@@ -74,6 +74,11 @@ namespace RichText
                             catch { }
                             break;
 
+                        case "PackFontFamily":
+                            try { TargetRun.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), $"./Resources/#{TagBody[1]}"); }
+                            catch { }
+                            break;
+
                         case "FontSize":
                             try
                             {

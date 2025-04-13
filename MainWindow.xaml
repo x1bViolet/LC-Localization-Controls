@@ -345,11 +345,11 @@
                     </TextBlock>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
                         <Button x:Name="TitleButton_Minimize" Click="TitleButton_Minimize_Click" BorderThickness="0" MouseEnter="TitleButton_Minimize_MouseEnter" MouseLeave="TitleButton_Minimize_MouseLeave" VerticalContentAlignment="Center" MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
-                            <TextBlock x:Name="TitleButton_Minimize_Text" FontFamily="Segoe Fluent Icons">
+                            <TextBlock x:Name="TitleButton_Minimize_Text" FontFamily="Resources\#Segoe Fluent Icons">
                                 
                             </TextBlock>
                         </Button>
-                        <Button x:Name="TitleButton_Close" Click="TitleButton_Close_Click" FontFamily="Segoe Fluent Icons" BorderThickness="0" MouseEnter="TitleButton_Close_MouseEnter" MouseLeave="TitleButton_Close_MouseLeave" VerticalContentAlignment="Center" MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                        <Button x:Name="TitleButton_Close" Click="TitleButton_Close_Click" FontFamily="Resources\#Segoe Fluent Icons" BorderThickness="0" MouseEnter="TitleButton_Close_MouseEnter" MouseLeave="TitleButton_Close_MouseLeave" VerticalContentAlignment="Center" MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
                             <TextBlock x:Name="TitleButton_Close_Text">
                                 
                             </TextBlock>
@@ -390,7 +390,7 @@
 
                                     <Border x:Name="SelectionMenu_Item1Highlight" Grid.Column="0" Margin="4"  CornerRadius="2"  Background="#FF312B28"/>
 
-                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="GOST Type BU">
+                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU">
                                         Shorthand
                                     </Button>
                                 </Grid>
@@ -402,7 +402,7 @@
 
                                     <Border x:Name="SelectionMenu_Item2Highlight" Grid.Column="0" Margin="4"  CornerRadius="2"  Background="#FF312B28"/>
 
-                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="GOST Type BU" Foreground="#FF544E47">
+                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU" Foreground="#FF544E47">
                                         TextMeshPro
                                     </Button>
                                 </Grid>
@@ -414,7 +414,7 @@
 
                                     <Border x:Name="SelectionMenu_Item3Highlight" Grid.Column="0" Margin="4"  CornerRadius="2"  Background="#FF312B28"/>
 
-                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18"  Margin="5,0,0,0" FontFamily="GOST Type BU" Foreground="#FF544E47">
+                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18"  Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU" Foreground="#FF544E47">
                                         Keyowrd Links
                                     </Button>
                                 </Grid>
@@ -426,7 +426,7 @@
 
                                     <Border x:Name="SelectionMenu_Item4Highlight" Grid.Column="0" Margin="4"  CornerRadius="2" Background="#FF312B28"/>
 
-                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="GOST Type BU" Foreground="#FF544E47">
+                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU" Foreground="#FF544E47">
                                         Шрифт
                                     </Button>
                                 </Grid>
@@ -449,7 +449,7 @@
 
                                     <Border x:Name="SelectionMenu_Item5Highlight" Grid.Column="0" Margin="4"  CornerRadius="2"  Background="#FF312B28"/>
 
-                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="GOST Type BU">
+                                    <Button Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU">
                                         Regex
                                     </Button>
                                 </Grid>
@@ -461,7 +461,7 @@
 
                                     <Border x:Name="SelectionMenu_Item6Highlight" Grid.Column="0" Margin="4" CornerRadius="2"  Background="#FF312B28"/>
 
-                                    <Button Foreground="#FF544E47" Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="GOST Type BU">
+                                    <Button Foreground="#FF544E47" Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU">
                                         Шрифт
                                     </Button>
                                 </Grid>
@@ -473,7 +473,7 @@
 
                                     <Border x:Name="SelectionMenu_Item7Highlight" Grid.Column="0" Margin="4" CornerRadius="2"  Background="#FF312B28"/>
 
-                                    <Button Foreground="#FF544E47" Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="GOST Type BU">
+                                    <Button Foreground="#FF544E47" Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU">
                                         Ключевые слова
                                     </Button>
                                 </Grid>
@@ -514,10 +514,10 @@
                                 <RowDefinition Height="0.1*"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="10,5,0,0" Grid.Column="0" Grid.Row="0" FontSize="45" FontFamily="GOST Type BU" Foreground="#FFBEB4BC">
-                                ※ Конвертер в Shorthand
+                            <TextBlock Margin="10,5,0,0" Grid.Column="0" Grid.Row="0" FontSize="45" FontFamily="Resources\#GOST Type BU" Foreground="#FFBEB4BC">
+                                ※ Конвертер из Shorthand
                             </TextBlock>
-                            <TextBlock Margin="10,5,0,0" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" FontSize="45" FontFamily="GOST Type BU" Foreground="#FFBEB4BC">
+                            <TextBlock Margin="10,5,0,0" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" FontSize="45" FontFamily="Resources\#GOST Type BU" Foreground="#FFBEB4BC">
                                 Параметры
                             </TextBlock>
                             <Border HorizontalAlignment="Left" Grid.Column="1" Width="2" Background="#503E3E" Margin="0,11,0,0" CornerRadius="1,1,0,0"/>
@@ -529,14 +529,14 @@
 
                                         <StackPanel Orientation="Horizontal">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="❡ Исходные файлы локализации:" Width="350" VerticalAlignment="Center" FontSize="25" FontFamily="GOST Type BU" Foreground="#BDBDBD"/>
+                                                <TextBlock Text="❡ Исходные файлы локализации:" Width="350" VerticalAlignment="Center" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#BDBDBD"/>
                                                 <Border Background="#2C2B31" CornerRadius="5" Margin="4,0,0,0" Height="35">
                                                     <Grid>
-                                                        <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_First_ShorthandConverter" TextChanged="DirectorySelect_First_ShorthandConverter_TextChanged" Text="C:\Somewhere" Width="585" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="GOST Type BU" Foreground="#FFBDBDBD"/>
+                                                        <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_First_ShorthandConverter" TextChanged="DirectorySelect_First_ShorthandConverter_TextChanged" Text="C:\Somewhere" Width="585" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#FFBDBDBD"/>
                                                     </Grid>
                                                 </Border>
                                             </StackPanel>
-                                            <TextBlock x:Name="DirectorySelect_First_ShorthandConverter_State" Margin="10,0,0,0" FontFamily="Segoe Fluent Icons" Foreground="#932E2E" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTipService.InitialShowDelay="1">
+                                            <TextBlock x:Name="DirectorySelect_First_ShorthandConverter_State" Margin="10,0,0,0" FontFamily="Resources\#Segoe Fluent Icons" Foreground="#932E2E" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTipService.InitialShowDelay="1">
                                                 
                                                 <TextBlock.ToolTip>
                                                     <ToolTip x:Name="X1039"
@@ -565,14 +565,14 @@
 
                                         <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="❡ Диркетория экспорта:" Width="350" VerticalAlignment="Center" FontSize="25" FontFamily="GOST Type BU" Foreground="#BDBDBD"/>
+                                                <TextBlock Text="❡ Диркетория экспорта:" Width="350" VerticalAlignment="Center" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#BDBDBD"/>
                                                 <Border Background="#2C2B31" CornerRadius="5" Margin="4,0,0,0" Height="35">
                                                     <Grid>
-                                                        <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_Second_ShorthandConverter" TextChanged="DirectorySelect_Second_ShorthandConverter_TextChanged" Text="C:\Somewhere" Width="585" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="GOST Type BU" Foreground="#FFBDBDBD"/>
+                                                        <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_Second_ShorthandConverter" TextChanged="DirectorySelect_Second_ShorthandConverter_TextChanged" Text="C:\Somewhere" Width="585" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#FFBDBDBD"/>
                                                     </Grid>
                                                 </Border>
                                             </StackPanel>
-                                            <TextBlock x:Name="DirectorySelect_Second_ShorthandConverter_State" Margin="10,0,0,0" FontFamily="Segoe Fluent Icons" Foreground="#932E2E" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTipService.InitialShowDelay="1">
+                                            <TextBlock x:Name="DirectorySelect_Second_ShorthandConverter_State" Margin="10,0,0,0" FontFamily="Resources\#Segoe Fluent Icons" Foreground="#932E2E" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTipService.InitialShowDelay="1">
                                                     
                                                 <TextBlock.ToolTip>
                                                     <ToolTip x:Name="X2039"
@@ -602,10 +602,10 @@
                                             <Grid>
                                                 <StackPanel>
                                                     <StackPanel Orientation="Horizontal" Height="25" HorizontalAlignment="Left" Width="650">
-                                                        <TextBlock FontFamily="GOST Type BU" Width="125" FontSize="18" Foreground="#7D7987">
+                                                        <TextBlock FontFamily="Resources\#GOST Type BU" Width="125" FontSize="18" Foreground="#7D7987">
                                                             ⥯ Shorthand:
                                                         </TextBlock>
-                                                        <RichTextBox Focusable="False" FontSize="18" Background="Transparent" BorderThickness="0" Width="1000" Foreground="#BDBDBD" FontFamily="GOST Type AU">
+                                                        <RichTextBox Focusable="False" FontSize="18" Background="Transparent" BorderThickness="0" Width="1000" Foreground="#BDBDBD" FontFamily="Resources\#GOST Type AU">
                                                             <FlowDocument>
                                                                 <Paragraph>
                                                                     <Run Text="{Binding Path=Text, ElementName=Parameters_SelectedDeltaKeywordsPattern}"></Run>
@@ -617,10 +617,10 @@
                                                         <Border Background="#BB5F5F62" Height="1" CornerRadius="0.8" Width="630" Margin="0,-1.7,0,0" HorizontalAlignment="Left"></Border>
                                                     </Border>
                                                     <StackPanel Orientation="Horizontal" Height="25" HorizontalAlignment="Left" Width="650">
-                                                        <TextBlock FontFamily="GOST Type BU" Width="125" FontSize="18" Foreground="#7D7987">
+                                                        <TextBlock FontFamily="Resources\#GOST Type BU" Width="125" FontSize="18" Foreground="#7D7987">
                                                             ⥯ TextMeshPro:
                                                         </TextBlock>
-                                                        <RichTextBox Focusable="False" FontSize="18" Background="Transparent" BorderThickness="0" Width="1000" Foreground="#BDBDBD" FontFamily="GOST Type AU">
+                                                        <RichTextBox Focusable="False" FontSize="18" Background="Transparent" BorderThickness="0" Width="1000" Foreground="#BDBDBD" FontFamily="Resources\#GOST Type AU">
                                                             <FlowDocument>
                                                                 <Paragraph>
                                                                     <Run>&lt;sprite name="ID"&gt;&lt;color=#Color&gt;&lt;u&gt;&lt;link="ID"&gt;Keyword Name&lt;/link&gt;&lt;u&gt;&lt;color&gt;</Run>
@@ -630,12 +630,12 @@
                                                     </StackPanel>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
-                                                    <TextBlock FontFamily="Segoe Fluent Icons" Text="" x:Name="X1043" Foreground="#404040" FontSize="60">
+                                                    <TextBlock FontFamily="Resources\#Segoe Fluent Icons" Text="" x:Name="X1043" Foreground="#404040" FontSize="60">
                                                         <TextBlock.RenderTransform>
                                                             <ScaleTransform ScaleX="0.65" CenterX="120"></ScaleTransform>
                                                         </TextBlock.RenderTransform>
                                                     </TextBlock>
-                                                    <TextBlock Margin="0,0,30,0" FontFamily="Segoe Fluent Icons" Text="" x:Name="X1044" Foreground="#BDBDBD" FontSize="60">
+                                                    <TextBlock Margin="0,0,30,0" FontFamily="Resources\#Segoe Fluent Icons" Text="" x:Name="X1044" Foreground="#BDBDBD" FontSize="60">
                                                         <TextBlock.RenderTransform>
                                                             <ScaleTransform ScaleX="0.65" CenterX="60"></ScaleTransform>
                                                         </TextBlock.RenderTransform>
@@ -656,7 +656,7 @@
                                                                         Применять шрифт
                                                                     </TextBlock>
                                                                     <Border PreviewMouseLeftButtonUp="ShorthandConverter_FontApply_Toggle" Width="18.6" Height="18.6" CornerRadius="0.1" Margin="7,0,0,0" Style="{StaticResource FKButton}" Visibility="Visible" Panel.ZIndex="1">
-                                                                        <TextBlock x:Name="X4908" FontSize="14" Margin="0,1.4,0,0" Style="{StaticResource FKTextBlock}" FontFamily="Segoe Fluent Icons" Foreground="#FFA8A0D4">
+                                                                        <TextBlock x:Name="X4908" FontSize="14" Margin="0,1.4,0,0" Style="{StaticResource FKTextBlock}" FontFamily="Resources\#Segoe Fluent Icons" Foreground="#FFA8A0D4">
                                                                             
                                                                         </TextBlock>
                                                                     </Border>
@@ -671,7 +671,7 @@
                                         <Grid Panel.ZIndex="-1" Margin="0,-30,0,0">
                                             <StackPanel>
                                                 <Border BorderBrush="#FF312E3C" BorderThickness="0" Height="20" Margin="405,0,0,0">
-                                                    <TextBlock x:Name="JsonFilesCounter" FontFamily="GOST Type AU" FontSize="14" HorizontalAlignment="Center" Foreground="#8883A0" VerticalAlignment="Bottom">
+                                                    <TextBlock x:Name="JsonFilesCounter" FontFamily="Resources\#GOST Type AU" FontSize="14" HorizontalAlignment="Center" Foreground="#8883A0" VerticalAlignment="Bottom">
                                                         Json файлов: ?
                                                     </TextBlock>
                                                 </Border>
@@ -695,7 +695,7 @@
                                 </Grid>
                             </Grid>
                             <Grid Grid.Column="1" Grid.Row="1">
-                                <Image Source="/Resources/Rodya.png" Width="400" Margin="-15 -180 0 0"></Image>
+                                <Image Source="/Resources/Родя.png" Width="400" Margin="-15 -180 0 0"></Image>
                             </Grid>
 
                         </Grid>
@@ -715,7 +715,7 @@
                                 <RowDefinition Height="0.1*"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="10,5,0,0" Grid.Row="0" FontSize="45" FontFamily="GOST Type BU" Foreground="#FFBEB4BC">
+                            <TextBlock Margin="10,5,0,0" Grid.Row="0" FontSize="45" FontFamily="Resources\#GOST Type BU" Foreground="#FFBEB4BC">
                                 ※ Настройки Regex
                             </TextBlock>
                             <StackPanel Grid.Row="1" Margin="30,0,35,0">
@@ -746,7 +746,7 @@
                                     </Border>
                                     <Border Margin="0,20,0,0" BorderBrush="#FF312E3C" BorderThickness="1" CornerRadius="2">
                                         <StackPanel Margin="5,0,5,5">
-                                            <TextBlock FontFamily="GOST Type BU" Foreground="#FFBDBDBD" FontSize="27">
+                                            <TextBlock FontFamily="Resources\#GOST Type BU" Foreground="#FFBDBDBD" FontSize="27">
                                                 | Исходный текст локализации
                                             </TextBlock>
 
@@ -761,7 +761,7 @@
                                                     </TextBox>
                                                 </Grid>
                                             </Border>
-                                            <TextBlock FontFamily="GOST Type BU" Margin="0,12,0,0" Foreground="#FFBDBDBD" FontSize="27">
+                                            <TextBlock FontFamily="Resources\#GOST Type BU" Margin="0,12,0,0" Foreground="#FFBDBDBD" FontSize="27">
                                                 | Предпросмотр выходного шаблона
                                             </TextBlock>
 
@@ -794,7 +794,7 @@
                     <Grid Grid.Row="1" Grid.Column="1" x:Name="PreviousEventsInfo">
                         <Border BorderThickness="2" BorderBrush="#503E3E" Margin="4" CornerRadius="3">
                             <Grid>
-                                <TextBlock x:Name="LastExport_date" Margin="10 0 0 0" FontFamily="GOST Type BU" Foreground="#FF595757" FontSize="25" VerticalAlignment="Center">
+                                <TextBlock x:Name="LastExport_date" Margin="10 0 0 0" FontFamily="Resources\#GOST Type BU" Foreground="#FF595757" FontSize="25" VerticalAlignment="Center">
                                     
                                 </TextBlock>
                             </Grid>

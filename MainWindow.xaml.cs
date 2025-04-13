@@ -276,7 +276,7 @@ public partial class MainWindow : Window
     private FontFamily GostTypeBU = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#GOST Type BU");
     private FontFamily Unispace = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Unispace");
     private FontFamily PretendardLight = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Prerendard Light");
-    private FontFamily SegoeFluentIcons = new FontFamily("Segoe Fluent Icons");
+    private FontFamily SegoeFluentIcons = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Segoe Fluent Icons");
 
 
 
@@ -932,7 +932,7 @@ public partial class MainWindow : Window
                                             Foreground = From("#BDBDBD"),
                                             FontFamily = GostTypeBU,
                                             Height = 16,
-                                    },  $"{ConvertedInfo.Shorthand} <size=70%><font=\"Segoe Fluent Icons\"></font></size> <font=\"Arial\">{ConvertedInfo.TMPro}</font> (Линия {ConvertedInfo.LineNumber})")
+                                    },  $"{ConvertedInfo.Shorthand} <size=74%><font=\"Segoe Fluent Icons\"></font></size> <font=\"Arial\">{ConvertedInfo.TMPro}</font> (Линия {ConvertedInfo.LineNumber})")
                                 }
                             },
                             new StackPanel()

@@ -169,6 +169,7 @@ namespace RichText
             RichTextString = Regex.Replace(RichTextString, @"<sprite name=""(\w+)"">", @"⇱sprite name=""$1""⇲");
             RichTextString = Regex.Replace(RichTextString, @"<style=""(\w+)"">", @"⇱style=""$1""⇲");
             RichTextString = Regex.Replace(RichTextString, @"<font=""(.*?)"">", @"⇱font=""$1""⇲");
+            RichTextString = Regex.Replace(RichTextString, @"<pfont=""(.*?)"">", @"⇱font=""$1""⇲");
             RichTextString = Regex.Replace(RichTextString, @"<size=(\d+)%>", @"⇱size=$1%⇲");
             foreach (var Tag in TagList) RichTextString = RichTextString.Replace($"<{Tag}>", $"⇱{Tag}⇲");
             #endregion
@@ -236,10 +237,29 @@ namespace RichText
                     {
                         string Range_TextItem = __TextSegmented__[RangeIndex];
 
-                        if (Range_TextItem.Equals("/font") | Range_TextItem.StartsWith("font=\"")) break;
+                        if (Range_TextItem.Equals("/font") | Range_TextItem.StartsWith("font=\"") | Range_TextItem.StartsWith("pfont=\"")) break;
                         if (ICm(Range_TextItem) & !Range_TextItem.Contains("⟦InnerTag/FontFamily@"))
                         {
                             __TextSegmented__[RangeIndex] += $"⟦InnerTag/FontFamily@{FontFamily}⟧";
+                        }
+                    }
+                }
+                #endregion
+
+                #region ⟦InnerTag/FontFamily@PackFontFamilyName⟧
+                // Needed for taking fontfamily from application resources
+                if (TextItem.StartsWith("pfont=\""))
+                {
+                    string FontFamily = Regex.Match(TextItem, @"pfont=""(.*)""").Groups[1].ToString();
+
+                    for (int RangeIndex = TextItem_Index + 1; RangeIndex < TextSegmented_Count; RangeIndex++)
+                    {
+                        string Range_TextItem = __TextSegmented__[RangeIndex];
+
+                        if (Range_TextItem.Equals("/font") | Range_TextItem.StartsWith("font=\"") | Range_TextItem.StartsWith("pfont=\"")) break;
+                        if (ICm(Range_TextItem) & !Range_TextItem.Contains("⟦InnerTag/FontFamily@") & !Range_TextItem.Contains("⟦InnerTag/PackFontFamily@"))
+                        {
+                            __TextSegmented__[RangeIndex] += $"⟦InnerTag/PackFontFamily@{FontFamily}⟧";
                         }
                     }
                 }
@@ -386,7 +406,7 @@ namespace RichText
             #endregion
 
             // Очистить сегментированный список текстовых фрагметов от тегов
-            __TextSegmented__.RemoveAll(TextItem => TagList.Contains(TextItem) | TextItem.StartsWith("color=#") | TextItem.StartsWith("font=\"") | TextItem.StartsWith("size="));
+            __TextSegmented__.RemoveAll(TextItem => TagList.Contains(TextItem) | TextItem.StartsWith("color=#") | TextItem.StartsWith("font=\"") | TextItem.StartsWith("pfont=\"") | TextItem.StartsWith("size="));
 
             #region Спрайты
             for (int TextItem_Index = 0; TextItem_Index < __TextSegmented__.Count; TextItem_Index++)
