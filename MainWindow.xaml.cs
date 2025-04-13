@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -275,7 +275,7 @@ public partial class MainWindow : Window
     private FontFamily GostTypeAU = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#GOST Type AU");
     private FontFamily GostTypeBU = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#GOST Type BU");
     private FontFamily Unispace = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Unispace");
-    private FontFamily PretendardLight = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Prerendard Light");
+    private FontFamily PretendardLight = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Pretendard Light");
     private FontFamily SegoeFluentIcons = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Segoe Fluent Icons");
 
 
@@ -932,7 +932,7 @@ public partial class MainWindow : Window
                                             Foreground = From("#BDBDBD"),
                                             FontFamily = GostTypeBU,
                                             Height = 16,
-                                    },  $"{ConvertedInfo.Shorthand} <size=74%><font=\"Segoe Fluent Icons\"></font></size> <font=\"Arial\">{ConvertedInfo.TMPro}</font> (Линия {ConvertedInfo.LineNumber})")
+                                    },  $"{ConvertedInfo.Shorthand} <size=74%><pfont=\"Segoe Fluent Icons\"></font></size> <pfont=\"Pretendard Light\">{ConvertedInfo.TMPro}</font> (Линия {ConvertedInfo.LineNumber})")
                                 }
                             },
                             new StackPanel()
