@@ -76,6 +76,7 @@ public partial class MainWindow : Window
         InitializeTDictionary();
         AppConfiguration.InitT();
         //InitSurfaceScroll(DeltaKeywordsMatchesPreview);
+        GetDpiAndScale();
         SelectionMenu_Item1Highlight.Background = From("#C9BBB3");
 
         AppConfiguration.LoadConfiguration();
@@ -99,7 +100,36 @@ public partial class MainWindow : Window
     private void TitleButton_Close_Click(object sender, RoutedEventArgs e) => Close();
     private void TitleButton_Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
+    internal double scaleX = 100;
+    internal double scaleY = 100;
+    private void GetDpiAndScale()
+    {
+        var dpi = VisualTreeHelper.GetDpi(this);
+        const double standardDpi = 96.0;
 
+        // Вычисляем масштаб в процентах
+        scaleX = (dpi.DpiScaleX * 100);
+        scaleY = (dpi.DpiScaleY * 100);
+
+        Console.WriteLine($"Масштаб по X: {scaleX}%");
+        Console.WriteLine($"Масштаб по Y: {scaleY}%");
+
+
+        if (scaleX == 125 & scaleY == 125)
+        {
+            ConvertGridScale1.ScaleX = 1;
+            ConvertGridScale1.ScaleY = 1;
+            DeltaKeywordsMatchesPreview.Height = 310;
+            Родя.Width = 400;
+        }
+        else if (scaleX == 100 & scaleY == 100)
+        {
+            ConvertGridScale1.ScaleX = 1.265;
+            ConvertGridScale1.ScaleY = 1.265;
+            DeltaKeywordsMatchesPreview.Height = 470;
+            Родя.Width = 500;
+        }
+    }
 
     private void InitSurfaceScroll(ScrollViewer Target)
     {
@@ -926,7 +956,7 @@ public partial class MainWindow : Window
                                         {
                                             Focusable = false,
                                             Background = From("#00FFFFFF"),
-                                            FontSize = 13.2,
+                                            FontSize = 12.7,
                                             BorderThickness = new Thickness(0),
                                             Width = 890,
                                             Foreground = From("#BDBDBD"),
@@ -956,7 +986,7 @@ public partial class MainWindow : Window
                                         {
                                             Focusable = false,
                                             Background = From("#00FFFFFF"),
-                                            FontSize = 13.2,
+                                            FontSize = 12.7,
                                             BorderThickness = new Thickness(0),
                                             Width = 890,
                                             Foreground = From("#BDBDBD"),
