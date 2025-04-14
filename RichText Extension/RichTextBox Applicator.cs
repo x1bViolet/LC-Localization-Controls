@@ -153,7 +153,7 @@ namespace RichText
 
             bool ICm(string Range_TextItem)
             {
-                return !TagList.Contains(Range_TextItem) & !Range_TextItem.StartsWith("color=#") & !Range_TextItem.StartsWith("sprite name=\"") & !Range_TextItem.StartsWith("font=\"") & !Range_TextItem.StartsWith("size=");
+                return !TagList.Contains(Range_TextItem) & !Range_TextItem.StartsWith("color=#") & !Range_TextItem.StartsWith("sprite name=\"") & !Range_TextItem.StartsWith("font=\"") & !Range_TextItem.StartsWith("pfont=\"") & !Range_TextItem.StartsWith("size=");
             }
 
             #region Базовое форматирование текста
