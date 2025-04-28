@@ -247,7 +247,7 @@ namespace LC_Localization_Controls.Converters
                                 LocalizeValue = ShorthandConverter.Redirect(LocalizeValue);
                             }
 
-                            if (InsertMissingID)
+                            if (InsertMissingID & !AppendedFiles.Contains(LocalizeFile.Name))
                             {
                                 string Filename_Strip = LocalizeFile.FullName[LocalizationDirectory.Length..];
                                 string MissingIDSourceFile = $"{LocalizationMaskDirectory}{Filename_Strip}";
@@ -332,7 +332,7 @@ namespace LC_Localization_Controls.Converters
 
                     string WriteValue = File.ReadAllText(OtherLocalizeFile.FullName);
 
-                    if (InsertMissingID)
+                    if (InsertMissingID & !AppendedFiles.Contains(OtherLocalizeFile.Name))
                     {
                         string Filename_Strip = OtherLocalizeFile.FullName[LocalizationDirectory.Length..];
                         string MissingIDSourceFile = @$"⇲ Asset Directory\Missing ID sources\{AppConfiguration.StringConfiguration["Missing ID source"]}{Filename_Strip}";
