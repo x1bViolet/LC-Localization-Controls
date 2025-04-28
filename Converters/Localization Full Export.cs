@@ -223,11 +223,9 @@ namespace LC_Localization_Controls.Converters
                             List<FileInfo> ProcessingTargets_Missing = new DirectoryInfo(LocalizationMaskDirectory).GetFiles(AcquirePattern)
                                 .Where(File => !DoNotIgnoreStoryData ? !File.FullName.Contains(@"StoryData\") : true)
                                     .Where(file => !ProcessingTargets.ContainsFileInfoWithName(file.Name)).ToList();
-                            foreach(var AppendedFile in ProcessingTargets_Missing)
-                            {
-                                //rin($"Вставлен пропущенный файл {AppendedFile.Name}");
-                                AppendedFiles.Add(AppendedFile.Name);
-                            }
+                            
+                            AppendedFiles = ProcessingTargets_Missing.Select(file => file.Name);
+                            
                             ProcessingTargets = ProcessingTargets.Concat(ProcessingTargets_Missing).ToList();
                         }
 
