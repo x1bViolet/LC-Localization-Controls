@@ -692,7 +692,7 @@
                         <Grid x:Name="MenuGrid_3">
 
                         </Grid>
-                        <Grid x:Name="MenuGrid_4" Visibility="Collapsed">
+                        <Grid x:Name="MenuGrid_4" Visibility="Visible">
                             
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="XD1924" />
@@ -795,58 +795,63 @@
                                                                 <Border Width="180" Height="64" Style="{StaticResource FKButton}" Panel.ZIndex="1" PreviewMouseLeftButtonUp="ExportLocalization">
                                                                     <TextBlock Margin="0 -1 0 0" Text="Старт&#x0a;Экспорта" FontSize="26" x:Name="XF12318" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU"/>
                                                                 </Border>
-                                                                <Grid>
-                                                                    <Grid.RowDefinitions>
-                                                                        <RowDefinition/>
-                                                                        <RowDefinition/>
-                                                                    </Grid.RowDefinitions>
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="0.50*"/>
-                                                                        <ColumnDefinition/>
-                                                                    </Grid.ColumnDefinitions>
+                                                                <Border x:Name="XF900054_OVER" Visibility="Collapsed" Width="180" Height="64" Panel.ZIndex="2" Margin="-180 0 0 0" Background="#990C0C0C"/>
 
-                                                                    <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" Height="30" BorderThickness="0 2 2 2" CornerRadius="0 0.8 0 0" Margin="-3.3 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
-                                                                        <Grid Margin="5.7 0 0 0">
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock x:Name="XFD9204" HorizontalAlignment="Left" Text="Шрифт" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
-                                                                            </StackPanel>
-                                                                            <Border PreviewMouseLeftButtonUp="FullExportToggle_ApplyFont" HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
-                                                                                <TextBlock x:Name="XSD1001" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
-                                                                                    
-                                                                                </TextBlock>
-                                                                            </Border>
-                                                                        </Grid>
-                                                                    </Border>
-                                                                    <Border Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Height="30" BorderThickness="2 2 2 2" CornerRadius="0.8 0.8 0.8 0" Margin="0 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
-                                                                        <Grid Margin="2 0 0 0">
-                                                                            <TextBlock x:Name="XFD9206" HorizontalAlignment="Left" Text="Не игнорировать StoryData" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
-                                                                            <Border PreviewMouseLeftButtonUp="FullExportToggle_DoNotIgnoreStoryData"  HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
-                                                                                <TextBlock x:Name="XSD1002" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
-                                                                                    
-                                                                                </TextBlock>
-                                                                            </Border>
-                                                                        </Grid>
-                                                                    </Border>
-                                                                    <Border Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Height="30" BorderThickness="0 2 2 2" CornerRadius="0 0 0.8 0" Margin="-2 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
-                                                                        <Grid Margin="5.7 0 0 0">
-                                                                            <TextBlock x:Name="XFD9205"  HorizontalAlignment="Left" Text="Shorthand" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
-                                                                            <Border PreviewMouseLeftButtonUp="FullExportToggle_ApplyShorthand" HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
-                                                                                <TextBlock x:Name="XSD1003" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
-                                                                                    
-                                                                                </TextBlock>
-                                                                            </Border>
-                                                                        </Grid>
-                                                                    </Border>
-                                                                    <Border Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Height="30" BorderThickness="2 2 2 2" CornerRadius="0 0.8 0.8 0.8" Margin="0 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
-                                                                        <Grid Margin="2 0 0 0">
-                                                                            <TextBlock x:Name="XFD9207" HorizontalAlignment="Left" Text="Вставлять отсутствующие ID" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
-                                                                            <Border PreviewMouseLeftButtonUp="FullExportToggle_InsertMissingID"  HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
-                                                                                <TextBlock x:Name="XSD1004" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
-                                                                                    
-                                                                                </TextBlock>
-                                                                            </Border>
-                                                                        </Grid>
-                                                                    </Border>
+                                                                <Grid>
+                                                                    <Border x:Name="XF900055_OVER" Visibility="Collapsed" Background="#990C0C0C" Panel.ZIndex="10" Margin="0 2 0 2" CornerRadius="0 1.8 1.8 0"/>
+                                                                    <Grid>
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition/>
+                                                                            <RowDefinition/>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="0.50*"/>
+                                                                            <ColumnDefinition/>
+                                                                        </Grid.ColumnDefinitions>
+
+                                                                        <Border Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" Height="30" BorderThickness="0 2 2 2" CornerRadius="0 0.8 0 0" Margin="-3.3 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
+                                                                            <Grid Margin="5.7 0 0 0">
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <TextBlock x:Name="XFD9204" HorizontalAlignment="Left" Text="Шрифт" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
+                                                                                </StackPanel>
+                                                                                <Border PreviewMouseLeftButtonUp="FullExportToggle_ApplyFont" HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
+                                                                                    <TextBlock x:Name="XSD1001" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
+                                                                                        
+                                                                                    </TextBlock>
+                                                                                </Border>
+                                                                            </Grid>
+                                                                        </Border>
+                                                                        <Border Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Height="30" BorderThickness="2 2 2 2" CornerRadius="0.8 0.8 0.8 0" Margin="0 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
+                                                                            <Grid Margin="2 0 0 0">
+                                                                                <TextBlock x:Name="XFD9206" HorizontalAlignment="Left" Text="Не игнорировать StoryData" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
+                                                                                <Border PreviewMouseLeftButtonUp="FullExportToggle_DoNotIgnoreStoryData"  HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
+                                                                                    <TextBlock x:Name="XSD1002" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
+                                                                                        
+                                                                                    </TextBlock>
+                                                                                </Border>
+                                                                            </Grid>
+                                                                        </Border>
+                                                                        <Border Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Height="30" BorderThickness="0 2 2 2" CornerRadius="0 0 0.8 0" Margin="-2 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
+                                                                            <Grid Margin="5.7 0 0 0">
+                                                                                <TextBlock x:Name="XFD9205"  HorizontalAlignment="Left" Text="Shorthand" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
+                                                                                <Border PreviewMouseLeftButtonUp="FullExportToggle_ApplyShorthand" HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
+                                                                                    <TextBlock x:Name="XSD1003" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
+                                                                                        
+                                                                                    </TextBlock>
+                                                                                </Border>
+                                                                            </Grid>
+                                                                        </Border>
+                                                                        <Border Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Height="30" BorderThickness="2 2 2 2" CornerRadius="0 0.8 0.8 0.8" Margin="0 0 0 0" Background="#FF2D2B39" BorderBrush="#FF626262" Panel.ZIndex="1">
+                                                                            <Grid Margin="2 0 0 0">
+                                                                                <TextBlock x:Name="XFD9207" HorizontalAlignment="Left" Text="Вставлять отсутствующие ID" FontSize="18" Style="{StaticResource FKTextBlock}" FontFamily="Resources/#Gost Type BU" Margin="0 0 27.6 0"/>
+                                                                                <Border PreviewMouseLeftButtonUp="FullExportToggle_InsertMissingID"  HorizontalAlignment="Right" Width="23.6" Height="23.6" BorderThickness="1.9" CornerRadius="0.8" Margin="6 0 1.4 0" VerticalAlignment="Center" Style="{StaticResource FKButton}" Panel.ZIndex="1">
+                                                                                    <TextBlock x:Name="XSD1004" FontFamily="Resources\#Segoe Fluent Icons" HorizontalAlignment="Center" Margin="0 1.4 0 0" FontSize="19" VerticalAlignment="Center" Foreground="#FFA8A0D4">
+                                                                                        
+                                                                                    </TextBlock>
+                                                                                </Border>
+                                                                            </Grid>
+                                                                        </Border>
+                                                                    </Grid>
                                                                 </Grid>
                                                             </StackPanel>
 
@@ -982,7 +987,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid x:Name="MenuGrid_6" Visibility="Visible">
+                        <Grid x:Name="MenuGrid_6" Visibility="Collapsed">
                             <TextBlock Text="※ Настройки особого шрифта" x:Name="XF189765" Margin="10,5,0,0" Grid.Row="0" FontSize="45" FontFamily="Resources\#GOST Type BU" Foreground="#FFBEB4BC">
                                 
                             </TextBlock>

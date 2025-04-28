@@ -1089,6 +1089,9 @@ public partial class MainWindow : Window
                 }
                 else
                 {
+                    XF900054_OVER.Visibility = Visibility.Visible;
+                    XF900055_OVER.Visibility = Visibility.Visible;
+
                     DirectorySelect_Second_FullConverter_State.Foreground = ToColor("#932E2E");
                     X6039.Width = double.NaN; X6039.Height = double.NaN;
                     X6039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (Unaccessible)"];
@@ -1113,6 +1116,9 @@ public partial class MainWindow : Window
             string SelectedDir = DirectorySelect_First_FullConverter.Text;
             if (Directory.Exists(SelectedDir))
             {
+                XF900054_OVER.Visibility = Visibility.Collapsed;
+                XF900055_OVER.Visibility = Visibility.Collapsed;
+
                 if (Directory.GetDirectories(SelectedDir).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max subdirs"] &
                     Directory.GetFiles(SelectedDir, "*.*", SearchOption.AllDirectories).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max files"]
                 )
@@ -1127,6 +1133,9 @@ public partial class MainWindow : Window
                     }
                     else
                     {
+                        XF900054_OVER.Visibility = Visibility.Visible;
+                        XF900055_OVER.Visibility = Visibility.Visible;
+
                         DirectorySelect_First_FullConverter_State.Foreground = ToColor("#932E2E");
                         X5039.Width = double.NaN; X5039.Height = double.NaN;
                         X5039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (No suggested files found)"];
@@ -1135,6 +1144,9 @@ public partial class MainWindow : Window
                 }
                 else
                 {
+                    XF900054_OVER.Visibility = Visibility.Visible;
+                    XF900055_OVER.Visibility = Visibility.Visible;
+
                     DirectorySelect_First_FullConverter_State.Foreground = ToColor("#932E2E");
                     X5039.Width = double.NaN; X5039.Height = double.NaN;
                     X5039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (Too much files or subdirs)"];
@@ -1143,6 +1155,9 @@ public partial class MainWindow : Window
             }
             else
             {
+                XF900054_OVER.Visibility = Visibility.Visible;
+                XF900055_OVER.Visibility = Visibility.Visible;
+
                 DirectorySelect_First_FullConverter_State.Foreground = ToColor("#932E2E");
                 X5039.Width = double.NaN; X5039.Height = double.NaN;
                 X5039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (Not found)"];
@@ -1450,14 +1465,25 @@ public partial class MainWindow : Window
     private async void ExportLocalization(object sender, MouseButtonEventArgs e)
     {
         IsProcessingDirectory = true;
-        await LocalizationFullExport.DirectExport(
-            AppConfiguration.StringConfiguration["Full Converter Selected Original directory"],
-            AppConfiguration.StringConfiguration["Full Converter Selected Output directory"],
-            AppConfiguration.ToggleConfiguration["Apply Font on Full Export"],
-            AppConfiguration.ToggleConfiguration["Convert Shorthands on Full Export"],
-            AppConfiguration.ToggleConfiguration["Don't Ignore StoryData on Full Export"],
-            AppConfiguration.ToggleConfiguration["Insert missing ID on Full Export"]
-        );
+        XF900054_OVER.Visibility = Visibility.Visible;
+        XF900055_OVER.Visibility = Visibility.Visible;
+        try
+        {
+            await LocalizationFullExport.DirectExport(
+                AppConfiguration.StringConfiguration["Full Converter Selected Original directory"],
+                AppConfiguration.StringConfiguration["Full Converter Selected Output directory"],
+                AppConfiguration.ToggleConfiguration["Apply Font on Full Export"],
+                AppConfiguration.ToggleConfiguration["Convert Shorthands on Full Export"],
+                AppConfiguration.ToggleConfiguration["Don't Ignore StoryData on Full Export"],
+                AppConfiguration.ToggleConfiguration["Insert missing ID on Full Export"]
+            );
+        }
+        catch { }
+        finally
+        {
+            XF900054_OVER.Visibility = Visibility.Collapsed;
+            XF900055_OVER.Visibility = Visibility.Collapsed;
+        }
         IsProcessingDirectory = false;
     }
 
