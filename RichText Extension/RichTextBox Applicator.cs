@@ -9,7 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
-using static TexelExtension.ExternalBase;
+using static TexExtension.ExternalBase;
 using static GeneralResources.Internal;
 
 namespace RichText 

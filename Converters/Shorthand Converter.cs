@@ -1,19 +1,17 @@
-﻿using Configuration;
-using GeneralResources;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+
+using Configuration;
+using GeneralResources;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static LC_Localization_Controls.MainWindow;
-using static TexelExtension.ExternalBase;
 
 namespace LC_Localization_Controls.Converters
 {
     internal abstract class ShorthandConverter
     {
-        internal static string Redirect(string FileText)
+        internal protected static string Redirect(string FileText)
         {
             foreach (Match Match in Regex.Matches(FileText, AppConfiguration.StringConfiguration["Shorthand Pattern"]))
             {

@@ -371,8 +371,7 @@
                         <Border BorderThickness="3" BorderBrush="#FF3A2727" Margin="-3,-3,0,-3" >
                             <StackPanel x:Name="SelectionMenu">
 
-                                <TextBlock Text="Конвертеры" x:Name="XFC1002" FontFamily="Resources\#Corbel Light" HorizontalAlignment="Center" FontSize="22" TextDecorations="Underline">
-                                    
+                                <TextBlock Text="Конвертеры"  Margin="0 5 0 -4" x:Name="XFC1002" FontFamily="Resources\#Corbel Light" HorizontalAlignment="Center" FontSize="22" TextDecorations="Underline">
                                     <TextBlock.Foreground>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <GradientStop Color="#FFBE4646" Offset="0"/>
@@ -389,7 +388,7 @@
 
                                     <Border x:Name="SelectionMenu_Item1Highlight" Grid.Column="0" Margin="4"  CornerRadius="2"  Background="#FF312B28"/>
 
-                                    <Button x:Name="XF9045" Content="Shorthand" Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU">
+                                    <Button x:Name="XF9045" Content="Shorthand" Foreground="#FF544E47" Grid.Column="1" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="18" Margin="5,0,0,0" FontFamily="Resources\#GOST Type BU">
                                     </Button>
                                 </Grid>
                                 <Grid PreviewMouseLeftButtonUp="General_SwitchMenu" Height="45" Margin="0,5,0,0" x:Name="SelectionMenu_Item2Grid" MouseEnter="SelectionMenu_Item2Grid_MouseEnter" MouseLeave="SelectionMenu_Item2Grid_MouseLeave">
@@ -426,7 +425,7 @@
                                     </Button>
                                 </Grid>
 
-                                <TextBlock x:Name="XFC1003" Text="Параметры" FontFamily="Resources\#Corbel Light" HorizontalAlignment="Center" FontSize="22" TextDecorations="Underline">
+                                <TextBlock x:Name="XFC1003" Text="Параметры" FontFamily="Resources\#Corbel Light" HorizontalAlignment="Center" FontSize="22" TextDecorations="Underline" Margin="0 5 0 -8">
                                     <TextBlock.Foreground>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <GradientStop Color="#FFBE4646" Offset="0"/>
@@ -693,11 +692,11 @@
                         <Grid x:Name="MenuGrid_3">
 
                         </Grid>
-                        <Grid x:Name="MenuGrid_4" Visibility="Visible">
+                        <Grid x:Name="MenuGrid_4" Visibility="Collapsed">
                             
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="XD1924" />
-                                <ColumnDefinition Width="0.37*"/>
+                                <ColumnDefinition Width="0.34*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.1*"/>
@@ -711,8 +710,10 @@
                             </TextBlock>
                             <Border HorizontalAlignment="Left" Grid.Column="1" Width="2" Background="#503E3E" Margin="0,11,0,0" CornerRadius="1,1,0,0"/>
                             <Border HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Width="2" Background="#503E3E" Margin="0,0,0,11" CornerRadius="1,1,0,0"/>
-
-                            <Grid Grid.Column="0" Grid.Row="1"  Visibility="Visible">
+                            <Grid Grid.Column="1" Grid.Row="1">
+                                <Image x:Name="Рёшу" Source="/Resources/Рёшу.png" Width="550" Margin="-96 -110 0 0"></Image>
+                            </Grid>
+                            <Grid Grid.Column="0" Grid.Row="1">
                                 <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15">
                                     <Grid.RenderTransform>
                                         <ScaleTransform x:Name="ConvertGridScale2" ScaleX="1.265" ScaleY="1.265"/>
@@ -722,9 +723,11 @@
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock x:Name="XF9012332" Text="{Binding ElementName=XF904332, Path=Text}"  Width="350" VerticalAlignment="Center" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#BDBDBD"/>
-                                                <Border Background="#2C2B31" CornerRadius="5" Margin="4,0,0,0" Height="35">
+                                                <Border Background="#2C2B31" CornerRadius="5" Margin="4,0,0,0" Height="35" Width="585">
                                                     <Grid>
-                                                        <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_First_FullConverter" TextChanged="DirectorySelect_First_FullConverter_TextChanged" Text="C:\Somewhere" Width="585" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#FFBDBDBD"/>
+                                                        <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_First_FullConverter" TextChanged="DirectorySelect_First_FullConverter_TextChanged" Text="C:\Somewhere" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#FFBDBDBD" Margin="4 0 4 0">
+                                                            
+                                                        </TextBox>
                                                     </Grid>
                                                 </Border>
                                             </StackPanel>
@@ -755,10 +758,8 @@
                                         <StackPanel Orientation="Horizontal" Margin="0,15,0,0" VerticalAlignment="Top">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock x:Name="XF123413" Text="{Binding ElementName=XF904213, Path=Text}" Width="350" VerticalAlignment="Center" FontSize="25" FontFamily="Resources\#GOST Type BU" Margin="0 0 0 0" Foreground="#BDBDBD"/>
-                                                <Border Background="#2C2B31" CornerRadius="5" Margin="4,0,0,0" Height="35">
-                                                    <Grid>
-                                                        <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_Second_FullConverter" TextChanged="DirectorySelect_Second_FullConverter_TextChanged" Text="C:\Somewhere" Width="585" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="Resources\#GOST Type BU" Foreground="#FFBDBDBD"/>
-                                                    </Grid>
+                                                <Border Background="#2C2B31" CornerRadius="5" Margin="4,0,0,0" Height="35" Width="585">
+                                                    <TextBox VerticalAlignment="Center" x:Name="DirectorySelect_Second_FullConverter" TextChanged="DirectorySelect_Second_FullConverter_TextChanged" Text="C:\Somewhere" Background="Transparent" SelectionBrush="#FF8F8F8F" CaretBrush="#FFF7F7F7" BorderThickness="0" FontSize="25" FontFamily="Resources\#GOST Type BU" Margin="4 0 4 0" Foreground="#FFBDBDBD"/>
                                                 </Border>
                                             </StackPanel>
                                             <TextBlock x:Name="DirectorySelect_Second_FullConverter_State" Margin="10,0,0,0" FontFamily="Resources\#Segoe Fluent Icons" Foreground="#932E2E" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTipService.InitialShowDelay="1">
@@ -857,7 +858,7 @@
                                                                 </TextBlock>
                                                             </StackPanel>
                                                         </StackPanel>
-                                                        <StackPanel Margin="20 0 -18 0">
+                                                        <StackPanel Margin="20 0 -14 0">
                                                             <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5 0.5">
                                                                 <StackPanel.RenderTransform>
                                                                     <RotateTransform Angle="180"/>
@@ -893,7 +894,7 @@
                                         </Border>
                                         <Grid Panel.ZIndex="-1" Margin="0 5 0 0">
                                             <StackPanel>
-                                                <Border BorderBrush="#FF312E3C" BorderThickness="2" CornerRadius="4">
+                                                <Border BorderBrush="#FF312E3C" BorderThickness="2" CornerRadius="4"  MaxWidth="976" >
                                                     <Grid>
                                                         <ScrollViewer x:Name="XFD9014" Height="417" Margin="0 7 5 7" VerticalAlignment="Center" BorderBrush="#BDBDBD">
                                                             <StackPanel Margin="8 0 8 0" x:Name="FullExport_Log">
@@ -981,7 +982,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid x:Name="MenuGrid_6" Visibility="Collapsed">
+                        <Grid x:Name="MenuGrid_6" Visibility="Visible">
                             <TextBlock Text="※ Настройки особого шрифта" x:Name="XF189765" Margin="10,5,0,0" Grid.Row="0" FontSize="45" FontFamily="Resources\#GOST Type BU" Foreground="#FFBEB4BC">
                                 
                             </TextBlock>
@@ -1051,8 +1052,8 @@
                                 <Grid Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 28 0 0" Panel.ZIndex="11">
                                     <Border Background="#FF2B2934" CornerRadius="4" Width="600" Height="37" VerticalAlignment="Top">
                                         <Grid>
-                                            <TextBlock x:Name="SelectedFontDisplay" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Resources\#GOST Type BU" Foreground="#FFBEB4BC" FontSize="29" Margin="5 0 0 0">
-                                                MTL + LimbusFonts 1.8.0
+                                            <TextBlock MaxWidth="560" x:Name="SelectedFontDisplay" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Resources\#GOST Type BU" Foreground="#FFBEB4BC" FontSize="29" Margin="5 0 0 0">
+                                                
                                             </TextBlock>
                                             <TextBlock x:Name="FontsList_DropdownButton" MouseEnter="FontsList_DropdownButton_MouseEnter" MouseLeave="FontsList_DropdownButton_MouseLeave" PreviewMouseLeftButtonDown="FontsList_DropdownButton_PreviewMouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 4 3 0" Foreground="#FFB4B4BE" FontSize="29" FontFamily="Resources\#Segoe Fluent Icons">
                                                 
@@ -1062,12 +1063,7 @@
                                     <Border x:Name="FontsList_Dropdown" Visibility="Collapsed" Background="#FF212024" Margin="0 33 0 0" Panel.ZIndex="10" CornerRadius="0 0 4 4" Width="600" BorderThickness="2 4 2 2" BorderBrush="#FF2B2934">
                                         <ScrollViewer MaxHeight="129">
                                             <StackPanel x:Name="FontsList_DropdownContent" Margin="1 1 4 4">
-                                                <TextBlock FontSize="26">
-                                                    ※ kimght LimbusFonts 1.8.0
-                                                </TextBlock>
-                                                <TextBlock FontSize="26">
-                                                    ※ LLCCN Font
-                                                </TextBlock>
+                                                
                                             </StackPanel>
                                         </ScrollViewer>
                                     </Border>

@@ -1,25 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Windows;
+﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows;
 using Newtonsoft.Json.Linq;
-using static TexelExtension.ExternalBase;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Shapes;
-using Configuration;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
 using System.Windows.Media;
-using RichText;
-using System.Reflection;
-using NLog.Time;
+using System.Windows.Shapes;
+using System.Windows.Controls;
+using System.Collections.Generic;
+
+using Configuration;
 using GeneralResources;
+using System.Text.RegularExpressions;
+using static TexExtension.ExternalBase;
 
 namespace LC_Localization_Controls.Converters
 {
@@ -116,14 +110,14 @@ namespace LC_Localization_Controls.Converters
             UpdateReplacementMap(FileSource);
             GenerateCustomFontsPreview(T["Test font string"].Text);
         }
-        internal static void GenerateCustomFontsPreview(string Text = "Test", bool UseUnicode = false)
+        internal static void GenerateCustomFontsPreview(string Text = "Test")
         {
             T["Custom fonts display list"].Children.Clear();
 
             bool FirstAdd = true;
             foreach(var CustomFontItem in InternalFontsList)
             {
-                CreateCustomFontPreviewPanel(CustomFontItem.Key, CustomFontItem.Value, Text, FirstAdd, UseUnicode);
+                CreateCustomFontPreviewPanel(CustomFontItem.Key, CustomFontItem.Value, Text, FirstAdd, AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"]);
                 FirstAdd = false;
             }
         }
@@ -158,158 +152,163 @@ namespace LC_Localization_Controls.Converters
 
         private static void CreateCustomFontPreviewPanel(string CustomFontPartName, Dictionary<string, string> CustomFontParameter, string TextString, bool FirstAdd = true, bool UseUnicode = false)
         {
-            string KFontConverted = KSTFont.Convert(TextString, CustomFontParameter);
-
-            Border CustomFontPreview = new Border()
+            try
             {
-                Margin = new Thickness(8, 0, 0, 0),
-                CornerRadius = new CornerRadius(5),
-                Background = ToColor("#2C2B31"),
-                Child = new TextBlock
-                {
-                    Margin = new Thickness(0, 3, 0, 4),
-                    Width = 1149,
-                    TextWrapping = TextWrapping.Wrap,
-                    FontSize = 20,
-                    FontFamily = Specified_FontObject,
-                    Text = KFontConverted,
-                }
-            };
-            CustomFontPreview.MouseLeftButtonUp += CopyConvertedFontText;
-            CustomFontPreview.ToolTip = new ToolTip()
-            {
-                Background = Brushes.Transparent,
-                Foreground = Brushes.White,
-                HasDropShadow = true,
-                Placement = System.Windows.Controls.Primitives.PlacementMode.Relative,
-                BorderThickness = new Thickness(0),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalOffset = 19,
 
-                Content = new Border
+                string KFontConverted = KSTFont.Convert(TextString, CustomFontParameter);
+
+                int BaseWidth = MainWindow.UIScaleY.Equals(100) ? 1480 : 1136;
+
+
+                Border CustomFontPreview = new Border()
                 {
-                    CornerRadius = new CornerRadius(3),
-                    BorderThickness = new Thickness(0.8),
-                    BorderBrush = ToColor("#646464"),
-                    Background = ToColor("#895B5B5B"),
-                    Child = new Grid()
+                    CornerRadius = new CornerRadius(5),
+                    Background = ToColor("#2C2B31"),
+                    Child = new TextBlock
                     {
-                        Children =
+                        Width = BaseWidth,
+                        TextWrapping = TextWrapping.Wrap,
+                        FontSize = 20,
+                        Margin = new Thickness(4, 4, -4, 4),
+                        FontFamily = Specified_FontObject,
+                        Text = KFontConverted,
+                    }
+                };
+                CustomFontPreview.MouseLeftButtonUp += CopyConvertedFontText;
+                CustomFontPreview.ToolTip = new ToolTip()
+                {
+                    Background = Brushes.Transparent,
+                    Foreground = Brushes.White,
+                    HasDropShadow = true,
+                    Placement = System.Windows.Controls.Primitives.PlacementMode.Relative,
+                    BorderThickness = new Thickness(0),
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalOffset = 19,
+
+                    Content = new Border
+                    {
+                        CornerRadius = new CornerRadius(3),
+                        BorderThickness = new Thickness(0.8),
+                        BorderBrush = ToColor("#646464"),
+                        Background = ToColor("#895B5B5B"),
+                        Child = new Grid()
                         {
-                            new TextBlock
+                            Children =
                             {
-                                Margin = new Thickness(3),
-                                TextAlignment = TextAlignment.Center,
-                                FontFamily = MainWindow.GostTypeBU,
-                                Text = "Copy to clipboard",
-                                FontSize = 14
+                                new TextBlock
+                                {
+                                    TextAlignment = TextAlignment.Center,
+                                    FontFamily = MainWindow.GostTypeBU,
+                                    Text = "Copy to clipboard",
+                                    FontSize = 14
+                                }
                             }
                         }
                     }
-                }
-            };
-            CustomFontPreview.SetValue(ToolTipService.InitialShowDelayProperty, 1000);
+                };
+                CustomFontPreview.SetValue(ToolTipService.InitialShowDelayProperty, 1000);
 
-            T["Custom fonts display list"].Children.Add(new Border()
-            {
-                BorderBrush = ToColor("#4C4959"),
-                BorderThickness = new Thickness(2),
-                Margin = new Thickness(0, FirstAdd ? 0 : 17, 0, 5),
-                CornerRadius = new CornerRadius(10, 1, 1, 1),
-                Child = new StackPanel()
+                T["Custom fonts display list"].Children.Add(new Border()
                 {
-                    Orientation = Orientation.Horizontal,
-                    Margin = new Thickness(-2, 0, 0, 0),
-                    Children =
-                {
-                    new StackPanel()
+                    BorderBrush = ToColor("#4C4959"),
+                    BorderThickness = new Thickness(2),
+                    Margin = new Thickness(0, FirstAdd ? 0 : 9, 4, 5),
+                    CornerRadius = new CornerRadius(10, 1, 1, 1),
+                    Child = new StackPanel()
                     {
+                        Orientation = Orientation.Horizontal,
                         Children =
+                    {
+                        new StackPanel()
                         {
-                            new StackPanel()
+                            Children =
                             {
-                                Orientation = Orientation.Horizontal,
-                                Children =
+                                new StackPanel()
                                 {
-                                    new Border()
+                                    Orientation = Orientation.Horizontal,
+                                    Children =
                                     {
-                                        HorizontalAlignment = HorizontalAlignment.Left,
-
-                                        Background = ToColor("#4C4959"),
-                                        CornerRadius = new CornerRadius(10, 0, 5, 0),
-                                        Child = new TextBlock()
+                                        new Border()
                                         {
-                                            Foreground = ToColor("#C4C4C4"),
-                                            FontWeight = FontWeights.Bold,
-                                            FontSize = 22,
-                                            Margin = new Thickness(8, 0, 5, 0),
-                                            FontFamily = Specified_FontObject,
-                                            Text = KSTFont.Convert(CustomFontPartName, CustomFontParameter)
+                                            HorizontalAlignment = HorizontalAlignment.Left,
+
+                                            Background = ToColor("#4C4959"),
+                                            CornerRadius = new CornerRadius(10, 0, 5, 0),
+                                            Child = new TextBlock()
+                                            {
+                                                Foreground = ToColor("#C4C4C4"),
+                                                FontWeight = FontWeights.Bold,
+                                                FontSize = 22,
+                                                Margin = new Thickness(6, 0, 4, 0),
+                                                FontFamily = Specified_FontObject,
+                                                Text = KSTFont.Convert(CustomFontPartName, CustomFontParameter)
+                                            }
                                         }
                                     }
-                                }
-                            },
-                            new StackPanel()
-                            {
-                                Orientation = Orientation.Horizontal,
-                                Margin = new Thickness(5, 0, 0, !UseUnicode ? 4 : 0),
-                                Children =
+                                },
+                                new StackPanel()
                                 {
-                                    new TextBlock()
+                                    Orientation = Orientation.Horizontal,
+                                    Children =
                                     {
-                                        FontFamily = MainWindow.GostTypeBU,
-                                        FontSize = 24,
-                                        Foreground = ToColor("#BDBDBD"),
-                                        Width = 137,
-                                        Text = "Custom Font:"
-                                    },
-                                    new Border()
-                                    {
-                                        Margin = new Thickness(8, 0, 0, 0),
-                                        CornerRadius = new CornerRadius(5),
-                                        Background = ToColor("#2C2B31"),
-                                        Child = CustomFontPreview
-                                    }
-                                }
-                            },
-
-                            UseUnicode ?
-                            new StackPanel()
-                            {
-                                Orientation = Orientation.Horizontal,
-                                Margin = new Thickness(5, 5, 0, 5),
-                                Children =
-                                {
-                                    new TextBlock()
-                                    {
-                                        FontFamily = MainWindow.GostTypeBU,
-                                        FontSize = 24,
-                                        Foreground = ToColor("#BDBDBD"),
-                                        Width = 137,
-                                        Text = "Unicode:"
-                                    },
-                                    new Border()
-                                    {
-                                        Margin = new Thickness(8, 0, 0, 0),
-                                        CornerRadius = new CornerRadius(5),
-                                        Background = ToColor("#2C2B31"),
-                                        Child = new TextBlock
+                                        new TextBlock()
                                         {
-                                            Margin = new Thickness(4, 3, 0, 4),
-                                            Width = 1149,
-                                            TextWrapping = TextWrapping.Wrap,
-                                            FontSize = 20,
-                                            FontFamily = Specified_FontObject,
-                                            Text = ToUnicodeSequence(KFontConverted, TextString),
+                                            FontFamily = MainWindow.GostTypeBU,
+                                            FontSize = 24,
+                                            Foreground = ToColor("#BDBDBD"),
+                                            Width = 137,
+                                            Margin = new Thickness(4, 0, 0, 0),
+                                            Text = CustomLanguage.Dynamic["Custom font info text"]
+                                        },
+                                        new Border()
+                                        {
+                                            CornerRadius = new CornerRadius(5),
+                                            Background = ToColor("#2C2B31"),
+                                            Margin = new Thickness(0, 8, 5, 5),
+                                            Child = CustomFontPreview
                                         }
                                     }
-                                }
-                            } : new StackPanel() { Visibility = Visibility.Collapsed }
+                                },
+
+                                UseUnicode ?
+                                new StackPanel()
+                                {
+                                    Margin = new Thickness(0, 4, 5, 5),
+                                    Orientation = Orientation.Horizontal,
+                                    Children =
+                                    {
+                                        new TextBlock()
+                                        {
+                                            FontFamily = MainWindow.GostTypeBU,
+                                            FontSize = 24,
+                                            Foreground = ToColor("#BDBDBD"),
+                                            Width = 137,
+                                            Margin = new Thickness(4, 0, 0, 0),
+                                            Text = CustomLanguage.Dynamic["Custom font info Unicode"]
+                                        },
+                                        new Border()
+                                        {
+                                            CornerRadius = new CornerRadius(5),
+                                            Background = ToColor("#2C2B31"),
+                                            Child = new TextBlock
+                                            {
+                                                Width = BaseWidth,
+                                                TextWrapping = TextWrapping.Wrap,
+                                                FontSize = 20,
+                                                Margin = new Thickness(4, 4, -4, 4),
+                                                FontFamily = Specified_FontObject,
+                                                Text = ToUnicodeSequence(KFontConverted, TextString),
+                                            }
+                                        }
+                                    }
+                                } : new StackPanel() { Visibility = Visibility.Collapsed }
+                            }
                         }
                     }
-                }
-                }
-            });
+                    }
+                });
+            }
+            catch { }
             //(((((MatchesList.Children[int.Parse(MatchNumber) - 1] as Border).Child
             //    as StackPanel).Children[0]
             //        as StackPanel).Children[1]

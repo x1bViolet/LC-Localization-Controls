@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
 using System.Text;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Drawing.Text;
 
-namespace TexelExtension
+namespace TexExtension
 {
     internal static class ExternalBase
     {

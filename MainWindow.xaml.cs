@@ -11,13 +11,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TexelExtension;
+using TexExtension;
 using Configuration;
 using GeneralResources;
 using RichText;
 using LC_Localization_Controls.Converters;
 
-using static TexelExtension.ExternalBase;
+using static TexExtension.ExternalBase;
 
 namespace LC_Localization_Controls;
 
@@ -211,37 +211,25 @@ public partial class MainWindow : Window
         StartupInits();
     }
 
-    internal async void ts()
-    {
-        //double i = 0;
-        //while (true)
-        //{
-        //    XD9044123.RenderTransform = new RotateTransform()
-        //    {
-        //        Angle = i,
-        //    };
-
-        //    i += 0.3;
-        //    await Task.Delay(1);
-
-        //}
-    }
-
-    private async void StartupInits()
+    private void StartupInits()
     {
         try { Console.OutputEncoding = Encoding.UTF8; }
         catch { }
-        ts();
+
+        GetDpiAndScale();
+
         DecoTransformLoop();
         InitializeSharedDictionaries();
+
         AppConfiguration.InitT();
         KSTFont.InitT();
         LocalizationFullExport.InitT();
-        //InitSurfaceScroll(DeltaKeywordsMatchesPreview);
-        GetDpiAndScale();
-        SelectionMenu_Item1Highlight.Background = ToColor("#C9BBB3");
 
         AppConfiguration.LoadConfiguration();
+
+        //InitSurfaceScroll(DeltaKeywordsMatchesPreview);
+
+        SelectionMenu_Item4Highlight.Background = ToColor("#C9BBB3");
 
         foreach(var LangItem in CustomLanguage.Static)
         {
@@ -257,7 +245,7 @@ public partial class MainWindow : Window
 
         Internal.Initialize_KeywordsGlobalDictionary();
         UpdateDeltaKeywordsMatchList();
-        X4908.Text = AppConfiguration.ToggleConfiguration["Apply font with shorthands"] ? ""  : "";
+        //X4908.Text = AppConfiguration.ToggleConfiguration["Apply font with shorthands"] ? ""  : "";
         X49908.Text = AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"] ? "" : "";
         Parameters_SelectedDeltaKeywordsPattern_TestString.Text = AppConfiguration.StringConfiguration["Shorthand test string"];
 
@@ -265,8 +253,8 @@ public partial class MainWindow : Window
 
         T["Shorthand pattern test string TB"].Text = AppConfiguration.StringConfiguration["Shorthand test string"];
 
-        T["Shorthand Converter Selected Original directory"].Text = AppConfiguration.StringConfiguration["Shorthand Converter Selected Original directory"];
-        T["Shorthand Converter Selected Output directory"].Text = AppConfiguration.StringConfiguration["Shorthand Converter Selected Output directory"];
+        //T["Shorthand Converter Selected Original directory"].Text = AppConfiguration.StringConfiguration["Shorthand Converter Selected Original directory"];
+        //T["Shorthand Converter Selected Output directory"].Text = AppConfiguration.StringConfiguration["Shorthand Converter Selected Output directory"];
 
         T["Full Converter Selected Original directory"].Text = AppConfiguration.StringConfiguration["Full Converter Selected Original directory"];
         T["Full Converter Selected Output directory"].Text = AppConfiguration.StringConfiguration["Full Converter Selected Output directory"];
@@ -293,11 +281,6 @@ public partial class MainWindow : Window
             false => "",
             true => "",
         };
-
-        //KFont.CopyConvert("По цепи", KFont.KFonts["excelsior"]);
-
-        //ts();
-        //await DirectoryFontConverter.DirectExport(@"C:\0x7FE9A.Rijnadel.44980Џ\General\@Localization\Localize Data @ External source", @"C:\Users\javas\OneDrive\Документы\XK\Новая папка", false, true);
 
 
         //string s = File.ReadAllText("MainWindow.xaml");
@@ -347,18 +330,17 @@ public partial class MainWindow : Window
     private void TitleButton_Close_Click(object sender, RoutedEventArgs e) => Close();
     private void TitleButton_Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
-    internal double scaleX = 100;
-    internal double scaleY = 100;
+    internal protected static double UIScaleX = 100;
+    internal protected static double UIScaleY = 100;
     private void GetDpiAndScale()
     {
         var dpi = VisualTreeHelper.GetDpi(this);
 
-        // Вычисляем масштаб в процентах
-        scaleX = (dpi.DpiScaleX * 100);
-        scaleY = (dpi.DpiScaleY * 100);
+        UIScaleX = dpi.DpiScaleX * 100;
+        UIScaleY = dpi.DpiScaleY * 100;
 
 
-        if (scaleX == 125 & scaleY == 125)
+        if (UIScaleX == 125 & UIScaleY == 125)
         {
             ConvertGridScale1.ScaleX = 1;
             ConvertGridScale1.ScaleY = 1;
@@ -367,10 +349,13 @@ public partial class MainWindow : Window
             ConvertGridScale2.ScaleY = 1;
             DeltaKeywordsMatchesPreview.Height = 310;
             Родя.Width = 400;
-            
+            Рёшу.Width = 550;
+
+            LastExport_date.FontSize = 20;
+
             FonsPreviewSCW.Height = 327;
         }
-        else if (scaleX == 100 & scaleY == 100)
+        else if (UIScaleX == 100 & UIScaleY == 100)
         {
             ConvertGridScale1.ScaleX = 1.265;
             ConvertGridScale1.ScaleY = 1.265;
@@ -378,10 +363,11 @@ public partial class MainWindow : Window
             ConvertGridScale2.ScaleX = 1.265;
             ConvertGridScale2.ScaleY = 1.265;
 
-
+            LastExport_date.FontSize = 25;
 
             DeltaKeywordsMatchesPreview.Height = 470;
             Родя.Width = 500;
+            Рёшу.Width = 650;
             FonsPreviewSCW.Height = 516;
         }
     }
@@ -418,8 +404,10 @@ public partial class MainWindow : Window
         (sender as ScrollViewer).ReleaseMouseCapture();
     }
 
-    private void SelectionMenu_Item1Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor(!SelectedMenu.Equals(1) ? "#5F5C5A" : "#C9BBB3");
-    private void SelectionMenu_Item1Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor(!SelectedMenu.Equals(1) ? "#312B28" : "#C9BBB3");
+    private void SelectionMenu_Item1Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor("#312B28");
+    //private void SelectionMenu_Item1Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor(!SelectedMenu.Equals(1) ? "#5F5C5A" : "#C9BBB3");
+    private void SelectionMenu_Item1Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor("#312B28");
+    //private void SelectionMenu_Item1Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor(!SelectedMenu.Equals(1) ? "#312B28" : "#C9BBB3");
     
     private void SelectionMenu_Item2Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item2Highlight.Background = ToColor("#312B28");
     //private void SelectionMenu_Item2Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item2Highlight.Background = ToColor(!SelectedMenu.Equals(2) ? "#5F5C5A" : "#C9BBB3");
@@ -452,27 +440,25 @@ public partial class MainWindow : Window
 
     private async void DecoTransformLoop()
     {
-        //#404040
-        //#BDBDBD
         while (true)
         {
-            if (!IsProcessingDirectory)
+            while (!IsProcessingDirectory)
             {
-                X1043.Foreground = ToColor("#404040");
+                X4043.Foreground = ToColor("#404040");
                 await Task.Delay(160);
-                X1044.Foreground = ToColor("#404040");
+                X4044.Foreground = ToColor("#404040");
 
                 await Task.Delay(2000);
 
-                X1043.Foreground = ToColor("#BDBDBD");
+                X4043.Foreground = ToColor("#BDBDBD");
                 await Task.Delay(160);
-                X1044.Foreground = ToColor("#BDBDBD");
+                X4044.Foreground = ToColor("#BDBDBD");
             }
-            else
+            while (IsProcessingDirectory)
             {
-                X1043.Foreground = ToColor("#BDBDBD");
-                X1044.Foreground = ToColor("#BDBDBD");
-                await Task.Delay(1000);
+                X4043.Foreground = ToColor("#BDBDBD");
+                X4044.Foreground = ToColor("#BDBDBD");
+                await Task.Delay(1);
             }
         }
     }
@@ -921,7 +907,7 @@ public partial class MainWindow : Window
                 }
                 else
                 {
-                    Parameters_SelectedDeltaKeywordsPattern_TestString_Background.Text = "Строка для проверки";
+                    Parameters_SelectedDeltaKeywordsPattern_TestString_Background.Text = CustomLanguage.Dynamic["Textfield empty background text"];
                 }
 
                 AppConfiguration.SaveConfiguration("Shorthand test string", Parameters_SelectedDeltaKeywordsPattern_TestString.Text);
@@ -935,7 +921,7 @@ public partial class MainWindow : Window
         }
         catch { }
     }
-    private int SelectedMenu = 1;
+    private int SelectedMenu = 4;
     private void General_SwitchMenu(object sender, MouseButtonEventArgs e)
     {
         List<Grid> MenuList = new()
@@ -975,7 +961,7 @@ public partial class MainWindow : Window
         string s = (sender as Grid).Name;
         int MenuNumber =  int.Parse($"{s[18]}");
 
-        if (MenuNumber == 1 | MenuNumber == 4 | MenuNumber == 5 | MenuNumber == 6)
+        if (MenuNumber == 4 | MenuNumber == 5 | MenuNumber == 6)
         {
             SelectedMenu = MenuNumber;
 
@@ -1440,11 +1426,10 @@ public partial class MainWindow : Window
     {
         TestFontString_bg.Text = TestFontString.Text switch
         {
-            "" => "Строка для проверки",
+            "" => CustomLanguage.Dynamic["Textfield empty background text"],
             _  => ""
         };
-
-        KSTFont.GenerateCustomFontsPreview(TestFontString.Text, AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"]);
+        KSTFont.GenerateCustomFontsPreview(TestFontString.Text);
         AppConfiguration.SaveConfiguration("Selected font test string", TestFontString.Text);
     }
 
@@ -1452,18 +1437,19 @@ public partial class MainWindow : Window
     {
         AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"] = !AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"];
         AppConfiguration.SaveConfiguration("Enable Unicode on font preview", AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"] ? "Yes" : "No");
-
-        KSTFont.GenerateCustomFontsPreview(TestFontString.Text, AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"]);
-
         X49908.Text = AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"] switch
         {
             false => "",
             true  => "",
         };
+
+        KSTFont.GenerateCustomFontsPreview(TestFontString.Text);
+
     }
 
     private async void ExportLocalization(object sender, MouseButtonEventArgs e)
     {
+        IsProcessingDirectory = true;
         await LocalizationFullExport.DirectExport(
             AppConfiguration.StringConfiguration["Full Converter Selected Original directory"],
             AppConfiguration.StringConfiguration["Full Converter Selected Output directory"],
@@ -1472,6 +1458,7 @@ public partial class MainWindow : Window
             AppConfiguration.ToggleConfiguration["Don't Ignore StoryData on Full Export"],
             AppConfiguration.ToggleConfiguration["Insert missing ID on Full Export"]
         );
+        IsProcessingDirectory = false;
     }
 
     private void FullExportToggle_ApplyFont(object sender, MouseButtonEventArgs e)

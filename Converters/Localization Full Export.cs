@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Windows;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using static TexelExtension.ExternalBase;
-using System.Windows.Threading;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using System.Collections.Generic;
+
 using Configuration;
 using GeneralResources;
-using TexelExtension;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
+using static TexExtension.ExternalBase;
 
 namespace LC_Localization_Controls.Converters
 {
@@ -23,6 +22,7 @@ namespace LC_Localization_Controls.Converters
         internal protected static void InitT() => T = MainWindow.T;
 
         internal protected static Dictionary<string, List<FontRule>> InternalFont = new();
+        internal protected static int InternalFont_RulesCount = 0;
         internal protected record FontRule
         {
             public FontRule(string FontName)
@@ -36,17 +36,12 @@ namespace LC_Localization_Controls.Converters
             public string FontName { get; set; }
             public string JsonPath { get; set; }
         }
-        internal protected record ActionRules
-        {
-            public bool AppendMissingID { get; set; }
-            public bool IgnoreStoryData { get; set; }
-            public bool OnlyKeywords    { get; set; }
-        }
 
         internal protected static void LoadConfigValues(string From)
         {
             string[] TomlDaxt = File.ReadAllLines(From);
             InternalFont.Clear();
+            InternalFont_RulesCount = 0;
             for (int LineIndex = 0; LineIndex <= (TomlDaxt.Count() - 1); LineIndex++)
             {
                 string Line = TomlDaxt[LineIndex];
@@ -57,11 +52,14 @@ namespace LC_Localization_Controls.Converters
                     string JsonPath =             TomlDaxt[LineIndex + 2][8..^1].Replace(".[*]", "[*]");
                     
                     if (!InternalFont.ContainsKey(FontFilenamePattern)) InternalFont[FontFilenamePattern] = new();
-                    
-                    InternalFont[FontFilenamePattern].Add( new FontRule(FontName){JsonPath = JsonPath} );
+                    InternalFont[FontFilenamePattern].Add( new FontRule(FontName){JsonPath=JsonPath} );
+
+                    InternalFont_RulesCount++;
                 }
             }
-            T["Selected font info Rules count"].Text = CustomLanguage.Dynamic["Selected font info Rules count"].ExTern(InternalFont.Keys.Count);
+
+            T["Selected font info Rules count"].Text = CustomLanguage.Dynamic["Selected font info Rules count"]
+                .ExTern($"{InternalFont_RulesCount}");
         }
 
         internal protected static string JsonPathConvert(string TargetString, string JsonPath, Dictionary<string, string> ReplaceSource)
@@ -199,6 +197,7 @@ namespace LC_Localization_Controls.Converters
                     InfoLog.Children.Clear();
                 });
 
+                List<string> AppendedFiles = new List<string>();
                 List<string> ExportedFiles = new List<string>();
 
                 int Indexer = 0;
@@ -216,83 +215,88 @@ namespace LC_Localization_Controls.Converters
                         List<FileInfo> ProcessingTargets = new DirectoryInfo(LocalizationDirectory).GetFiles(AcquirePattern)
                             .Where(File => !DoNotIgnoreStoryData ? !File.FullName.Contains(@"StoryData\") : true).ToList();
 
-                        List<string> AppendedFiles = new List<string>();
                         string LocalizationMaskDirectory = @$"⇲ Asset Directory\Missing ID sources\{AppConfiguration.StringConfiguration["Missing ID source"]}";
                         if (Directory.Exists(LocalizationMaskDirectory) & InsertMissingID)
                         {
                             List<FileInfo> ProcessingTargets_Missing = new DirectoryInfo(LocalizationMaskDirectory).GetFiles(AcquirePattern)
                                 .Where(File => !DoNotIgnoreStoryData ? !File.FullName.Contains(@"StoryData\") : true)
                                     .Where(file => !ProcessingTargets.ContainsFileInfoWithName(file.Name)).ToList();
-                            
-                            AppendedFiles = ProcessingTargets_Missing.Select(file => file.Name);
-                            
+                            foreach(var AppendedFile in ProcessingTargets_Missing)
+                            {
+                                //rin($"Вставлен пропущенный файл {AppendedFile.Name}");
+                                AppendedFiles.Add(AppendedFile.Name);
+                            }
                             ProcessingTargets = ProcessingTargets.Concat(ProcessingTargets_Missing).ToList();
                         }
 
                         int FileCounter = 0;
-                        int FilesTotal = ProcessingTargets.Count() * TexlsFontRules.Count();
+                        int FilesTotal = ProcessingTargets.Count() * TexlsFontRules.Count;
 
                         foreach (FileInfo LocalizeFile in ProcessingTargets)
                         {
-                            string LocalizeValue = File.ReadAllText(LocalizeFile.FullName);
-
-                            if (LocalizeFile.Name.StartsWithOneOf(KeywordFilesMatch) & ConvertShorthands)
+                            try
                             {
-                                LocalizeValue = ShorthandConverter.Redirect(LocalizeValue);
-                            }
+                                string LocalizeValue = File.ReadAllText(LocalizeFile.FullName);
 
-                            if (InsertMissingID & !AppendedFiles.Contains(LocalizeFile.Name))
-                            {
-                                string Filename_Strip = LocalizeFile.FullName[LocalizationDirectory.Length..];
-                                string MissingIDSourceFile = $"{LocalizationMaskDirectory}{Filename_Strip}";
-
-                                if (File.Exists(MissingIDSourceFile))
+                                if (LocalizeFile.Name.StartsWithOneOf(KeywordFilesMatch) & ConvertShorthands)
                                 {
-                                    //string old = LocalizeValue;
-                                    LocalizeValue = AppendMissing(LocalizeValue, File.ReadAllText(MissingIDSourceFile));
-                                    //if (!LocalizeValue.Equals(old)) rin($"Вставлены пропущенные ID в {LocalizeFile.Name}");
+                                    LocalizeValue = ShorthandConverter.Redirect(LocalizeValue);
                                 }
-                            }
 
-                            foreach (var FontConvertData in TexlsFontRules)
-                            {
-                                if (ApplyFont) LocalizeValue = JsonPathConvert(LocalizeValue, FontConvertData.JsonPath, FontConvertData.FontMask);
-                                FileCounter++;
-                            }
-
-                            InfoLog.Dispatcher.Invoke(() =>
-                            {
-                                ((InfoLog.Children[Indexer] as StackPanel).Children[3] as TextBlock).Text = CustomLanguage.Dynamic["Current rule panel - Processing rule file"].Exform($"{FileCounter}", $"{FilesTotal}");
-                                ((InfoLog.Children[Indexer] as StackPanel).Children[4] as TextBlock).Text = " " + LocalizeFile.Name;
-                            });
-
-                            string DestFullname = DestinationDirectory + LocalizeFile.FullName[LocalizationDirectory.Length..];
-                            if (DestFullname.Contains(@$"{LocalizationMaskDirectory}\"))
-                            {
-                                DestFullname = DestFullname.Replace(@$"{LocalizationMaskDirectory}\", "");
-                            }
-
-                            List<string> TC1 = DestFullname.Split('\\').ToList();
-                            string ExportDirectory = String.Join('\\', TC1.RemoveAtIndex(TC1.Count - 1));
-
-                            if (File.Exists(DestFullname))
-                            {
-                                if (!File.ReadAllText(DestFullname).Equals(LocalizeValue))
+                                if (InsertMissingID & !AppendedFiles.Contains(LocalizeFile.Name))
                                 {
+                                    string Filename_Strip = LocalizeFile.FullName[LocalizationDirectory.Length..];
+                                    string MissingIDSourceFile = $"{LocalizationMaskDirectory}{Filename_Strip}";
+
+                                    if (File.Exists(MissingIDSourceFile))
+                                    {
+                                        //string old = LocalizeValue;
+                                        LocalizeValue = AppendMissing(LocalizeValue, File.ReadAllText(MissingIDSourceFile));
+                                        //if (!LocalizeValue.Equals(old)) rin($"Вставлены пропущенные ID в {LocalizeFile.Name}");
+                                    }
+                                }
+
+                                foreach (var FontConvertData in TexlsFontRules)
+                                {
+                                    if (ApplyFont) LocalizeValue = JsonPathConvert(LocalizeValue, FontConvertData.JsonPath, FontConvertData.FontMask);
+                                    FileCounter++;
+                                }
+
+                                InfoLog.Dispatcher.Invoke(() =>
+                                {
+                                    ((InfoLog.Children[Indexer] as StackPanel).Children[3] as TextBlock).Text = CustomLanguage.Dynamic["Current rule panel - Processing rule file"].Exform($"{FileCounter}", $"{FilesTotal}");
+                                    ((InfoLog.Children[Indexer] as StackPanel).Children[4] as TextBlock).Text = " " + LocalizeFile.Name;
+                                });
+
+                                string DestFullname = DestinationDirectory + LocalizeFile.FullName[LocalizationDirectory.Length..];
+                                if (DestFullname.Contains(@$"{LocalizationMaskDirectory}\"))
+                                {
+                                    DestFullname = DestFullname.Replace(@$"{LocalizationMaskDirectory}\", "");
+                                }
+
+                                List<string> TC1 = DestFullname.Split('\\').ToList();
+                                string ExportDirectory = String.Join('\\', TC1.RemoveAtIndex(TC1.Count - 1));
+
+                                if (File.Exists(DestFullname))
+                                {
+                                    if (!File.ReadAllText(DestFullname).Equals(LocalizeValue))
+                                    {
+                                        File.WriteAllText(DestFullname, LocalizeValue);
+                                    }
+                                }
+                                else
+                                {
+                                    if (!Directory.Exists(ExportDirectory))
+                                    {
+                                        Directory.CreateDirectory(ExportDirectory);
+                                    }
+
                                     File.WriteAllText(DestFullname, LocalizeValue);
                                 }
-                            }
-                            else
-                            {
-                                if (!Directory.Exists(ExportDirectory))
-                                {
-                                    Directory.CreateDirectory(ExportDirectory);
-                                }
 
-                                File.WriteAllText(DestFullname, LocalizeValue);
+                                ExportedFiles.Add(LocalizeFile.Name);
                             }
-
-                            ExportedFiles.Add(LocalizeFile.Name);
+                            catch { }
                         }
                         Indexer++;
                     }
@@ -317,56 +321,60 @@ namespace LC_Localization_Controls.Converters
 
                 foreach (FileInfo OtherLocalizeFile in ProcessingTargets_MissingFiles
                 ) {
-                    InfoLog.Dispatcher.Invoke(() =>
+                    try
                     {
-                        ((InfoLog.Children[Indexer] as StackPanel).Children[3] as TextBlock).Text = CustomLanguage.Dynamic["Current rule panel - Processing rule file"].Exform($"{FileCounter_MF}", $"{FileCounter_Total_MF}");
-                        ((InfoLog.Children[Indexer] as StackPanel).Children[4] as TextBlock).Text = " " + OtherLocalizeFile.Name;
-                    });
-                    FileCounter_MF++;
-
-                    string WriteValue = File.ReadAllText(OtherLocalizeFile.FullName);
-
-                    if (InsertMissingID & !AppendedFiles.Contains(OtherLocalizeFile.Name))
-                    {
-                        string Filename_Strip = OtherLocalizeFile.FullName[LocalizationDirectory.Length..];
-                        string MissingIDSourceFile = @$"⇲ Asset Directory\Missing ID sources\{AppConfiguration.StringConfiguration["Missing ID source"]}{Filename_Strip}";
-
-                        if (File.Exists(MissingIDSourceFile))
+                        InfoLog.Dispatcher.Invoke(() =>
                         {
-                            //string old = WriteValue;
-                            WriteValue = AppendMissing(WriteValue, File.ReadAllText(MissingIDSourceFile));
-                            //if (!WriteValue.Equals(old)) rin($"Вставлены пропущенные ID в {OtherLocalizeFile.Name}");
+                            ((InfoLog.Children[Indexer] as StackPanel).Children[3] as TextBlock).Text = CustomLanguage.Dynamic["Current rule panel - Processing rule file"].Exform($"{FileCounter_MF}", $"{FileCounter_Total_MF}");
+                            ((InfoLog.Children[Indexer] as StackPanel).Children[4] as TextBlock).Text = " " + OtherLocalizeFile.Name;
+                        });
+                        FileCounter_MF++;
+
+                        string WriteValue = File.ReadAllText(OtherLocalizeFile.FullName);
+
+                        if (InsertMissingID & !AppendedFiles.Contains(OtherLocalizeFile.Name))
+                        {
+                            string Filename_Strip = OtherLocalizeFile.FullName[LocalizationDirectory.Length..];
+                            string MissingIDSourceFile = @$"⇲ Asset Directory\Missing ID sources\{AppConfiguration.StringConfiguration["Missing ID source"]}{Filename_Strip}";
+
+                            if (File.Exists(MissingIDSourceFile))
+                            {
+                                //string old = WriteValue;
+                                WriteValue = AppendMissing(WriteValue, File.ReadAllText(MissingIDSourceFile));
+                                //if (!WriteValue.Equals(old)) rin($"Вставлены пропущенные ID в {OtherLocalizeFile.Name}");
+                            }
                         }
-                    }
-                    if (ConvertShorthands & OtherLocalizeFile.Name.StartsWithOneOf(KeywordFilesMatch))
-                    {
-                        WriteValue = ShorthandConverter.Redirect(WriteValue);
-                    }
-
-
-                    string DestFullname = DestinationDirectory + OtherLocalizeFile.FullName[LocalizationDirectory.Length..];
-
-                    List<string> TC1 = DestFullname.Split('\\').ToList();
-                    string ExportDirectory = String.Join('\\', TC1.RemoveAtIndex(TC1.Count - 1));
-
-                    if (File.Exists(DestFullname))
-                    {
-                        if (!File.ReadAllText(DestFullname).Equals(WriteValue))
+                        if (ConvertShorthands & OtherLocalizeFile.Name.StartsWithOneOf(KeywordFilesMatch))
                         {
+                            WriteValue = ShorthandConverter.Redirect(WriteValue);
+                        }
+
+
+                        string DestFullname = DestinationDirectory + OtherLocalizeFile.FullName[LocalizationDirectory.Length..];
+
+                        List<string> TC1 = DestFullname.Split('\\').ToList();
+                        string ExportDirectory = String.Join('\\', TC1.RemoveAtIndex(TC1.Count - 1));
+
+                        if (File.Exists(DestFullname))
+                        {
+                            if (!File.ReadAllText(DestFullname).Equals(WriteValue))
+                            {
+                                File.WriteAllText(DestFullname, WriteValue);
+                                ExportedFiles.Add(OtherLocalizeFile.Name);
+                            }
+                        }
+                        else
+                        {
+                            if (!Directory.Exists(ExportDirectory))
+                            {
+                                Directory.CreateDirectory(ExportDirectory);
+                            }
+
                             File.WriteAllText(DestFullname, WriteValue);
                             ExportedFiles.Add(OtherLocalizeFile.Name);
                         }
                     }
-                    else
-                    {
-                        if (!Directory.Exists(ExportDirectory))
-                        {
-                            Directory.CreateDirectory(ExportDirectory);
-                        }
-
-                        File.WriteAllText(DestFullname, WriteValue);
-                        ExportedFiles.Add(OtherLocalizeFile.Name);
-                    }
+                    catch { }
                 }
             });
 

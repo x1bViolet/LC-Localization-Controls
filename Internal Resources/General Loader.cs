@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using Configuration;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.Generic;
 
+using Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq; 
 using SixLabors.ImageSharp;
-using static TexelExtension.ExternalBase;
-using Newtonsoft.Json.Linq;
-using System.Reflection;
+using System.Windows.Media.Imaging;
+using static TexExtension.ExternalBase;
 
 namespace GeneralResources
 {
-    public static class Internal
+    internal abstract class Internal
     {
-        public class KeywordComplexInfo
+        internal protected record KeywordComplexInfo
         {
             public string ID    { get; set; }
             public string Name  { get; set; }
@@ -30,15 +29,15 @@ namespace GeneralResources
             public List<string> Forms { get; set; }
         }
 
-        private class KeywordImageInfo
+        internal protected record KeywordImageInfo
         {
             public string KeywordID { get; set; }
             public bool IsWebp { get; set; }
         }
 
-        public static Dictionary<string, KeywordComplexInfo> KeywordsGlobalDictionary = new();
+        internal protected static Dictionary<string, KeywordComplexInfo> KeywordsGlobalDictionary = new();
 
-        public static class FontReplace
+        internal protected static class FontReplace
         {
             public class GlyphReplaceData
             {
@@ -168,7 +167,7 @@ namespace GeneralResources
             }
         }
 
-        public static void Initialize_KeywordsGlobalDictionary()
+        internal protected static void Initialize_KeywordsGlobalDictionary()
         {
             Dictionary<string, string> KeywordsColorsInfo = GenerateColorInfo(@"⇲ Asset Directory\Keywords\Keywords@DefaultColordata.T[-]");
             Dictionary<string, BitmapImage> KeywordsImageInfo = GetKeywordImages();
@@ -244,7 +243,7 @@ namespace GeneralResources
 
 
 
-        private class KeywordsJson
+        internal protected record KeywordsJson
         {
             public List<Keyword> dataList { get; set; }
             public class Keyword
@@ -255,7 +254,7 @@ namespace GeneralResources
             }
         }
 
-        public static Dictionary<string, BitmapImage> GetKeywordImages()
+        internal protected static Dictionary<string, BitmapImage> GetKeywordImages()
         {
             Dictionary<string, BitmapImage> SpriteFiles = new();
 
@@ -268,7 +267,7 @@ namespace GeneralResources
             return SpriteFiles;
         }
 
-        private static BitmapImage GenerateBitmap(string ImageFilepath)
+        internal protected static BitmapImage GenerateBitmap(string ImageFilepath)
         {
             bool IsWebp = ImageFilepath.EndsWith(".webp");
             byte[] ImageData = File.ReadAllBytes(ImageFilepath);
@@ -284,7 +283,7 @@ namespace GeneralResources
             }
         }
 
-        private static byte[] ConvertWebPToPng(byte[] WebpData)
+        internal protected static byte[] ConvertWebPToPng(byte[] WebpData)
         {
             using (var InputStream = new MemoryStream(WebpData))
             using (var image = Image.Load(InputStream))
@@ -297,7 +296,7 @@ namespace GeneralResources
             }
         }
 
-        private static Dictionary<string, string> GenerateColorInfo(string ColorDataFilepath)
+        internal protected static Dictionary<string, string> GenerateColorInfo(string ColorDataFilepath)
         {
             Dictionary<string, string> KeywordColorsInfo = new();
             foreach (string Line in File.ReadAllLines(ColorDataFilepath))
