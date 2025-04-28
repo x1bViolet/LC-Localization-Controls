@@ -232,11 +232,7 @@ namespace LC_Localization_Controls.Converters
                         }
 
                         int FileCounter = 0;
-                        int FilesTotal = ProcessingTargets.Count();
-                        if (TexlsFontRules.Count > 1)
-                        {
-                            FilesTotal = FilesTotal * TexlsFontRules.Count;
-                        }
+                        int FilesTotal = ProcessingTargets.Count() * TexlsFontRules.Count();
 
                         foreach (FileInfo LocalizeFile in ProcessingTargets)
                         {
