@@ -11,7 +11,7 @@ using System.Windows.Media;
 
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
-using static Additional_Codebase.Utils;
+using static TexelExtension.ExternalBase;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 
@@ -19,8 +19,6 @@ namespace GeneralResources
 {
     public static class Internal
     {
-        
-
         public class KeywordComplexInfo
         {
             public string ID    { get; set; }
@@ -58,8 +56,10 @@ namespace GeneralResources
                     "Passive",
                     "EGOgift_",
                     "BattleKeywords",
-                    "Bufs"
+                    "Bufs",
+                    "Egos"
                 };
+                public static List<string> Personalities = new() { "Personalities" };
             }
 
             public static Dictionary<char, char> Mikodacs = new();
@@ -89,20 +89,22 @@ namespace GeneralResources
 
             public static void Typematch_Convert(ref string JsonText, string Filename)
             {
+                rin(Filename);
                 if (Filename.StartsWithOneOf(TypeMatches.NameOnly))
                 {
                     JsonText = ConvertDatalistNames(JsonText);
-                    //rin("   > Applied Mikodacs with NamesOnly profile");
                 }
                 else if (Filename.StartsWithOneOf(TypeMatches.Skills))
                 {
                     JsonText = ConvertSkillNames(JsonText);
-                    //rin("   > Applied Mikodacs with Skills profile");
                 }
                 else if (Filename.StartsWithOneOf(TypeMatches.PanicNames))
                 {
                     JsonText = ConvertPanicNames(JsonText);
-                    //rin("   > Applied Mikodacs with PanicNames profile");
+                }
+                else if (Filename.StartsWithOneOf(TypeMatches.Personalities))
+                {
+                    JsonText = ConvertPersonalities(JsonText);
                 }
             }
 
@@ -170,7 +172,7 @@ namespace GeneralResources
         {
             Dictionary<string, string> KeywordsColorsInfo = GenerateColorInfo(@"⇲ Asset Directory\Keywords\Keywords@DefaultColordata.T[-]");
             Dictionary<string, BitmapImage> KeywordsImageInfo = GetKeywordImages();
-            FontReplace.ReadGRD();
+            try { FontReplace.ReadGRD(); } catch { }
 
             KeywordsGlobalDictionary["Unknown"] = new KeywordComplexInfo
             {
@@ -179,7 +181,7 @@ namespace GeneralResources
                  Desc = "",
                 Color = "#9f6a3a",
                 Image = KeywordsImageInfo["Unknown"],
-                ColorBursh = From("#9f6a3a")
+                ColorBursh = ToColor("#9f6a3a")
             };
 
             List<string> KeywordsStringInfo_PriorityLoad = new() {
@@ -213,7 +215,7 @@ namespace GeneralResources
                                          Desc = !Keyword.desc.IsNull() ? Keyword.desc : "",
                                         Color =  PreOrderKeywordColor,
                                         Image =  PreOrderKeywordImage,
-                                        ColorBursh = From(PreOrderKeywordColor),
+                                        ColorBursh = ToColor(PreOrderKeywordColor),
                                     };
                                     TotalCounter++;
                                 }

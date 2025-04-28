@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Additional_Codebase.Utils;
+using static TexelExtension.ExternalBase;
 using System.Text.RegularExpressions;
 using LC_Localization_Controls;
+using LC_Localization_Controls.Converters;
+using GeneralResources;
 
 namespace Configuration
 {
@@ -93,20 +95,16 @@ namespace Configuration
                         ToggleConfiguration  [Name] = Value.Equals("Yes"); break;
                 }
             }
-            T["Shorthand pattern test string TB"].Text = StringConfiguration["Shorthand test string"];
-
-            T["Shorthand Converter Selected Original directory"].Text = StringConfiguration["Shorthand Converter Selected Original directory"];
-            T["Shorthand Converter Selected Output directory"].Text = StringConfiguration["Shorthand Converter Selected Output directory"];
 
             SelectedLanguage = StringConfiguration["Selected Language"];
             KeywordsDirectory = StringConfiguration["Selected Keywords"];
 
+            KSTFont.UpdateSelectedFontAction(StringConfiguration["Selected font"]);
+            KSTFont.UpdateCustomFontsDropdownList(@$"⇲ Asset Directory\Font\{StringConfiguration["Selected font"]}\replacement_map.json");
+
+            CustomLanguage.LoadCustomLanguage();
+
             MainWindow.ConfigurationLoadingEvent = false;
-        }
-
-        public static class CurrentConfigurationParameters
-        {
-
         }
     }
 }

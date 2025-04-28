@@ -9,15 +9,21 @@ using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
-using static Additional_Codebase.Utils;
+using static TexelExtension.ExternalBase;
 using static GeneralResources.Internal;
 
 namespace RichText 
 {
-    class RichTextBoxApplicator
+    static class RichTextBoxApplicator
     {
+        public static class Defaults
+        {
+            public static int ImageInlineOffset = 0;
+            public static bool ImagesLineBreak = false;
+        }
+
         #region Методы добавления текста и спрайтов на предпросмотр
-        private static void RichText_AppendText(InlineTextConstructor TextData, RichTextBox Target)
+        public static void AppendText(InlineTextConstructor TextData, RichTextBox Target)
         {
             try
             {
@@ -64,7 +70,7 @@ namespace RichText
             catch { }
         }
 
-        private static void RichText_AppendImage(InlineImageConstructor ImageData, RichTextBox Target)
+        public static void AppendImage(InlineImageConstructor ImageData, RichTextBox Target, double ImageInlineOffset = 0)
         {
             try
             {
@@ -100,8 +106,8 @@ namespace RichText
 
                 SpritePlusEffectname.Children.Add(new TextBlock(KeywordName));
 
-                SpritePlusEffectname.RenderTransform = new TranslateTransform(0, Target.FontSize/2.1);
-                SpritePlusEffectname.Margin = new Thickness(0, -Target.FontSize/2.1, 0, 0);
+                SpritePlusEffectname.RenderTransform = new TranslateTransform(0, ImageInlineOffset);
+                SpritePlusEffectname.Margin = new Thickness(0, -ImageInlineOffset, 0, 0);
 
                 SpritePlusEffectname.VerticalAlignment = VerticalAlignment.Bottom;
                 lastParagraph.Inlines.Add(new InlineUIContainer(SpritePlusEffectname));
@@ -110,16 +116,21 @@ namespace RichText
         }
         #endregion
 
-        
-        public static RichTextBox ApplyOn(RichTextBox Target, string RichTextString)
+        public static void Set(this RichTextBox Target, string RichTextString, bool ImagesLineBreak = false, double ImageInlineOffset = 0)
         {
-            GenerateAt(RichTextString, Target);
+            if (Target.Document.Blocks.Count > 0) Target.Document.Blocks.Clear();
+            CreateOn(RichTextString, Target, ImagesLineBreak, ImageInlineOffset);
+        }
+
+        public static RichTextBox GetWithApplied(RichTextBox Target, string RichTextString, bool ImagesLineBreak = false, double ImageInlineOffset = 0)
+        {
+            CreateOn(RichTextString, Target, ImagesLineBreak, ImageInlineOffset);
 
             return Target;
         }
 
         
-        public static void GenerateAt(string RichTextString, RichTextBox Target, bool ImagesLineBreak = false)
+        public static void CreateOn(string RichTextString, RichTextBox Target, bool ImagesLineBreak = false, double ImageInlineOffset = 0)
         {
             List<string> TagList = new()
             {
@@ -153,14 +164,14 @@ namespace RichText
 
             bool ICm(string Range_TextItem)
             {
-                return !TagList.Contains(Range_TextItem) & !Range_TextItem.StartsWith("color=#") & !Range_TextItem.StartsWith("sprite name=\"") & !Range_TextItem.StartsWith("font=\"") & !Range_TextItem.StartsWith("pfont=\"") & !Range_TextItem.StartsWith("size=");
+                return !TagList.Contains(Range_TextItem) & !Range_TextItem.StartsWith("color=#") & !Range_TextItem.StartsWith("sprite name=\"") & !Range_TextItem.StartsWith("font=\"") & !Range_TextItem.StartsWith("size=");
             }
 
             #region Базовое форматирование текста
             RichTextString = RichTextString.Replace("color=#None", "color=#ffffff")
-                               .Replace("<style=\"highlight\">", "<style=\"upgradeHighlight\">") // Подсветка улучшения (Без разницы как)
-                               .Replace("</link>", "") // Ссылки вырезать (тултипы не работают (Возможно))
-                               .Replace("[TabExplain]", "");
+                                           .Replace("<style=\"highlight\">", "<style=\"upgradeHighlight\">") // Подсветка улучшения (Без разницы как)
+                                           .Replace("</link>", "") // Ссылки вырезать (тултипы не работают (Возможно))
+                                           .Replace("[TabExplain]", "");
 
             RichTextString = Regex.Replace(RichTextString, @"<link=""\w+"">", ""); // убрать все link (Тултип не рабоатет)
 
@@ -169,7 +180,7 @@ namespace RichText
             RichTextString = Regex.Replace(RichTextString, @"<sprite name=""(\w+)"">", @"⇱sprite name=""$1""⇲");
             RichTextString = Regex.Replace(RichTextString, @"<style=""(\w+)"">", @"⇱style=""$1""⇲");
             RichTextString = Regex.Replace(RichTextString, @"<font=""(.*?)"">", @"⇱font=""$1""⇲");
-            RichTextString = Regex.Replace(RichTextString, @"<pfont=""(.*?)"">", @"⇱font=""$1""⇲");
+            RichTextString = Regex.Replace(RichTextString, @"<pfont=""(.*?)"">", @"⇱pfont=""$1""⇲");
             RichTextString = Regex.Replace(RichTextString, @"<size=(\d+)%>", @"⇱size=$1%⇲");
             foreach (var Tag in TagList) RichTextString = RichTextString.Replace($"<{Tag}>", $"⇱{Tag}⇲");
             #endregion
@@ -238,7 +249,7 @@ namespace RichText
                         string Range_TextItem = __TextSegmented__[RangeIndex];
 
                         if (Range_TextItem.Equals("/font") | Range_TextItem.StartsWith("font=\"") | Range_TextItem.StartsWith("pfont=\"")) break;
-                        if (ICm(Range_TextItem) & !Range_TextItem.Contains("⟦InnerTag/FontFamily@"))
+                        if (ICm(Range_TextItem) & !Range_TextItem.Contains("⟦InnerTag/FontFamily@") & !Range_TextItem.Contains("⟦InnerTag/PackFontFamily@"))
                         {
                             __TextSegmented__[RangeIndex] += $"⟦InnerTag/FontFamily@{FontFamily}⟧";
                         }
@@ -256,7 +267,7 @@ namespace RichText
                     {
                         string Range_TextItem = __TextSegmented__[RangeIndex];
 
-                        if (Range_TextItem.Equals("/font") | Range_TextItem.StartsWith("font=\"") | Range_TextItem.StartsWith("pfont=\"")) break;
+                        if (Range_TextItem.Equals("/font") | Range_TextItem.Equals("/pfont") | Range_TextItem.StartsWith("font=\"") | Range_TextItem.StartsWith("pfont=\"")) break;
                         if (ICm(Range_TextItem) & !Range_TextItem.Contains("⟦InnerTag/FontFamily@") & !Range_TextItem.Contains("⟦InnerTag/PackFontFamily@"))
                         {
                             __TextSegmented__[RangeIndex] += $"⟦InnerTag/PackFontFamily@{FontFamily}⟧";
@@ -442,7 +453,7 @@ namespace RichText
                                             NextTextItem_InnerTags += InnerTagMatch;
                                         }
 
-                                        SpriteKeyword = $":«{(!SpriteKeywordAppend.Contains("\n") ? SpriteKeywordAppend : "") + NextTextItem_InnerTags}»";
+                                        SpriteKeyword = $":«{(!SpriteKeywordAppend.Contains('\n') ? SpriteKeywordAppend : "") + NextTextItem_InnerTags}»";
                                     }
                                 }
                             }
@@ -528,7 +539,7 @@ namespace RichText
                             Text = TagManager.ClearText(This_StickedWord),
                         }
                     };
-                    RichText_AppendImage(Current_SpriteConstructor, Target);
+                    AppendImage(Current_SpriteConstructor, Target, ImageInlineOffset);
                 }
                 #endregion
                 #region Обычный текст
@@ -540,7 +551,7 @@ namespace RichText
                         Text = TagManager.ClearText(TextItem)
                     };
 
-                    RichText_AppendText(Current_TextConstructor, Target);
+                    AppendText(Current_TextConstructor, Target);
                 }
                 #endregion
             }

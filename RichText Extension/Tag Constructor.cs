@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using static Additional_Codebase.Utils;
+using static TexelExtension.ExternalBase;
 
 namespace RichText
 {
@@ -18,9 +18,14 @@ namespace RichText
         public InlineTextConstructor TextBase;
     };
 
-
     public static class TagManager
     {
+        /// <summary>
+        /// Path where all pack fonts placed
+        /// counts as 'new FontFamily(new Uri("pack://application:,,,/"), $"./{FontResourcesDirectory}/#Some Font")'
+        /// </summary>
+        public static string FontResourcesDirectory = "Resources";
+
         public static List<string> InnerTags(string Source)
         {
             List<string> OutputTags = new();
@@ -66,7 +71,7 @@ namespace RichText
                     switch (TagBody[0])
                     {
                         case "TextColor":
-                            TargetRun.Foreground = From($"#{TagBody[1]}");
+                            TargetRun.Foreground = ToColor($"#{TagBody[1]}");
                             break;
 
                         case "FontFamily":
@@ -75,7 +80,7 @@ namespace RichText
                             break;
 
                         case "PackFontFamily":
-                            try { TargetRun.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), $"./Resources/#{TagBody[1]}"); }
+                            try { TargetRun.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), $"./{FontResourcesDirectory}/#{TagBody[1]}"); }
                             catch { }
                             break;
 
@@ -91,7 +96,7 @@ namespace RichText
                             break;
 
                         case "UptieHighlight":
-                            TargetRun.Foreground = From($"#fff8c200");
+                            TargetRun.Foreground = ToColor($"#fff8c200");
                             break;
 
                         case "TextStyle":
