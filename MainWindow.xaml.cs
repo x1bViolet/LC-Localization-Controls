@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -207,7 +207,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        
+
         StartupInits();
     }
 
@@ -231,7 +231,7 @@ public partial class MainWindow : Window
 
         SelectionMenu_Item4Highlight.Background = ToColor("#C9BBB3");
 
-        foreach(var LangItem in CustomLanguage.Static)
+        foreach (var LangItem in CustomLanguage.Static)
         {
             if (StaticElementLocalization[LangItem.Key] is TextBlock)
             {
@@ -326,7 +326,7 @@ public partial class MainWindow : Window
     private void TitleButton_Close_MouseLeave(object sender, MouseEventArgs e) => (sender as Button).Background = ToColor("#1F1E23");
     private void TitleButton_Minimize_MouseEnter(object sender, MouseEventArgs e) => (sender as Button).Background = ToColor("#34323A");
     private void TitleButton_Minimize_MouseLeave(object sender, MouseEventArgs e) => (sender as Button).Background = ToColor("#1F1E23");
-    
+
     private void TitleButton_Close_Click(object sender, RoutedEventArgs e) => Close();
     private void TitleButton_Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
@@ -376,8 +376,8 @@ public partial class MainWindow : Window
     {
         Target.Resources.Add(SystemParameters.VerticalScrollBarWidthKey, 0.0);
         Target.PreviewMouseLeftButtonDown += SurfaceScroll_MouseLeftButtonDown;
-        Target.PreviewMouseMove           += SurfaceScroll_MouseMove;
-        Target.PreviewMouseLeftButtonUp   += SurfaceScroll_MouseLeftButtonUp;
+        Target.PreviewMouseMove += SurfaceScroll_MouseMove;
+        Target.PreviewMouseLeftButtonUp += SurfaceScroll_MouseLeftButtonUp;
     }
     private bool SurfaceScroll_isDragging = false;
     private Point SurfaceScroll_lastMousePosition;
@@ -408,30 +408,30 @@ public partial class MainWindow : Window
     //private void SelectionMenu_Item1Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor(!SelectedMenu.Equals(1) ? "#5F5C5A" : "#C9BBB3");
     private void SelectionMenu_Item1Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor("#312B28");
     //private void SelectionMenu_Item1Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item1Highlight.Background = ToColor(!SelectedMenu.Equals(1) ? "#312B28" : "#C9BBB3");
-    
+
     private void SelectionMenu_Item2Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item2Highlight.Background = ToColor("#312B28");
     //private void SelectionMenu_Item2Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item2Highlight.Background = ToColor(!SelectedMenu.Equals(2) ? "#5F5C5A" : "#C9BBB3");
     private void SelectionMenu_Item2Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item2Highlight.Background = ToColor("#312B28");
     //private void SelectionMenu_Item2Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item2Highlight.Background = ToColor(!SelectedMenu.Equals(2) ? "#312B28" : "#C9BBB3");
-    
+
     private void SelectionMenu_Item3Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item3Highlight.Background = ToColor("#312B28");
     //private void SelectionMenu_Item3Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item3Highlight.Background = ToColor(!SelectedMenu.Equals(3) ? "#5F5C5A" : "#C9BBB3");
     private void SelectionMenu_Item3Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item3Highlight.Background = ToColor("#312B28");
     //private void SelectionMenu_Item3Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item3Highlight.Background = ToColor(!SelectedMenu.Equals(3) ? "#312B28" : "#C9BBB3");
-    
+
     //private void SelectionMenu_Item4Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item4Highlight.Background = ToColor("#312B28");
     private void SelectionMenu_Item4Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item4Highlight.Background = ToColor(!SelectedMenu.Equals(4) ? "#5F5C5A" : "#C9BBB3");
     //private void SelectionMenu_Item4Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item4Highlight.Background = ToColor("#312B28");
     private void SelectionMenu_Item4Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item4Highlight.Background = ToColor(!SelectedMenu.Equals(4) ? "#312B28" : "#C9BBB3");
-    
+
     private void SelectionMenu_Item5Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item5Highlight.Background = ToColor(!SelectedMenu.Equals(5) ? "#5F5C5A" : "#C9BBB3");
     private void SelectionMenu_Item5Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item5Highlight.Background = ToColor(!SelectedMenu.Equals(5) ? "#312B28" : "#C9BBB3");
-    
+
     //private void SelectionMenu_Item6Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item6Highlight.Background = ToColor("#312B28");
     private void SelectionMenu_Item6Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item6Highlight.Background = ToColor(!SelectedMenu.Equals(6) ? "#5F5C5A" : "#C9BBB3");
     //private void SelectionMenu_Item6Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item6Highlight.Background = ToColor("#312B28");
     private void SelectionMenu_Item6Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item6Highlight.Background = ToColor(!SelectedMenu.Equals(6) ? "#312B28" : "#C9BBB3");
-    
+
     private void SelectionMenu_Item7Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item7Highlight.Background = ToColor("#312B28");
     //private void SelectionMenu_Item7Grid_MouseEnter(object sender, MouseEventArgs e) => SelectionMenu_Item7Highlight.Background = ToColor(!SelectedMenu.Equals(7) ? "#5F5C5A" : "#C9BBB3");
     private void SelectionMenu_Item7Grid_MouseLeave(object sender, MouseEventArgs e) => SelectionMenu_Item7Highlight.Background = ToColor("#312B28");
@@ -543,12 +543,12 @@ public partial class MainWindow : Window
         return DeltaKeyword;
     }
 
-    
 
 
 
 
-    
+
+
     private Dictionary<string, List<ReplacePanelData>> WholeReplacementInfo = new();
 
     internal async Task ConvertFileShorthand(FileInfo ThisFile, string OutDir, bool FirstFile)
@@ -597,14 +597,14 @@ public partial class MainWindow : Window
         if (FileSaved)
         {
             WholeReplacementInfo[CurrentConvertigFile] = FileReplacementsData;
-            
+
             StackPanel Re = await GenerateFileHeaderPanel(ThisFile.Name, MatchesCount, FirstFile, true, Counter);
 
             ShorthandFileReplacesList.Dispatcher.Invoke(() =>
             {
                 ShorthandFileReplacesList.Children.Add(Re);
             });
-            
+
         }
         await Task.Delay(1);
     }
@@ -613,7 +613,7 @@ public partial class MainWindow : Window
     {
         bool FirstMatch = true;
         var Matches = Regex.Matches(FileText, AppConfiguration.StringConfiguration["Shorthand Pattern"]);
-        List<Match> AlreadlyConverted =  new();
+        List<Match> AlreadlyConverted = new();
         foreach (Match Match in Matches)
         {
             if (!AlreadlyConverted.Contains(Match))
@@ -680,7 +680,7 @@ public partial class MainWindow : Window
                 }
             }
         };
-        
+
         FileDetailedInfoShowClick.PreviewMouseLeftButtonUp += ToggleDropdownConvertInfo;
         FileDetailedInfoShowClick.MouseEnter += ShowDropdownConvertInfo_HighlightEnter;
         FileDetailedInfoShowClick.MouseLeave += ShowDropdownConvertInfo_HighlightLeave;
@@ -742,7 +742,7 @@ public partial class MainWindow : Window
 
 
 
-    
+
 
 
 
@@ -959,7 +959,7 @@ public partial class MainWindow : Window
         };
 
         string s = (sender as Grid).Name;
-        int MenuNumber =  int.Parse($"{s[18]}");
+        int MenuNumber = int.Parse($"{s[18]}");
 
         if (MenuNumber == 4 | MenuNumber == 5 | MenuNumber == 6)
         {
@@ -970,15 +970,15 @@ public partial class MainWindow : Window
                 MenuButtonsHighlight[i].Background = ToColor("#312B28");
             }
 
-            foreach(Grid Menu in MenuList)
+            foreach (Grid Menu in MenuList)
             {
                 Menu.Visibility = Visibility.Collapsed;
             }
             MenuButtonsHighlight[MenuNumber].Background = ToColor("#C9BBB3");
-        
+
             MenuList[MenuNumber].Visibility = Visibility.Visible;
         }
-        
+
     }
 
     private static bool DirectoryReflectsType(string SearchTarget, List<string> Type)
@@ -1033,9 +1033,10 @@ public partial class MainWindow : Window
             string SelectedDir = DirectorySelect_First_ShorthandConverter.Text;
             if (Directory.Exists(SelectedDir))
             {
-                if (Directory.GetDirectories(SelectedDir).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max subdirs"] & 
+                if (Directory.GetDirectories(SelectedDir).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max subdirs"] &
                     Directory.GetFiles(SelectedDir, "*.*", SearchOption.AllDirectories).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max files"]
-                ) {
+                )
+                {
                     if (DirectoryReflectsType(SelectedDir, KeywordFiles))
                     {
                         //Directory.GetFiles(SelectedDir, "*.*", SearchOption.AllDirectories).Count()//JsonFilesCounter
@@ -1084,6 +1085,12 @@ public partial class MainWindow : Window
             {
                 if (IsDirectoryWritable(SelectedDir))
                 {
+                    if (Directory.Exists(AppConfiguration.StringConfiguration["Full Converter Selected Original directory"]))
+                    {
+                        XF900054_OVER.Visibility = Visibility.Collapsed;
+                        XF900055_OVER.Visibility = Visibility.Collapsed;
+                    }
+
                     DirectorySelect_Second_FullConverter_State.Foreground = ToColor("#3072AC");
                     X6039.Width = 0; X6039.Height = 0;
                 }
@@ -1099,9 +1106,12 @@ public partial class MainWindow : Window
             }
             else
             {
-                DirectorySelect_Second_FullConverter_State.Foreground = ToColor("#308DAC");
+                XF900054_OVER.Visibility = Visibility.Visible;
+                XF900055_OVER.Visibility = Visibility.Visible;
+
+                DirectorySelect_Second_FullConverter_State.Foreground = ToColor("#932E2E");
                 X6039.Width = double.NaN; X6039.Height = double.NaN;
-                X6039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (Will be created)"];
+                X6039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (Not found)"];
             }
 
             AppConfiguration.SaveConfiguration("Full Converter Selected Output directory", SelectedDir);
@@ -1116,16 +1126,24 @@ public partial class MainWindow : Window
             string SelectedDir = DirectorySelect_First_FullConverter.Text;
             if (Directory.Exists(SelectedDir))
             {
-                XF900054_OVER.Visibility = Visibility.Collapsed;
-                XF900055_OVER.Visibility = Visibility.Collapsed;
-
                 if (Directory.GetDirectories(SelectedDir).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max subdirs"] &
                     Directory.GetFiles(SelectedDir, "*.*", SearchOption.AllDirectories).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max files"]
-                )
-                {
+                ) {
                     if (DirectoryReflectsType(SelectedDir, KeywordFiles))
                     {
-                        int JsonFilesCount = new DirectoryInfo(SelectedDir).GetFiles("*.json", SearchOption.AllDirectories).Count();
+                        if (Directory.Exists(AppConfiguration.StringConfiguration["Full Converter Selected Output directory"]))
+                        {
+                            XF900054_OVER.Visibility = Visibility.Collapsed;
+                            XF900055_OVER.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            XF900054_OVER.Visibility = Visibility.Visible;
+                            XF900055_OVER.Visibility = Visibility.Visible;
+                        }
+
+
+                            int JsonFilesCount = new DirectoryInfo(SelectedDir).GetFiles("*.json", SearchOption.AllDirectories).Count();
                         JsonFilesCounter_FullExport.Text = CustomLanguage.Dynamic["Json file count in Source Localization Directory"].ExTern(JsonFilesCount);
 
                         DirectorySelect_First_FullConverter_State.Foreground = ToColor("#3072AC");
@@ -1180,7 +1198,7 @@ public partial class MainWindow : Window
     private void ShorthandConverter_FontApply_Toggle(object sender, MouseButtonEventArgs e)
     {
         AppConfiguration.ToggleConfiguration["Apply font with shorthands"] = !AppConfiguration.ToggleConfiguration["Apply font with shorthands"];
-        AppConfiguration.SaveConfiguration("Apply font with shorthands", AppConfiguration.ToggleConfiguration["Apply font with shorthands"]? "Yes" : "No");
+        AppConfiguration.SaveConfiguration("Apply font with shorthands", AppConfiguration.ToggleConfiguration["Apply font with shorthands"] ? "Yes" : "No");
         X4908.Text = !AppConfiguration.ToggleConfiguration["Apply font with shorthands"] ? "" : "";
     }
 
@@ -1196,7 +1214,7 @@ public partial class MainWindow : Window
 
         DirectoryInfo OriginalDirectory = new DirectoryInfo(AppConfiguration.StringConfiguration["Shorthand Converter Selected Original directory"]);
         string OutputDirectory = AppConfiguration.StringConfiguration["Shorthand Converter Selected Output directory"];
-       
+
         bool FirstFile = true;
         List<string> AlreadyConverted = new();
         ShorthandFileReplacesList.Children.Clear();
@@ -1334,7 +1352,7 @@ public partial class MainWindow : Window
 
     internal void IncreaseRegisteredIndexes(int InsertedIndex)
     {
-        foreach(var Index in RegisteredExpandDetailInfo)
+        foreach (var Index in RegisteredExpandDetailInfo)
         {
             if (Index.Value > InsertedIndex) RegisteredExpandDetailInfo[Index.Key] = Index.Value + 1;
         }
@@ -1432,7 +1450,7 @@ public partial class MainWindow : Window
         FontsList_Dropdown.Visibility = FontsList_Dropdown.Visibility switch
         {
             Visibility.Collapsed => Visibility.Visible,
-            Visibility.Visible   => Visibility.Collapsed,
+            Visibility.Visible => Visibility.Collapsed,
             _ => Visibility.Collapsed
         };
     }
@@ -1442,7 +1460,7 @@ public partial class MainWindow : Window
         TestFontString_bg.Text = TestFontString.Text switch
         {
             "" => CustomLanguage.Dynamic["Textfield empty background text"],
-            _  => ""
+            _ => ""
         };
         KSTFont.GenerateCustomFontsPreview(TestFontString.Text);
         AppConfiguration.SaveConfiguration("Selected font test string", TestFontString.Text);
@@ -1455,7 +1473,7 @@ public partial class MainWindow : Window
         X49908.Text = AppConfiguration.ToggleConfiguration["Enable Unicode on font preview"] switch
         {
             false => "",
-            true  => "",
+            true => "",
         };
 
         KSTFont.GenerateCustomFontsPreview(TestFontString.Text);
