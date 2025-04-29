@@ -13,6 +13,7 @@
 2. Font options
 ![image](https://github.com/user-attachments/assets/7d950243-7c50-4924-b835-3fae6939ad26)
    - Shows defined in `replacement_map.json` symbol replacements for custom font.
+   - Fonts placed in `⇲ Asset Directory\Font` folder
 
 
 ### Program config
