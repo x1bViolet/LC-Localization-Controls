@@ -268,11 +268,18 @@ namespace LC_Localization_Controls.Converters
                                     ((InfoLog.Children[Indexer] as StackPanel).Children[4] as TextBlock).Text = " " + LocalizeFile.Name;
                                 });
 
-                                string DestFullname = DestinationDirectory + LocalizeFile.FullName[LocalizationDirectory.Length..];
-                                if (DestFullname.Contains(@$"{LocalizationMaskDirectory}\"))
+
+                                string Filename_Part = "";
+                                if (AppendedFiles.Contains(LocalizeFile.Name))
                                 {
-                                    DestFullname = DestFullname.Replace(@$"{LocalizationMaskDirectory}\", "");
+                                    Filename_Part = LocalizeFile.FullName[Path.GetFullPath(LocalizationMaskDirectory).Length..];
                                 }
+                                else
+                                {
+                                    Filename_Part = LocalizeFile.FullName[Path.GetFullPath(LocalizationDirectory).Length..];
+                                }
+                                string DestFullname = DestinationDirectory + Filename_Part;
+
 
                                 List<string> TC1 = DestFullname.Split('\\').ToList();
                                 string ExportDirectory = String.Join('\\', TC1.RemoveAtIndex(TC1.Count - 1));

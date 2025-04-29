@@ -1,5 +1,4 @@
-
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -995,6 +994,8 @@ public partial class MainWindow : Window
         return false;
     }
 
+
+    //////////////////////////////////////////////////////////////////////
     private void DirectorySelect_Second_ShorthandConverter_TextChanged(object sender, TextChangedEventArgs e)
     {
         try
@@ -1033,14 +1034,12 @@ public partial class MainWindow : Window
             string SelectedDir = DirectorySelect_First_ShorthandConverter.Text;
             if (Directory.Exists(SelectedDir))
             {
-                if (Directory.GetDirectories(SelectedDir).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max subdirs"] &
+                if (
+                    Directory.GetDirectories(SelectedDir).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max subdirs"] &
                     Directory.GetFiles(SelectedDir, "*.*", SearchOption.AllDirectories).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max files"]
-                )
-                {
+                ) {
                     if (DirectoryReflectsType(SelectedDir, KeywordFiles))
                     {
-                        //Directory.GetFiles(SelectedDir, "*.*", SearchOption.AllDirectories).Count()//JsonFilesCounter
-
                         int JsonFilesCount = new DirectoryInfo(SelectedDir).GetFiles("*.json", SearchOption.AllDirectories).Where(file => file.Name.StartsWithOneOf(LocalizationFullExport.KeywordFilesMatch)).Count();
                         JsonFilesCounter.Text = CustomLanguage.Dynamic["Json file count in Source Localization Directory"].ExTern(JsonFilesCount);
 
@@ -1074,6 +1073,14 @@ public partial class MainWindow : Window
         }
         catch { }
     }
+    //////////////////////////////////////////////////////////////////////
+    
+
+
+
+
+
+
 
 
     private void DirectorySelect_Second_FullConverter_TextChanged(object sender, TextChangedEventArgs e)
@@ -1089,6 +1096,11 @@ public partial class MainWindow : Window
                     {
                         XF900054_OVER.Visibility = Visibility.Collapsed;
                         XF900055_OVER.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        XF900054_OVER.Visibility = Visibility.Visible;
+                        XF900055_OVER.Visibility = Visibility.Visible;
                     }
 
                     DirectorySelect_Second_FullConverter_State.Foreground = ToColor("#3072AC");
@@ -1106,12 +1118,19 @@ public partial class MainWindow : Window
             }
             else
             {
-                XF900054_OVER.Visibility = Visibility.Visible;
-                XF900055_OVER.Visibility = Visibility.Visible;
-
-                DirectorySelect_Second_FullConverter_State.Foreground = ToColor("#932E2E");
+                if (Directory.Exists(AppConfiguration.StringConfiguration["Full Converter Selected Original directory"]))
+                {
+                    XF900054_OVER.Visibility = Visibility.Collapsed;
+                    XF900055_OVER.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    XF900054_OVER.Visibility = Visibility.Visible;
+                    XF900055_OVER.Visibility = Visibility.Visible;
+                }
+                DirectorySelect_Second_FullConverter_State.Foreground = ToColor("#308DAC");
                 X6039.Width = double.NaN; X6039.Height = double.NaN;
-                X6039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (Not found)"];
+                X6039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (Will be created)"];
             }
 
             AppConfiguration.SaveConfiguration("Full Converter Selected Output directory", SelectedDir);
@@ -1129,36 +1148,24 @@ public partial class MainWindow : Window
                 if (Directory.GetDirectories(SelectedDir).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max subdirs"] &
                     Directory.GetFiles(SelectedDir, "*.*", SearchOption.AllDirectories).Count() <= AppConfiguration.IntegerConfiguration["Original directory Max files"]
                 ) {
-                    if (DirectoryReflectsType(SelectedDir, KeywordFiles))
+                    
+                    if (Directory.Exists(AppConfiguration.StringConfiguration["Full Converter Selected Output directory"]))
                     {
-                        if (Directory.Exists(AppConfiguration.StringConfiguration["Full Converter Selected Output directory"]))
-                        {
-                            XF900054_OVER.Visibility = Visibility.Collapsed;
-                            XF900055_OVER.Visibility = Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            XF900054_OVER.Visibility = Visibility.Visible;
-                            XF900055_OVER.Visibility = Visibility.Visible;
-                        }
-
-
-                            int JsonFilesCount = new DirectoryInfo(SelectedDir).GetFiles("*.json", SearchOption.AllDirectories).Count();
-                        JsonFilesCounter_FullExport.Text = CustomLanguage.Dynamic["Json file count in Source Localization Directory"].ExTern(JsonFilesCount);
-
-                        DirectorySelect_First_FullConverter_State.Foreground = ToColor("#3072AC");
-                        X5039.Width = 0; X5039.Height = 0;
+                        XF900054_OVER.Visibility = Visibility.Collapsed;
+                        XF900055_OVER.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
                         XF900054_OVER.Visibility = Visibility.Visible;
                         XF900055_OVER.Visibility = Visibility.Visible;
-
-                        DirectorySelect_First_FullConverter_State.Foreground = ToColor("#932E2E");
-                        X5039.Width = double.NaN; X5039.Height = double.NaN;
-                        X5039_1.Text = CustomLanguage.Dynamic["Directory Tooltip (No suggested files found)"];
-                        JsonFilesCounter_FullExport.Text = CustomLanguage.Dynamic["Json file count in Source Localization Directory"].ExTern("-");
                     }
+
+
+                    int JsonFilesCount = new DirectoryInfo(SelectedDir).GetFiles("*.json", SearchOption.AllDirectories).Count();
+                    JsonFilesCounter_FullExport.Text = CustomLanguage.Dynamic["Json file count in Source Localization Directory"].ExTern(JsonFilesCount);
+
+                    DirectorySelect_First_FullConverter_State.Foreground = ToColor("#3072AC");
+                    X5039.Width = 0; X5039.Height = 0;
                 }
                 else
                 {
@@ -1487,6 +1494,10 @@ public partial class MainWindow : Window
         XF900055_OVER.Visibility = Visibility.Visible;
         try
         {
+            if (!Directory.Exists(AppConfiguration.StringConfiguration["Full Converter Selected Output directory"]))
+            {
+                Directory.CreateDirectory(AppConfiguration.StringConfiguration["Full Converter Selected Output directory"]);
+            }
             await LocalizationFullExport.DirectExport(
                 AppConfiguration.StringConfiguration["Full Converter Selected Original directory"],
                 AppConfiguration.StringConfiguration["Full Converter Selected Output directory"],
