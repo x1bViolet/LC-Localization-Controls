@@ -14,7 +14,8 @@
 2. Font options
 ![image](https://github.com/user-attachments/assets/7d950243-7c50-4924-b835-3fae6939ad26)
    - Shows defined in `replacement_map.json` symbol replacements for custom font.
-   - Fonts placed in `⇲ Asset Directory\Font` folder
+   - Fonts placed in `⇲ Asset Directory\Font` folder.
+     - In font folder: `.json` file in folder will be selected as replacement_map, `ttf` or `otf` file as font for preview, `.toml` as config with rules for files.
 
 
 ### Program config
