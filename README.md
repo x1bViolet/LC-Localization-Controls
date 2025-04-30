@@ -2,6 +2,7 @@
 ![image](https://github.com/user-attachments/assets/0d9b8306-fd7e-42f5-b23a-454cc4e7091d)
   - Function for raw localization files export with font conversion of some files using the created crutch in the form of `replacement_map.json` and `merged_font.ttf` from [LimbusFonts](https://github.com/kimght/LimbusFonts), so that Limbus has more than 1 font in total (But in text editor you will see only squares).
   - Function to convert the Shorthand (Somethind like `[Keyword:'Name']`) version of keywords into a TextMeshPro format (`<sprite name="KeywordID"><color=#hexcolor><u><link="KeywordID">Name</color></u></link>`) understandable by the game is also configured as 'Shorthand' checkbox.
+  - !! Manually add new keywords to files in your folder in `⇲ Asset Directory\Keywords\Text Sources` and their color in `⇲ Asset Directory\Keywords\Keywords@DefaultColordata.T [-]` to convert them too
   - Strongly recommended to use the 'Insert missing ID' checkbox in order to avoid widespread 'Unknown' instead of the original untranslated text, it manually adds missing ID in files and missing files too (ProjectMoon did not make this thing work in one of the latest patches for Custom TL in which they mentioned it).
 
 ### Settings
