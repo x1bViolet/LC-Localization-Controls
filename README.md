@@ -10,6 +10,7 @@
 ![image](https://github.com/user-attachments/assets/9eaf76f3-7dd9-4cbe-8f29-3af85623335c)
    - Shows their custom regex pattern and how they will be converted at export.
    - Better to use https://regex101.com/r/WdEwd8/1 website to write pattern, or leave it as it is, group names as `?<Some>` on current pattern is neccessary.
+   - Color in `?<Color>` group being recognized automatically as `#[a-fA-F0-9]{6}` after extracting group value, so this group can have any form. In this example there are round brackets and group originally has value `(#hexcolor)`.
  
 2. Font options
 ![image](https://github.com/user-attachments/assets/7d950243-7c50-4924-b835-3fae6939ad26)
