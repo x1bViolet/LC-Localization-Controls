@@ -12,7 +12,7 @@
    - Better to use https://regex101.com/r/WdEwd8/1 website to write pattern, or leave it as it is, group names as `?<Some>` on current pattern is neccessary.
    - Color in `?<Color>` group being recognized automatically as `#[a-fA-F0-9]{6}` after extracting group value, so this group can have any form. In this example there are round brackets and group originally has value `(#hexcolor)`.
  
-2. Font options
+2. Font options (**HALF OUTDATED**)
 ![image](https://github.com/user-attachments/assets/7d950243-7c50-4924-b835-3fae6939ad26)
    - Shows defined in `replacement_map.json` symbol replacements for custom font.
    - Fonts placed in `⇲ Asset Directory\Font` folder.
