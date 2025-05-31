@@ -1,0 +1,19 @@
+{
+  "Export": {
+    "Raw Custom Localization Source": "C:\\Dream-Devouring Siltcurrent",
+    "Exported Custom Localization Destination": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Lang/Export",
+    "Reference Localization Files": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
+    "Reference Localization Files Prefix": "EN_",
+    "Shorthands Pattern": "\\[(?<ID>\\w+):`(?<Name>.*?)`\\](\\((?<Color>#[a-fA-F0-9]{6})\\))?",
+    "Merged Font Parameters": "⇲ Assets Directory/Fonts/LimbusFonts 1.9.0 (Cyrillic)/replacement_map.json",
+    "Font Files": {
+      "Context": "⇲ Assets Directory/Fonts/LimbusFonts 1.9.0 (Cyrillic)/Pretendard+.ttf",
+      "Title": "⇲ Assets Directory/Fonts/LimbusFonts 1.9.0 (Cyrillic)/Mikodacs+.ttf"
+    }
+  },
+  "Internal": {
+    "Automatically open Destination directory after completion": false,
+    "Automatically open Report File after completion": false,
+    "Window Scaling": 1.0
+  }
+}
