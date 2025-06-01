@@ -1,0 +1,36 @@
+{
+  "UI Text": [
+    {
+      "ElementID": "RawCustomLocalizationDirectory_BackgroundText",
+      "Text": "Директория кастомной локализации"
+    },
+    {
+      "ElementID": "DestinationDirectory_BackgroundText",
+      "Text": "Выходная директория экспорта"
+    },
+    {
+      "ElementID": "ExportTranslationButton",
+      "Text": "Старт экспорта"
+    },
+    {
+      "ElementID": "ViewReportButton",
+      "Text": "Файл отчёта"
+    },
+    {
+      "ElementID": "Tooltip_ReloadConfigButton",
+      "Text": "Перезагрузить .json конфиг (Configurazione.json)"
+    },
+    {
+      "ElementID": "Tooltip_MissingContentSource",
+      "Text": "Источник пропущенного контента"
+    },
+    {
+      "ElementID": "Tooltip_ShorthandsPattern",
+      "Text": "Паттерн Shorthands"
+    },
+    {
+      "ElementID": "Tooltip_SpecialFontPattern",
+      "Text": "Параметры особых шрифтов"
+    }
+  ]
+}

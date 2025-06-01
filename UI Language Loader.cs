@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 using static Translation_Devouring_Siltcurrent.MainWindow;
 using static Translation_Devouring_Siltcurrent.Requirements;
 
@@ -14,14 +16,15 @@ namespace Translation_Devouring_Siltcurrent
         internal protected record UILanguage
         {
             [JsonProperty("UI Text")]
-            public Dictionary<string, UIOverrideTextParameters> UIText { get; set; }
+            public List<UIOverrideTextParameters> UIText { get; set; }
         }
 
         internal protected record UIOverrideTextParameters
         {
-            public int? Width { get; set; }
-            public int? Height { get; set; }
-            public int? FontSize { get; set; }
+            public string ElementID { get; set; }
+            public double? Width { get; set; }
+            public double? Height { get; set; }
+            public double? FontSize { get; set; }
             public string Text { get; set; }
             public string FontFamily { get; set; }
             public string Foreground { get; set; }
@@ -29,23 +32,27 @@ namespace Translation_Devouring_Siltcurrent
             public string CaretBrush { get; set; }
         }
 
-        internal protected static void LoadUIOverrideText(Dictionary<string, UIOverrideTextParameters> OverrideParameters)
+        internal protected static void LoadUIOverrideText(List<UIOverrideTextParameters> OverrideParameters)
         {
-            foreach(KeyValuePair<string, UIOverrideTextParameters> Parameter in OverrideParameters)
+            foreach(UIOverrideTextParameters Parameter in OverrideParameters)
             {
-                if (MainControl.FindName(Parameter.Key) != null)
+                if (Parameter.ElementID != null)
                 {
-                    dynamic TargetElement = MainControl.FindName(Parameter.Key);
-                    UIOverrideTextParameters _ = Parameter.Value;
+                    if (MainControl.FindName(Parameter.ElementID) != null)
+                    {
+                        FrameworkElement TargetElementCheck = MainControl.FindName(Parameter.ElementID) as FrameworkElement;
+                        dynamic TargetElement = MainControl.FindName(Parameter.ElementID);
+                        UIOverrideTextParameters t = Parameter;
 
-                    if (TargetElement.HasProperty("SelectionBrush") & _.SelectionBrush != null) TargetElement.Foreground = ToColor(_.SelectionBrush);
-                    if (TargetElement.HasProperty    ("CaretBrush") & _.CaretBrush     != null) TargetElement.Foreground = ToColor(_.CaretBrush);
-                    if (TargetElement.HasProperty    ("Foreground") & _.Foreground     != null) TargetElement.Foreground = ToColor(_.Foreground);
-                    if (TargetElement.HasProperty    ("FontFamily") & _.FontFamily     != null) TargetElement.FontFamily = _.FontFamily;
-                    if (TargetElement.HasProperty      ("FontSize") & _.FontSize       != null) TargetElement.FontSize   = _.FontSize;
-                    if (TargetElement.HasProperty        ("Height") & _.Height         != null) TargetElement.Height     = _.Height;
-                    if (TargetElement.HasProperty         ("Width") & _.Width          != null) TargetElement.Width      = _.Width;
-                    if (TargetElement.HasProperty          ("Text") & _.Text           != null) TargetElement.Text       = _.Text;
+                        if (TargetElementCheck.HasProperty("SelectionBrush") & t.SelectionBrush != null) TargetElement.Foreground = ToColor(t.SelectionBrush);
+                        if (TargetElementCheck.HasProperty    ("CaretBrush") & t.CaretBrush     != null) TargetElement.Foreground = ToColor(t.CaretBrush);
+                        if (TargetElementCheck.HasProperty    ("Foreground") & t.Foreground     != null) TargetElement.Foreground = ToColor(t.Foreground);
+                        if (TargetElementCheck.HasProperty    ("FontFamily") & t.FontFamily     != null) TargetElement.FontFamily = new FontFamily(t.FontFamily);
+                        if (TargetElementCheck.HasProperty      ("FontSize") & t.FontSize       != null) TargetElement.FontSize   = (double)t.FontSize;
+                        if (TargetElementCheck.HasProperty        ("Height") & t.Height         != null) TargetElement.Height     = (double)t.Height;
+                        if (TargetElementCheck.HasProperty         ("Width") & t.Width          != null) TargetElement.Width      = (double)t.Width;
+                        if (TargetElementCheck.HasProperty          ("Text") & t.Text           != null) TargetElement.Text       = t.Text;
+                    }
                 }
             }
         }

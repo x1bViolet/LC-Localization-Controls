@@ -1,6 +1,6 @@
 {
   "Export": {
-    "Raw Custom Localization Source": "C:\\Dream-Devouring Siltcurrent",
+    "Raw Custom Localization Source": "C:/Dream-Devouring Siltcurrent",
     "Exported Custom Localization Destination": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Lang/Export",
     "Reference Localization Files": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
     "Reference Localization Files Prefix": "EN_",
@@ -12,6 +12,7 @@
     }
   },
   "Internal": {
+    "Language (⇲ Assets Directory/Languages)": "⇲ Assets Directory/Languages/English.json",
     "Automatically open Destination directory after completion": false,
     "Automatically open Report File after completion": false,
     "Window Scaling": 1.0

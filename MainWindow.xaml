@@ -10,6 +10,8 @@
         Opacity="1"
         AllowsTransparency="True"
         
+        WindowStartupLocation="CenterScreen"
+        
         MinHeight="257"
         MinWidth="301"
         
@@ -472,7 +474,7 @@
                 <Grid x:Name="TitleBar" Grid.Row="0" MouseLeftButtonDown="Window_DragMove">
                     <Border Background="#FF101117" CornerRadius="4 4 0 0">
                         <Grid>
-                            <TextBlock x:Name="XFC1001" Margin="6,0,0,0" FontSize="20" VerticalAlignment="Center" FontFamily="Interface\Fonts\#Corbel Light" Text="⇲  LC Localization Control">
+                            <TextBlock x:Name="Title" Margin="6,0,0,0" FontSize="20" VerticalAlignment="Center" FontFamily="Interface\Fonts\#Corbel Light" Text="⇲  LC Localization Control">
                                 <TextBlock.Foreground>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="#FFBE4646" Offset="0"/>
@@ -491,7 +493,9 @@
                                         
                                         <TextBlock.ToolTip>
                                             <ToolTip HorizontalOffset="20">
-                                                Reload .json config (Configurazione.json)
+                                                <TextBlock x:Name="Tooltip_ReloadConfigButton">
+                                                    Reload .json config (Configurazione.json)
+                                                </TextBlock>
                                             </ToolTip>
                                         </TextBlock.ToolTip>
                                     </TextBlock>
@@ -565,7 +569,7 @@
                                 <Grid.RenderTransform>
                                     <RotateTransform Angle="90"/>
                                 </Grid.RenderTransform>
-                                <TextBlock FontSize="22" Foreground="#FF45444C" Margin="0 0 0 0" RenderTransformOrigin="0.5 0.5" FontFamily="Interface/Fonts/#Share Tech Mono">
+                                <TextBlock x:Name="LeftDecorativeText_90Degree" FontSize="22" Foreground="#FF45444C" Margin="0 0 0 0" RenderTransformOrigin="0.5 0.5" FontFamily="Interface/Fonts/#Share Tech Mono">
                                     Translation Export
                                     <TextBlock.RenderTransform>
                                         <RotateTransform Angle="180"/>
@@ -576,9 +580,9 @@
                             <StackPanel Margin="30 0 0 0">
                                 <Border Background="#FF25242B" CornerRadius="2">
                                     <Grid>
-                                        <TextBox Focusable="False" x:Name="TranslationExport_RawFanmade_SourceDirectory__BackgroundText" Margin="2 0 4 0" FontSize="24" FontFamily="Sitka Subheading" Background="Transparent" BorderThickness="0" Foreground="#FF444343">
+                                        <TextBlock Focusable="False" x:Name="RawCustomLocalizationDirectory_BackgroundText" Margin="2 0 4 0" FontSize="24" FontFamily="Sitka Subheading" Background="Transparent" Foreground="#FF444343">
                                             Raw Custom Localization path
-                                        </TextBox>
+                                        </TextBlock>
                                         <TextBox x:Name="TranslationExport_RawFanmade_SourceDirectory" TextChanged="TextChanged_BGTextAttr" Margin="2 0 4 0" FontSize="24" FontFamily="Sitka Subheading" Background="Transparent" BorderThickness="0" Foreground="#FFB7B7B7" CaretBrush="#FFB7B7B7" SelectionBrush="#FFB7B7B7">
                                             C:\Dream-Devouring Siltcurrent
                                         </TextBox>
@@ -586,9 +590,9 @@
                                 </Border>
                                 <Border Background="#FF25242B" CornerRadius="2" Margin="0 5 0 0">
                                     <Grid>
-                                        <TextBox Focusable="False" Margin="2 0 4 0" x:Name="TranslationExport_RawFanmadeOutputDirectory__BackgroundText" FontSize="24" FontFamily="Sitka Subheading" Background="Transparent" BorderThickness="0" Foreground="#FF444343">
+                                        <TextBlock Focusable="False" Margin="2 0 4 0" x:Name="DestinationDirectory_BackgroundText" FontSize="24" FontFamily="Sitka Subheading" Background="Transparent" Foreground="#FF444343">
                                             Exported Custom Localization destination path
-                                        </TextBox>
+                                        </TextBlock>
                                         <TextBox Margin="2 0 4 0" x:Name="TranslationExport_RawFanmadeOutputDirectory" TextChanged="TextChanged_BGTextAttr" Background="Transparent" BorderThickness="0" FontSize="24" FontFamily="Sitka Subheading" Foreground="#FFB7B7B7" CaretBrush="#FFB7B7B7" SelectionBrush="#FFB7B7B7">
                                             C:\Program Files (x86)\Steam\steamapps\common\Limbus Company\LimbusCompany_Data\Lang\Export
                                         </TextBox>
@@ -598,7 +602,7 @@
 
                             <Grid Margin="30 75 0 0 " VerticalAlignment="Top">
                                 <TextBlock x:Name="FilesCounter" Visibility="Collapsed" Margin="5 0 5 0" FontSize="22" HorizontalAlignment="Left" Foreground="#FF8898B1" FontFamily="Interface/Fonts/#Linotype Syntax Com Regular" VerticalAlignment="Center">
-                                    0/1440
+                                    
                                 </TextBlock>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
@@ -606,7 +610,7 @@
                                         
                                     </TextBlock>
                                     <Border x:Name="OpenReportFile_Button" Visibility="Collapsed" Style="{StaticResource MouseOverHighlightBorder}" PreviewMouseLeftButtonUp="OpenOutputReport_File" Width="163" Margin="2 0 30 0" BorderBrush="#FF3C3B42" BorderThickness="2" CornerRadius="2">
-                                        <TextBlock x:Name="TranslationExport_OpenOutputReportButton" Margin="5 0 5 0" FontSize="26" HorizontalAlignment="Center" Foreground="#FF8898B1" FontFamily="Interface/Fonts/#Linotype Syntax Com Regular" VerticalAlignment="Center">
+                                        <TextBlock x:Name="ViewReportButton" Margin="5 0 5 0" FontSize="26" HorizontalAlignment="Center" Foreground="#FF8898B1" FontFamily="Interface/Fonts/#Linotype Syntax Com Regular" VerticalAlignment="Center">
                                             View report
                                         </TextBlock>
                                     </Border>
@@ -617,7 +621,7 @@
 
                                     <Grid Margin="2 0 0 0">
                                         <Border PreviewMouseLeftButtonUp="Border_PreviewMouseLeftButtonUp" Style="{StaticResource MouseOverHighlightBorder}" BorderBrush="#FF3C3B42" Width="223" BorderThickness="2" CornerRadius="2">
-                                            <TextBlock Margin="5 0 5 0" FontSize="26" HorizontalAlignment="Center" Foreground="#FF8898B1" FontFamily="Interface/Fonts/#Linotype Syntax Com Regular" VerticalAlignment="Center">
+                                            <TextBlock x:Name="ExportTranslationButton" Margin="5 0 5 0" FontSize="26" HorizontalAlignment="Center" Foreground="#FF8898B1" FontFamily="Interface/Fonts/#Linotype Syntax Com Regular" VerticalAlignment="Center">
                                                 Export translation
                                             </TextBlock>
                                         </Border>
@@ -642,7 +646,9 @@
                                         
                                         <TextBlock.ToolTip>
                                             <ToolTip HorizontalOffset="20">
-                                                Missing content source
+                                                <TextBlock x:Name="Tooltip_MissingContentSource">
+                                                    Missing content source
+                                                </TextBlock>
                                             </ToolTip>
                                         </TextBlock.ToolTip>
                                     </TextBlock>
@@ -652,7 +658,9 @@
                                         
                                         <TextBlock.ToolTip>
                                             <ToolTip HorizontalOffset="20">
-                                                Shorthands pattern
+                                                <TextBlock x:Name="Tooltip_ShorthandsPattern">
+                                                    Shorthands pattern
+                                                </TextBlock>
                                             </ToolTip>
                                         </TextBlock.ToolTip>
                                     </TextBlock>
@@ -662,7 +670,9 @@
                                         
                                         <TextBlock.ToolTip>
                                             <ToolTip HorizontalOffset="20">
-                                                Special font parameters
+                                                <TextBlock x:Name="Tooltip_SpecialFontPattern">
+                                                    Special font parameters
+                                                </TextBlock>
                                             </ToolTip>
                                         </TextBlock.ToolTip>
                                     </TextBlock>

@@ -1,3 +1,5 @@
 /obj
 /Properties
 *.user
+/.vs
+bin/Debug/net8.0-windows/Export Records.json

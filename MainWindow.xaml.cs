@@ -46,7 +46,7 @@ public partial class MainWindow : Window
         //taskbarItemInfo.ProgressValue = 0.5;
         //Process.Start("explorer.exe", @"⇲ Assets Directory");
         //OpenWithDefaultProgram(@"⇲ Assets Directory\Configurazione.json");
-        //OpenDirectoryAndSelect(@"C:\Users\javas\OneDrisve\Документы\Translation-Devouring Siltcurrent\Translation-Devouring Siltcurrent\bin\Debug\net8.0-windows\⇲ Assets Directory\Configurazione.json");
+        //OpenDirectoryAndSelect(@"file.tx");
     }
 
 

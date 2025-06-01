@@ -96,18 +96,9 @@ namespace Translation_Devouring_Siltcurrent
                 MainControl.WindwScaling.ScaleY = (double)WindowScaling;
                 MainControl.MinWidth = MainWindow.DefaultMinWidth * (double)WindowScaling;
                 MainControl.MinHeight = MainWindow.DefaultMinHeight * (double)WindowScaling;
-                rin(MainControl.MaxWidth);
             }
         }
 
-        internal protected static string ContextFontFile = "";
-        internal protected static string TitleFontFile = "";
-
-
-        internal protected static string RawCustomLocalizationSource = @"";
-        internal protected static string ExportedCustomLocalizationDestination = @"";
-        internal protected static string ReferenceLocalizationFiles = @"";
-        internal protected static Regex  LoadedShorthandsPattern = new Regex(@"");
         internal protected static Config Settings = new();
 
         internal protected static bool LoadingEvent = true;
@@ -117,6 +108,11 @@ namespace Translation_Devouring_Siltcurrent
 
 
             Settings = JsonConvert.DeserializeObject<Config>(File.ReadAllText(@"⇲ Assets Directory\Configurazione.json"));
+
+            if (File.Exists(Settings.Internal.Language))
+            {
+                UI_Language_Loader.LoadUIOverrideText(JsonConvert.DeserializeObject<UI_Language_Loader.UILanguage>(File.ReadAllText(Configurazione.Settings.Internal.Language)).UIText);
+            }
 
 
             LoadingEvent = false;
