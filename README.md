@@ -6,6 +6,9 @@ Only raw localization export to release version with missing IDs and files appen
 - Special fonts conversion by using symbols replacement map for them (Can work if font actually supports that, [LimbusFonts](https://github.com/kimght/LimbusFonts) as example. Means there are another font characters inside this font somewhere in unicode private use areas. In text editor being displayed as squares, but in limbus they turn into characters of a different font).
    - Usage: place in start of any property value `[font=fontname]` string that refers to the replacement_map.json file dictionary object, and all propery value symbols will be converted (Except `<tags>` or `{insertions}`, actual pattern on screenshot):
    ![image](https://github.com/user-attachments/assets/d524f02d-e6d8-4310-b5c4-6a554241002a)
+   Example for `⇲ Assets Directory\Fonts\LimbusFonts 1.9.0 (Cyrillic Symbols)\Pretendard+.ttf` (Font Creator program):
+   ![image](https://github.com/user-attachments/assets/aff1c531-206f-4914-b3b4-caba7064fb02)
+
 
 Configuration file `⇲ Assets Directory\Configurazione.json`
 ![Image](https://github.com/user-attachments/assets/b49a7413-4988-43d1-96d0-6bb24f04e2bf)
