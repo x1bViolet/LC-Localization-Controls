@@ -109,9 +109,12 @@ namespace Translation_Devouring_Siltcurrent
 
             Settings = JsonConvert.DeserializeObject<Config>(File.ReadAllText(@"⇲ Assets Directory\Configurazione.json"));
 
-            if (File.Exists(Settings.Internal.Language))
+            if (Settings.Internal.Language != null)
             {
-                UI_Language_Loader.LoadUIOverrideText(JsonConvert.DeserializeObject<UI_Language_Loader.UILanguage>(File.ReadAllText(Configurazione.Settings.Internal.Language)).UIText);
+                if (File.Exists(Settings.Internal.Language))
+                {
+                    UI_Language_Loader.LoadUIOverrideText(JsonConvert.DeserializeObject<UI_Language_Loader.UILanguage>(File.ReadAllText(Configurazione.Settings.Internal.Language)).UIText);
+                }
             }
 
 
