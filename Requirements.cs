@@ -5,6 +5,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Diagnostics;
+using Siltcurrent;
+using static Siltcurrent.LimbusTranslationExport.ActionsProvider;
+using static Siltcurrent.LimbusTranslationExport.ActionsProvider.MergedFont.FontsTomlConfig;
 
 namespace Translation_Devouring_Siltcurrent
 {
@@ -395,7 +398,7 @@ namespace Translation_Devouring_Siltcurrent
             }
             foreach (string RelativeSubDir in SubDirectories)
             {
-                if (!Directory.Exists(@$"{HeaderDirectory}\{RelativeSubDir}")) Directory.CreateDirectory(@$"{HeaderDirectory}\{RelativeSubDir}");
+                if (!Directory.Exists(@$"{HeaderDirectory}\{RelativeSubDir}") & !RelativeSubDir.Equals("")) Directory.CreateDirectory(@$"{HeaderDirectory}\{RelativeSubDir}");
             }
         }
 
@@ -435,6 +438,45 @@ namespace Translation_Devouring_Siltcurrent
             return Cloned;
         }
 
+        internal static bool MatchesWithSearchPattern(this string CheckString, string Pattern)
+        {
+            return Regex.Match(CheckString, "^" + Pattern.Replace("*", ".*") + "$").Success;
+        }
+        internal static bool MatchesWithAnySearchPatterns(this string CheckString, IEnumerable<string> Patterns)
+        {
+            foreach(string Pattern in Patterns)
+            {
+                if (CheckString.MatchesWithSearchPattern(Pattern)) return true;
+            }
+            return false;
+        }
+        internal static List<string> FindMatchesWithSearchPatternsFrom(this string CheckString, IEnumerable<string> Patterns)
+        {
+            List<string> Founded = new List<string>();
+
+            foreach (string Pattern in Patterns)
+            {
+                if (CheckString.MatchesWithSearchPattern(Pattern)) Founded.Add(Pattern);
+            }
+            return Founded;
+        }
+        internal static List<MergedFont.FontsTomlConfig.FontRule> FindMatchingFontRules(this string CheckString)
+        {
+            List<MergedFont.FontsTomlConfig.FontRule> Founded = new List<MergedFont.FontsTomlConfig.FontRule>();
+
+            foreach (var Pattern in MergedFont.FontsTomlConfig.Parameters)
+            {
+                if (CheckString.MatchesWithSearchPattern(Pattern.Key))
+                {
+                    foreach(var FontRule in Pattern.Value)
+                    {
+                        Founded.Add(FontRule);
+                    }
+                }
+            }
+            return Founded;
+        }
+
         internal static bool HasProperty(this object ObjectItem, string SearchProperty)
         {
             return ObjectItem.GetType().GetProperties().Select(property => property.Name.ToString()).ToList().Contains(SearchProperty);
@@ -454,7 +496,6 @@ namespace Translation_Devouring_Siltcurrent
                         Convert.ToByte(HexString.Substring(1, 2), 16),
                         Convert.ToByte(HexString.Substring(3, 2), 16),
                         Convert.ToByte(HexString.Substring(5, 2), 16)
-
                     )
                 );
             }

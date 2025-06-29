@@ -10,6 +10,8 @@ using System.Runtime.Serialization;
 using static Translation_Devouring_Siltcurrent.Requirements;
 using static Translation_Devouring_Siltcurrent.MainWindow;
 using static Translation_Devouring_Siltcurrent.NullableControl;
+using Siltcurrent;
+using static Siltcurrent.LimbusTranslationExport.ActionsProvider;
 
 namespace Translation_Devouring_Siltcurrent
 {
@@ -39,10 +41,34 @@ namespace Translation_Devouring_Siltcurrent
             public string ShorthandsPattern { get; set; }
 
             [JsonIgnore]
-            public Regex LoadedShorthandsPattern { get; set; }
+            public Regex LoadedShorthandsPattern { get; set; } = new Regex(@"NOTHING THERE");
+
+            [JsonProperty("Convert Shorthands")]
+            public bool ConvertShorthands { get; set; }
+
+            [JsonProperty("Add <style> placeholders")]
+            public bool AddStyleTagPlaceholders { get; set; }
+
+            [JsonProperty("Add Missing Files")]
+            public bool AddMissingFiles { get; set; }
+
+            [JsonProperty("Add Missing IDs")]
+            public bool AddMissingIDs { get; set; }
+
+            [JsonProperty("Copy font files")]
+            public bool CopyFontFiles { get; set; }
+
+            [JsonProperty("Apply special fonts from [font=*]")]
+            public bool ApplySpecialFontsByMarks { get; set; }
+
+            [JsonProperty("Apply special fonts from Toml Config")]
+            public bool ApplySpecialFontsFromToml { get; set; }
 
             [JsonProperty("Merged Font Parameters")]
-            public string MergedFontParameters { get; set; }
+            public string MergedFontParameters { get; set; } = "";
+
+            [JsonProperty("Merged Font Config")]
+            public string MergedFontConfig { get; set; } = "";
 
             [JsonProperty("Font Files")]
             public FontFiles FontFiles { get; set; }
@@ -54,6 +80,14 @@ namespace Translation_Devouring_Siltcurrent
                 MainControl.ShorthandsPatternInput.Text = ShorthandsPattern;
                 MainControl.MergedFontParametersInput.Text = MergedFontParameters;
 
+                
+                LimbusTranslationExport.ActionsProvider.MergedFont.LoadedParameters = new MergedFont.FontParameters(MergedFontParameters);
+                LimbusTranslationExport.ActionsProvider.MergedFont.FontsTomlConfig.Load(
+                    MergedFontConfig,
+                    LimbusTranslationExport.ActionsProvider.MergedFont.LoadedParameters.ReplacementMapsList
+                );
+
+
 
                 MainControl.TranslationExport_RawFanmade_SourceDirectory.Text = RawCustomLocalizationSource;
                 MainControl.TranslationExport_RawFanmadeOutputDirectory.Text = ExportedCustomLocalizationDestination;
@@ -64,7 +98,7 @@ namespace Translation_Devouring_Siltcurrent
                 }
                 catch
                 {
-                    LoadedShorthandsPattern = new Regex(@"");
+                    LoadedShorthandsPattern = new Regex(@"NOTHING THERE");
                 }
             }
         }

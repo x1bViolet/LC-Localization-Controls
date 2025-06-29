@@ -1,18 +1,16 @@
 ﻿
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Text.RegularExpressions;
-using static Translation_Devouring_Siltcurrent.Requirements;
-using static Translation_Devouring_Siltcurrent.MainWindow;
-using static Translation_Devouring_Siltcurrent.SkillsQuickFormatter;
-using System.Diagnostics;
 using Translation_Devouring_Siltcurrent;
+using static Translation_Devouring_Siltcurrent.MainWindow;
+using static Translation_Devouring_Siltcurrent.Requirements;
+using static Translation_Devouring_Siltcurrent.SkillsQuickFormatter;
+
 
 namespace Siltcurrent
 {
@@ -61,10 +59,10 @@ namespace Siltcurrent
                 [JsonProperty("Untranslated Files Count")]
                 public int UntranslatedFilesCount { get; set; }
 
-                [JsonProperty("Untranslated Files")]
+                [JsonProperty("Untranslated Files added")]
                 public List<string> UntranslatedFiles { get; set; } = new List<string>();
 
-                [JsonProperty("Missing IDs")]
+                [JsonProperty("Missing IDs added")]
                 public Dictionary<string, List<dynamic>> MissingIDs { get; set; } = new Dictionary<string, List<dynamic>>();
             }
             internal protected record SpecialFontsConversionInfo
@@ -84,7 +82,7 @@ namespace Siltcurrent
                 public int ConvertedCount { get; set; }
 
                 [JsonProperty("Undefined Colors for:")]
-                public List<string> KeywordsWithoutColor { get; set; } = new List<string>();
+                public List<string> ShorthandsConvertedWithoutColor { get; set; } = new List<string>();
             }
         }
 
@@ -176,9 +174,9 @@ namespace Siltcurrent
                             string ExportTMPro = $"<sprite name=\\\"{ID}\\\"><color={(!Color.Equals("") ? Color : (KeywordColors.ContainsKey(ID) ? KeywordColors[ID] : "#9f6a3a"))}><u><link=\\\"{ID}\\\">{Name}</link></u></color>";
                             OutputReport.ShorthandsConversionInfo.ConvertedCount++;
 
-                            if (!KeywordColors.ContainsKey(ID) & !OutputReport.ShorthandsConversionInfo.KeywordsWithoutColor.Contains(ID))
+                            if (!KeywordColors.ContainsKey(ID) & !OutputReport.ShorthandsConversionInfo.ShorthandsConvertedWithoutColor.Contains(ID))
                             {
-                                OutputReport.ShorthandsConversionInfo.KeywordsWithoutColor.Add(ID);
+                                OutputReport.ShorthandsConversionInfo.ShorthandsConvertedWithoutColor.Add(ID);
                             }
 
                             return ExportTMPro;
@@ -359,6 +357,8 @@ namespace Siltcurrent
                 };
                 private protected static Regex PlacementRegex = new Regex(@"""(?<PropertyValue>\[font=(?<FontName>\w+)\](.*?))(?<Afterward>""(,)?(\r)?\n)");
 
+                internal protected static FontParameters LoadedParameters = null;
+
                 internal protected record FontParameters
                 {
                     public Dictionary<string, Dictionary<string, string>> ReplacementMapsList { get; private set; } = new Dictionary<string, Dictionary<string, string>>();
@@ -377,7 +377,6 @@ namespace Siltcurrent
                     }
                 }
 
-
                 internal protected static string PlaceMergedFonts(string Text, FontParameters FontParameters, string CheckFileName = "")
                 {
                     bool SuccessReplace = false;
@@ -395,15 +394,14 @@ namespace Siltcurrent
 
                             string Replacement = Groups["PropertyValue"].Value;
 
-                            Replacement = RegexRemove(Replacement, new Regex(@"\[font=\w+\]"));
-
-
-                            Replacement = SafeEscapeConvert(Replacement, Reversal: false);
-                            foreach (KeyValuePair<string, string> CharacterReplacement in FontParameters.ReplacementMapsList[AttachedFontName])
-                            {
-                                Replacement = Replacement.Replace(CharacterReplacement.Key, CharacterReplacement.Value);
-                            }
-                            Replacement = SafeEscapeConvert(Replacement, Reversal: true);
+                            //Replacement = RegexRemove(Replacement, new Regex(@"\[font=\w+\]"));
+                            //Replacement = SafeEscapeConvert(Replacement, Reversal: false);
+                            //foreach (KeyValuePair<string, string> CharacterReplacement in FontParameters.ReplacementMapsList[AttachedFontName])
+                            //{
+                            //    Replacement = Replacement.Replace(CharacterReplacement.Key, CharacterReplacement.Value);
+                            //}
+                            //Replacement = SafeEscapeConvert(Replacement, Reversal: true);
+                            Replacement = ConvertSingle(Replacement, FontParameters.ReplacementMapsList[AttachedFontName]);
 
 
                             int LineNumber = Text[0..Match.Index].LinesCount() + 1;
@@ -424,6 +422,28 @@ namespace Siltcurrent
                     }
 
                     return Text;
+                }
+                internal protected static string ConvertSingle(string TargetText, Dictionary<string, string> ReplacementMap, string CheckFileName = "", string DetailedInfo = "")
+                {
+                    string OriginalText = TargetText;
+                    TargetText = RegexRemove(TargetText, new Regex(@"\[font=\w+\]"));
+
+                    TargetText = SafeEscapeConvert(TargetText, Reversal: false);
+                    foreach (KeyValuePair<string, string> CharacterReplacement in ReplacementMap)
+                    {
+                        TargetText = TargetText.Replace(CharacterReplacement.Key, CharacterReplacement.Value);
+                    }
+                    TargetText = SafeEscapeConvert(TargetText, Reversal: true);
+
+                    if (CheckFileName != "")
+                    {
+                        string DictionaryKeyName = CheckFileName + (!DetailedInfo.Equals("") ? $" (Option: {DetailedInfo})" : "");
+
+                        if (!OutputReport.SpecialFontsConversionReport.AttachedFonts.ContainsKey(DictionaryKeyName)) OutputReport.SpecialFontsConversionReport.AttachedFonts[DictionaryKeyName] = new Dictionary<string, string>();
+                        OutputReport.SpecialFontsConversionReport.AttachedFonts[DictionaryKeyName][$"{OriginalText}"] = $"{TargetText} :: {TargetText.ToUnicodeSequence()}";
+                    }
+
+                    return TargetText;
                 }
 
 
@@ -454,17 +474,67 @@ namespace Siltcurrent
                     }
                     return Text;
                 }
-            }
-        }
-        internal abstract class Neccessary
-        {
-            internal abstract class Shorthands
-            {
-                internal protected static Regex MTL = new Regex(@"\[(?<ID>\w+):`(?<Name>.*?)`\](\((?<Color>#[a-fA-F0-9]{6})\))?");
-                internal protected static Regex Crescent_Corporation = new Regex(@"\[(?<ID>\w+):\*(?<Name>.*?)\*\](\((?<Color>#[a-fA-F0-9]{6})\))?");
-            }
-        }
+                
+                
+                internal abstract class FontsTomlConfig
+                {
+                    internal protected static Dictionary<string, List<FontRule>> Parameters = new Dictionary<string, List<FontRule>>();
+                    internal protected static List<string> DefinedPatterns = new List<string>();
 
+                    internal protected record FontRule
+                    {
+                        public FontRule(string ExternalFontName, Dictionary<string, Dictionary<string, string>> ExternalReplacementMaps)
+                        {
+                            if (ExternalReplacementMaps.ContainsKey(ExternalFontName))
+                            {
+                                ReplacementMap = ExternalReplacementMaps[ExternalFontName];
+                                FontName = ExternalFontName;
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Special font characters replacement map file does not contain definition for '{ExternalFontName}' that attached in toml config!");
+                            }
+                        }
+
+                        public Dictionary<string, string> ReplacementMap { get; set; }
+                        public string FontName { get; set; }
+                        public string JsonPath { get; set; }
+
+                        // For report
+                        public string SearchPattern { get; set; }
+                    }
+
+                    internal protected static void Load(string TomlConfigFilepath, Dictionary<string, Dictionary<string, string>> ExternalFontMasks)
+                    {
+                        if (File.Exists(TomlConfigFilepath))
+                        {
+                            string[] TomlConfig = File.ReadAllLines(TomlConfigFilepath);
+                            Parameters.Clear();
+                            DefinedPatterns.Clear();
+
+                            for (int LineIndex = 0; LineIndex <= (TomlConfig.Count() - 1); LineIndex++)
+                            {
+                                string Line = TomlConfig[LineIndex];
+                                string Font_FilesPattern = Regex.Match(Line, @"\[\[font_rules\.""(?<NamePattern>.*?)""\]\]").Groups["NamePattern"].Value;
+                                if (!Font_FilesPattern.Equals(""))
+                                {
+                                    string FontName = Regex.Match(TomlConfig[LineIndex + 1], @"font = ""(?<FontName>\w+)""").Groups["FontName"].Value;
+                                    string JsonPath = TomlConfig[LineIndex + 2][8..^1].Replace(".[*]", "[*]");
+
+                                    if (!Parameters.ContainsKey(Font_FilesPattern))
+                                    {
+                                        Parameters[Font_FilesPattern] = new List<FontRule>();
+                                        DefinedPatterns.Add(Font_FilesPattern);
+                                    }
+
+                                    Parameters[Font_FilesPattern].Add(new FontRule(FontName, ExternalFontMasks) { JsonPath = JsonPath, SearchPattern = Font_FilesPattern });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 
         internal abstract class TranslationBuilder
@@ -488,6 +558,8 @@ namespace Siltcurrent
 
             internal protected static async Task DirectExport(ExportParameters Parameters)
             {
+                MainControl.taskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
+
                 await Task.Run(async () =>
                 {
                     await Task.Delay(1);
@@ -511,9 +583,9 @@ namespace Siltcurrent
                                 @"EGOVoiceDig",
                                 @"PersonalityVoiceDlg",
                                 @"StoryData",
-                                @"Font",
-                                @"Font\Context",
-                                @"Font\Title"
+                                Configurazione.Settings.Export.CopyFontFiles ? @"Font"         : @"",
+                                Configurazione.Settings.Export.CopyFontFiles ? @"Font\Context" : @"",
+                                Configurazione.Settings.Export.CopyFontFiles ? @"Font\Title"   : @""
                             ]
                         );
 
@@ -543,122 +615,221 @@ namespace Siltcurrent
 
                         foreach (FileInfo LocalizeFile in TargetFiles_RawFanmadeLocalization)
                         {
-                            ProgressCounter++;
-                            MainControl.FilesCounter.Dispatcher.Invoke(() =>
+                            string LocalizeFile_RelativePath = "";
+                            try
                             {
-                                MainControl.FilesCounter.Text = $"{ProgressCounter}/{FilesTotalCount}";
-                            });
-
-                            string LocalizeFile_Text = File.ReadAllText(LocalizeFile.FullName);
-                            string LocalizeFile_RelativePath = LocalizeFile.FullName[(Parameters.RawFanmade_LocalizationPath.Length + 1)..];
-
-                            // Append missing content
-                            string ReferenceFilePath = @$"{Parameters.Reference_LocalizationPath}\{Parameters.ReferenceFilesPrefix}{LocalizeFile_RelativePath}";
-                            if (File.Exists(ReferenceFilePath))
-                            {
-                                LocalizeFile_Text = ActionsProvider.MissingJsonIDManager.CompareAppend(LocalizeFile_Text, File.ReadAllText(ReferenceFilePath), LocalizeFile_RelativePath.Replace("\\", "/"));
-                            }
-
-                            // Convert shorthands
-                            if (Parameters.ShorthandsPattern != null & LocalizeFile.Name.StartsWithOneOf(["Skills", "Passive", "EGOgift", "PanicInfo", "MentalCondition", "BattleKeywords", "Bufs"]))
-                            {
-                                LocalizeFile_Text = ActionsProvider.ShorthandsTransform.Convert(LocalizeFile_Text, Parameters.ShorthandsPattern);
-
-                                if (OutputReport.ShorthandsConversionInfo.UsedPattern == null)
+                                ProgressCounter++;
+                                MainControl.FilesCounter.Dispatcher.Invoke(() =>
                                 {
-                                    OutputReport.ShorthandsConversionInfo.UsedPattern = Parameters.ShorthandsPattern.ToString();
-                                }
-                            }
-
-                            // Place <style="highlight"></style> placeholders to descs and coins to avoid incorrect highlighting on uptie (e.g. if coin on some uptie level has <style> and at the next uptie this coin desc is same but without <style>, game automatically highlights whole coin desc by some logic)
-                            if (LocalizeFile.Name.ToLower().ContainsOneOf(["skills.json", "_personality-"]))
-                            {
-                                LocalizeFile_Text = PlaceStyleHighlightPlaceholders(LocalizeFile_Text);
-                            }
-
-                            // Apply special fonts if possible
-                            if (Parameters.MergedFontParameters != null & LocalizeFile_Text.Contains("[font="))
-                            {
-                                LocalizeFile_Text = ActionsProvider.MergedFont.PlaceMergedFonts(LocalizeFile_Text, Parameters.MergedFontParameters, LocalizeFile_RelativePath.Replace("\\", "/"));
-                            }
-
-                            // Write file
-                            if (!File.Exists(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}"))
-                            {
-                                //rin($"Export: {LocalizeFile_RelativePath}");
-                                File.WriteAllText(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}", LocalizeFile_Text);
-                                MainControl.ExportedFilesList.Dispatcher.Invoke(() =>
-                                {
-                                    MainControl.ExportedFilesList.Children.Add(new TextBlock() { Text = LocalizeFile_RelativePath, Foreground = ToColor("#B7B7B7"), FontSize = 19 });
+                                    MainControl.FilesCounter.Text = $"{ProgressCounter}/{FilesTotalCount}";
+                                    MainControl.taskbarItemInfo.ProgressValue = (double)ProgressCounter / (double)FilesTotalCount;
                                 });
 
-                                ExportedCounter++;
-                            }
-                            else
-                            {
-                                if (!File.ReadAllText(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}").Equals(LocalizeFile_Text))
-                                {
-                                    File.WriteAllText(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}", LocalizeFile_Text);
+                                string LocalizeFile_Text = File.ReadAllText(LocalizeFile.FullName);
+                                LocalizeFile_RelativePath = LocalizeFile.FullName[(Parameters.RawFanmade_LocalizationPath.Length + 1)..];
 
-                                    MainControl.ExportedFilesList.Dispatcher.Invoke(() =>
+                                // Append missing content
+                                if (Configurazione.Settings.Export.AddMissingIDs)
+                                {
+                                    string ReferenceFilePath = @$"{Parameters.Reference_LocalizationPath}\{Parameters.ReferenceFilesPrefix}{LocalizeFile_RelativePath}";
+                                    if (File.Exists(ReferenceFilePath))
+                                    {
+                                        LocalizeFile_Text = ActionsProvider.MissingJsonIDManager.CompareAppend(LocalizeFile_Text, File.ReadAllText(ReferenceFilePath), LocalizeFile_RelativePath.Replace("\\", "/"));
+                                    }
+                                }
+
+                                // Convert shorthands
+                                if (Configurazione.Settings.Export.ConvertShorthands)
+                                {
+                                    if (Parameters.ShorthandsPattern != null & LocalizeFile.Name.StartsWithOneOf(["Skills", "Passive", "EGOgift", "PanicInfo", "MentalCondition", "BattleKeywords", "Bufs"]))
+                                    {
+                                        LocalizeFile_Text = ActionsProvider.ShorthandsTransform.Convert(LocalizeFile_Text, Parameters.ShorthandsPattern);
+
+                                        if (OutputReport.ShorthandsConversionInfo.UsedPattern == null)
+                                        {
+                                            OutputReport.ShorthandsConversionInfo.UsedPattern = Parameters.ShorthandsPattern.ToString();
+                                        }
+                                    }
+                                }
+
+                                // Place <style="highlight"></style> placeholders to descs and coins to avoid incorrect highlighting on uptie (e.g. if coin on some uptie level has <style> and at the next uptie this coin desc is same but without <style>, game automatically highlights whole coin desc by some logic)
+                                if (Configurazione.Settings.Export.AddStyleTagPlaceholders)
+                                {
+                                    if (LocalizeFile.Name.ToLower().ContainsOneOf(["skills.json", "_personality-"]))
+                                    {
+                                        LocalizeFile_Text = PlaceStyleHighlightPlaceholders(LocalizeFile_Text);
+                                    }
+                                }
+
+                                // Apply special fonts if possible
+                                if (Configurazione.Settings.Export.ApplySpecialFontsByMarks)
+                                {
+                                    if (Parameters.MergedFontParameters != null & LocalizeFile_Text.Contains("\"[font="))
+                                    {
+                                        LocalizeFile_Text = ActionsProvider.MergedFont.PlaceMergedFonts(LocalizeFile_Text, Parameters.MergedFontParameters, LocalizeFile_RelativePath.Replace("\\", "/"));
+                                    }
+                                }
+
+                                // Apply Toml Config fonts
+                                if (Configurazione.Settings.Export.ApplySpecialFontsFromToml)
+                                {
+                                    if (LimbusTranslationExport.ActionsProvider.MergedFont.FontsTomlConfig.Parameters.Count > 0)
+                                    {
+                                        List<ActionsProvider.MergedFont.FontsTomlConfig.FontRule> FontRulesForFile = LocalizeFile.Name.FindMatchingFontRules();
+                                        if (FontRulesForFile.Count > 0)
+                                        {
+                                            //rin($"\n{LocalizeFile.Name}");
+                                            JToken JParser = JToken.Parse(LocalizeFile_Text);
+                                            foreach (var i in FontRulesForFile)
+                                            {
+                                                //rin($"  - {i.JsonPath} : {i.FontName}");
+                                                
+                                                //rin($" - {FontRule.JsonPath} : {FontRule.FontName}");
+                                                foreach (JToken StringItem in JParser.SelectTokens(i.JsonPath))
+                                                {
+                                                    //rin("   " + StringItem);
+                                                    StringItem.Replace(ActionsProvider.MergedFont.ConvertSingle($"{StringItem}", i.ReplacementMap, LocalizeFile.Name, $"'{i.SearchPattern}'→'{i.JsonPath}', Font: {i.FontName}"));
+                                                }
+                                            }
+                                            LocalizeFile_Text = JParser.ToString(Formatting.Indented).Replace("\r\n", "\n");
+                                        }
+                                    }
+                                }
+
+
+
+
+                                // Write file
+                                if (!File.Exists(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}"))
+                                {
+                                    //rin($"Export: {LocalizeFile_RelativePath}");
+                                    File.WriteAllText(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}", LocalizeFile_Text);
+                                    
+                                    MainControl.Dispatcher.Invoke(() =>
                                     {
                                         MainControl.ExportedFilesList.Children.Add(new TextBlock() { Text = LocalizeFile_RelativePath, Foreground = ToColor("#B7B7B7"), FontSize = 19 });
+                                        MainControl.ExportLogScrollv.ScrollToVerticalOffset(MainControl.ExportLogScrollv.ScrollableHeight + 100);
                                     });
 
                                     ExportedCounter++;
-
-                                    //rin($"Export: {LocalizeFile_RelativePath}");
                                 }
-                            }
-                            MainControl.ExportLogScrollv.Dispatcher.Invoke(() =>
-                            {
-                                MainControl.ExportLogScrollv.ScrollToVerticalOffset(MainControl.ExportLogScrollv.ScrollableHeight + 100);
-                            });
+                                else
+                                {
+                                    if (!File.ReadAllText(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}").Equals(LocalizeFile_Text))
+                                    {
+                                        File.WriteAllText(@$"{Parameters.OutputDirectory}\{LocalizeFile_RelativePath}", LocalizeFile_Text);
 
-                            PrimaryExportedFiles.Add(LocalizeFile.Name);
+                                        MainControl.Dispatcher.Invoke(() =>
+                                        {
+                                            MainControl.ExportedFilesList.Children.Add(new TextBlock() { Text = LocalizeFile_RelativePath, Foreground = ToColor("#B7B7B7"), FontSize = 19 });
+                                            MainControl.ExportLogScrollv.ScrollToVerticalOffset(MainControl.ExportLogScrollv.ScrollableHeight + 100);
+                                        });
+                                        ExportedCounter++;
+                                    }
+                                }
+
+                                PrimaryExportedFiles.Add(LocalizeFile.Name);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Cant export file:\n{Parameters.OutputDirectory}\\{LocalizeFile_RelativePath}\n\nError: {ex.Message}\n\nMaybe incorrect Raw Custom Localization Source folder? (Must be exactly with localization files)");
+                            }
                         }
 
 
                         // Copy font files
-                        if (File.Exists(Parameters.Fonts.ContextFontPath) & File.Exists(Parameters.Fonts.TitleFontPath))
+                        if (Parameters.Fonts != null)
                         {
-                            try { File.Copy(Parameters.Fonts.ContextFontPath, @$"{Parameters.OutputDirectory}\Font\Context\{Parameters.Fonts.ContextFontPath.GetFilename()}"); } catch { }
-                            try { File.Copy(Parameters.Fonts.TitleFontPath, @$"{Parameters.OutputDirectory}\Font\Title\{Parameters.Fonts.TitleFontPath.GetFilename()}");       } catch { }
+                            if (File.Exists(Parameters.Fonts.ContextFontPath) & File.Exists(Parameters.Fonts.TitleFontPath))
+                            {
+                                try { File.Copy(Parameters.Fonts.ContextFontPath, @$"{Parameters.OutputDirectory}\Font\Context\{Parameters.Fonts.ContextFontPath.GetFilename()}"); } catch { }
+                                try { File.Copy(Parameters.Fonts.TitleFontPath,   @$"{Parameters.OutputDirectory}\Font\Title\{Parameters.Fonts.TitleFontPath.GetFilename()}");     } catch { }
+                            }
                         }
 
 
-                        // Add missing files 
+
+                        // Add missing files
                         IEnumerable<FileInfo> TargetFiles_ReferenceLocalization = new DirectoryInfo(Parameters.Reference_LocalizationPath)
                             .GetFiles("*.json", SearchOption.AllDirectories)
                             .Where(x => !PrimaryExportedFiles.Contains(x.Name.RemovePrefix(Parameters.ReferenceFilesPrefix)));
 
+                        if (Configurazione.Settings.Export.AddMissingFiles) OutputReport.UntranslatedElementsReport.UntranslatedFilesCount = TargetFiles_ReferenceLocalization.Count();
                         FilesTotalCount += TargetFiles_ReferenceLocalization.Count();
 
                         foreach (FileInfo MissingFileToAdd in TargetFiles_ReferenceLocalization)
                         {
-                            OutputReport.UntranslatedElementsReport.UntranslatedFilesCount++;
                             string MissingFileToAdd_RelativePath = MissingFileToAdd.FullName[(Parameters.Reference_LocalizationPath.Length + 1)..].Replace(Parameters.ReferenceFilesPrefix, "");
                             try
                             {
-                                OutputReport.UntranslatedElementsReport.UntranslatedFiles.Add(MissingFileToAdd_RelativePath.Replace("\\", "/"));
 
-                                ProgressCounter++;
-
-                                MainControl.FilesCounter.Dispatcher.Invoke(() =>
+                                if (Configurazione.Settings.Export.AddMissingFiles)
                                 {
-                                    MainControl.FilesCounter.Text = $"{ProgressCounter}/{FilesTotalCount} [REF]";
-                                });
+                                    ProgressCounter++;
+                                    OutputReport.UntranslatedElementsReport.UntranslatedFiles.Add(MissingFileToAdd_RelativePath.Replace("\\", "/"));
 
-                                if (!File.Exists(@$"{Parameters.OutputDirectory}\{MissingFileToAdd_RelativePath}"))
-                                {
-                                    MissingFileToAdd.CopyTo(@$"{Parameters.OutputDirectory}\{MissingFileToAdd_RelativePath}");
-                                    ExportedCounter++;
-
-                                    MainControl.Dispatcher.Invoke(() =>
+                                    MainControl.FilesCounter.Dispatcher.Invoke(() =>
                                     {
-                                        MainControl.ExportedFilesList.Children.Add(new TextBlock() { Text = "[REF] " + MissingFileToAdd_RelativePath, Foreground = ToColor("#B7B7B7"), FontSize = 19 });
-                                        MainControl.ExportLogScrollv.ScrollToVerticalOffset(MainControl.ExportLogScrollv.ScrollableHeight + 100);
+                                        MainControl.FilesCounter.Text = $"{ProgressCounter}/{FilesTotalCount} [REF]";
                                     });
+
+                                    if (!File.Exists(@$"{Parameters.OutputDirectory}\{MissingFileToAdd_RelativePath}"))
+                                    {
+                                        bool JustCopyFile = true;
+                                        string ChangedFileText = "";
+
+
+
+                                        // Apply font rules for missing files from reference too
+                                        if (Configurazione.Settings.Export.ApplySpecialFontsFromToml)
+                                        {
+                                            if (LimbusTranslationExport.ActionsProvider.MergedFont.FontsTomlConfig.Parameters.Count > 0)
+                                            {
+                                                List<ActionsProvider.MergedFont.FontsTomlConfig.FontRule> FontRulesForFile = MissingFileToAdd.Name.RemovePrefix(Parameters.ReferenceFilesPrefix).FindMatchingFontRules();
+                                                //rin(MissingFileToAdd.Name);
+                                                if (FontRulesForFile.Count > 0)
+                                                {
+                                                    JustCopyFile = false;
+
+                                                    ChangedFileText = File.ReadAllText(MissingFileToAdd.FullName);
+
+                                                    //rin($"\n{MissingFileToAdd.Name}");
+                                                    JToken JParser = JToken.Parse(ChangedFileText);
+                                                    foreach (var i in FontRulesForFile)
+                                                    {
+                                                        //rin($"  - {i.JsonPath} : {i.FontName}");
+
+                                                        //rin($" - {i.JsonPath} : {i.FontName}");
+                                                        foreach (JToken StringItem in JParser.SelectTokens(i.JsonPath))
+                                                        {
+                                                            //rin("   " + StringItem);
+                                                            StringItem.Replace(ActionsProvider.MergedFont.ConvertSingle($"{StringItem}", i.ReplacementMap, MissingFileToAdd.Name, $"'{i.SearchPattern}'→'{i.JsonPath}', Font: {i.FontName}"));
+                                                        }
+                                                    }
+                                                    ChangedFileText = JParser.ToString(Formatting.Indented).Replace("\r\n", "\n");
+                                                }
+                                            }
+                                        }
+
+
+
+
+                                        if (JustCopyFile)
+                                        {
+                                            MissingFileToAdd.CopyTo(@$"{Parameters.OutputDirectory}\{MissingFileToAdd_RelativePath}");
+                                            ExportedCounter++;
+                                        }
+                                        else
+                                        {
+                                            File.WriteAllText(@$"{Parameters.OutputDirectory}\{MissingFileToAdd_RelativePath}", ChangedFileText);
+                                        }
+
+                                        MainControl.Dispatcher.Invoke(() =>
+                                        {
+                                            MainControl.ExportedFilesList.Children.Add(new TextBlock() { Text = "[REF] " + MissingFileToAdd_RelativePath, Foreground = ToColor("#B7B7B7"), FontSize = 19 });
+                                            MainControl.ExportLogScrollv.ScrollToVerticalOffset(MainControl.ExportLogScrollv.ScrollableHeight + 100);
+                                        });
+                                    }
                                 }
                             }
                             catch (Exception ex) { rin(ex.ToString()); }
@@ -667,11 +838,17 @@ namespace Siltcurrent
 
 
 
+
+
+
+
+
+
                         try
                         {
                             OutputReport.MarkSerialize(
                                 "Export Records.json",
-                                ManualCorruptParameter: OutputReport.ShorthandsConversionInfo.KeywordsWithoutColor.Count > 0 ? "Undefined Colors for:" : ""
+                                ManualCorruptParameter: OutputReport.ShorthandsConversionInfo.ShorthandsConvertedWithoutColor.Count > 0 ? "Undefined Colors for:" : ""
                             );
                         }
                         catch { }
@@ -704,12 +881,17 @@ namespace Siltcurrent
                                 FontSize = 23
                             });
 
-                            MainControl.ExportLogScrollv.ScrollToVerticalOffset(MainControl.ExportLogScrollv.ScrollableHeight + 1000);
-                        });
+                            //MainControl.ExportedFilesList.Children.Add(new TextBlock()
+                            //{
+                            //    Text = ""
+                            //});
 
-                        MainControl.Dispatcher.Invoke(() =>
-                        {
+                            MainControl.ExportLogScrollv.ScrollToVerticalOffset(MainControl.ExportLogScrollv.ScrollableHeight + 1000);
+                        
+
+
                             MainControl.Border_PreviewMouseLeftButtonUp_DisableCover.Visibility = Visibility.Collapsed;
+                            MainControl.taskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
                         });
 
                         await Task.Delay(2100);

@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using System.Windows.Shell;
 using System.Text.RegularExpressions;
 using static Siltcurrent.LimbusTranslationExport.ActionsProvider;
-using static Siltcurrent.LimbusTranslationExport.Neccessary;
 using static Siltcurrent.LimbusTranslationExport.TranslationBuilder;
 using static Translation_Devouring_Siltcurrent.NullableControl;
 using static Translation_Devouring_Siltcurrent.Requirements;
@@ -42,8 +41,8 @@ public partial class MainWindow : Window
 
         Configurazione.PullLoad();
 
-        //taskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
-        //taskbarItemInfo.ProgressValue = 0.5;
+        //rin("SeasontTitle-a1c7.json".MatchesWithPattern("SeasontTitle*.json"));
+        
         //Process.Start("explorer.exe", @"⇲ Assets Directory");
         //OpenWithDefaultProgram(@"⇲ Assets Directory\Configurazione.json");
         //OpenDirectoryAndSelect(@"file.tx");
@@ -59,7 +58,7 @@ public partial class MainWindow : Window
             ReferenceFilesPrefix = Configurazione.Settings.Export.ReferenceLocalizationFilesPrefix,
             OutputDirectory = Configurazione.Settings.Export.ExportedCustomLocalizationDestination,
             ShorthandsPattern = Configurazione.Settings.Export.LoadedShorthandsPattern,
-            MergedFontParameters = new MergedFont.FontParameters(Configurazione.Settings.Export.MergedFontParameters),
+            MergedFontParameters = LimbusTranslationExport.ActionsProvider.MergedFont.LoadedParameters,
             Fonts = new FontFiles
             {
                 ContextFontPath = Configurazione.Settings.Export.FontFiles.Context,
@@ -136,13 +135,13 @@ public partial class MainWindow : Window
             switch ((sender as TextBox).Name)
             {
                 case "TranslationExport_RawFanmade_SourceDirectory":
-                    Configurazione.Settings.Export.RawCustomLocalizationSource = TranslationExport_RawFanmade_SourceDirectory.Text;
+                    Configurazione.Settings.Export.RawCustomLocalizationSource = TranslationExport_RawFanmade_SourceDirectory.Text.Replace("\\", "/");
                     Configurazione.Settings.MarkSerialize(@"⇲ Assets Directory\Configurazione.json");
 
                     break;
 
                 case "TranslationExport_RawFanmadeOutputDirectory":
-                    Configurazione.Settings.Export.ExportedCustomLocalizationDestination = TranslationExport_RawFanmadeOutputDirectory.Text;
+                    Configurazione.Settings.Export.ExportedCustomLocalizationDestination = TranslationExport_RawFanmadeOutputDirectory.Text.Replace("\\", "/");
                     Configurazione.Settings.MarkSerialize(@"⇲ Assets Directory\Configurazione.json");
                     break;
             }
@@ -182,7 +181,7 @@ public partial class MainWindow : Window
                     switch ((sender as TextBox).Name)
                     {
                         case "ReferenceLocalizationFilePathInput":
-                            Configurazione.Settings.Export.ReferenceLocalizationFiles = ReferenceLocalizationFilePathInput.Text;
+                            Configurazione.Settings.Export.ReferenceLocalizationFiles = ReferenceLocalizationFilePathInput.Text.Replace("\\", "/");
                             Configurazione.Settings.MarkSerialize(@"⇲ Assets Directory\Configurazione.json");
                             break;
 
@@ -202,7 +201,7 @@ public partial class MainWindow : Window
 
 
                         case "MergedFontParametersInput":
-                            Configurazione.Settings.Export.MergedFontParameters = MergedFontParametersInput.Text;
+                            Configurazione.Settings.Export.MergedFontParameters = MergedFontParametersInput.Text.Replace("\\", "/");
                             Configurazione.Settings.MarkSerialize(@"⇲ Assets Directory\Configurazione.json");
                             break;
                     }

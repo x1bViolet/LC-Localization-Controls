@@ -832,3 +832,14 @@ DuelDeclaration ¤ #9f6a3a
 RepressedMurderousIntendTwo ¤ #e30000
 DisengageCombat ¤ #9f6a3a
 BudgetBulletPropellant ¤ #9f6a3a
+WaitingXichun ¤ #9f6a3a
+StartXichun ¤ #9f6a3a
+CheerUpXichun ¤ #f8c200
+RetreatForCommon ¤ #9f6a3a
+FireBulletPropellant ¤ #f8c200
+SingBulletSupport ¤ #f8c200
+BulletPropellantAlly ¤ #9f6a3a
+BulletPropellantSpecialAlly ¤ #9f6a3a
+IrritationAlly ¤ #f8c200
+HugeIrritationAlly ¤ #f8c200
+BeastEyesAlly ¤ #f8c200

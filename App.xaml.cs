@@ -45,6 +45,7 @@ public partial class App : Application
             message = string.Format("Unhandled exception in {0} v{1}:\n{2}", assemblyName.Name, assemblyName.Version, exception.ToString());
 
             rin(message);
+            MessageBox.Show(message);
         }
         catch (Exception ex)
         {
