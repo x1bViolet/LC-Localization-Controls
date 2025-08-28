@@ -428,12 +428,14 @@ namespace Siltcurrent
                     string OriginalText = TargetText;
                     TargetText = RegexRemove(TargetText, new Regex(@"\[font=\w+\]"));
 
+                    TargetText = TargetText.Replace("\\n", "\uF8FF");
                     TargetText = SafeEscapeConvert(TargetText, Reversal: false);
                     foreach (KeyValuePair<string, string> CharacterReplacement in ReplacementMap)
                     {
                         TargetText = TargetText.Replace(CharacterReplacement.Key, CharacterReplacement.Value);
                     }
                     TargetText = SafeEscapeConvert(TargetText, Reversal: true);
+                    TargetText = TargetText.Replace("\uF8FF", "\\n");
 
                     if (CheckFileName != "")
                     {
@@ -738,12 +740,12 @@ namespace Siltcurrent
 
 
                         // Copy font files
-                        if (Parameters.Fonts != null)
+                        if (Parameters.Fonts != null & Configurazione.Settings.Export.CopyFontFiles)
                         {
                             if (File.Exists(Parameters.Fonts.ContextFontPath) & File.Exists(Parameters.Fonts.TitleFontPath))
                             {
                                 try { File.Copy(Parameters.Fonts.ContextFontPath, @$"{Parameters.OutputDirectory}\Font\Context\{Parameters.Fonts.ContextFontPath.GetFilename()}"); } catch { }
-                                try { File.Copy(Parameters.Fonts.TitleFontPath,   @$"{Parameters.OutputDirectory}\Font\Title\{Parameters.Fonts.TitleFontPath.GetFilename()}");     } catch { }
+                                try { File.Copy(Parameters.Fonts.TitleFontPath,   @$"{Parameters.OutputDirectory}\Font\Title\{Parameters.Fonts.TitleFontPath.GetFilename()}");   } catch { }
                             }
                         }
 
