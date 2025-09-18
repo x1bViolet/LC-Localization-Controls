@@ -632,11 +632,11 @@ namespace Siltcurrent
 
                                 if (ReferenceLocalizeFilePath.Contains('\\'))
                                 {
-                                    ReferenceLocalizeFilePath = ReferenceLocalizeFilePath.Insert(ReferenceLocalizeFilePath.LastIndexOf('\\')+1, "EN_");
+                                    ReferenceLocalizeFilePath = ReferenceLocalizeFilePath.Insert(ReferenceLocalizeFilePath.LastIndexOf('\\')+1, Parameters.ReferenceFilesPrefix);
                                 }
                                 else
                                 {
-                                    ReferenceLocalizeFilePath = $"EN_{ReferenceLocalizeFilePath}";
+                                    ReferenceLocalizeFilePath = $"{Parameters.ReferenceFilesPrefix}{ReferenceLocalizeFilePath}";
                                 }
 
                                 // Append missing content
