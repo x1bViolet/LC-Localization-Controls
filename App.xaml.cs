@@ -50,6 +50,7 @@ public partial class App : Application
         catch (Exception ex)
         {
             _logger.Error(ex, "Exception in LogUnhandledException");
+            MessageBox.Show(ex.ToString());
         }
         finally
         {
