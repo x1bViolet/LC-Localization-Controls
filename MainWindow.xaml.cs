@@ -155,10 +155,12 @@ public partial class MainWindow : Window
                 {
                     case true:
                         Border_PreviewMouseLeftButtonUp_DisableCover.Visibility = Visibility.Collapsed;
+                        StartExportButton.IsHitTestVisible = true;
                         break;
 
                     case false:
                         Border_PreviewMouseLeftButtonUp_DisableCover.Visibility = Visibility.Visible;
+                        StartExportButton.IsHitTestVisible = false;
                         break;
                 }
             }
