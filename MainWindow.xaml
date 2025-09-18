@@ -620,7 +620,7 @@
                                     </TextBlock>
 
                                     <Grid Margin="2 0 0 0">
-                                        <Border PreviewMouseLeftButtonUp="Border_PreviewMouseLeftButtonUp" Style="{StaticResource MouseOverHighlightBorder}" BorderBrush="#FF3C3B42" Width="223" BorderThickness="2" CornerRadius="2">
+                                        <Border x:Name="StartExportButton" PreviewMouseLeftButtonUp="Border_PreviewMouseLeftButtonUp" Style="{StaticResource MouseOverHighlightBorder}" BorderBrush="#FF3C3B42" Width="223" BorderThickness="2" CornerRadius="2">
                                             <TextBlock x:Name="ExportTranslationButton" Margin="5 0 5 0" FontSize="26" HorizontalAlignment="Center" Foreground="#FF8898B1" FontFamily="Interface/Fonts/#Linotype Syntax Com Regular" VerticalAlignment="Center">
                                                 Export translation
                                             </TextBlock>
