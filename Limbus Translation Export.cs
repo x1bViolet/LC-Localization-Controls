@@ -568,8 +568,6 @@ namespace Siltcurrent
                     Parameters.RawFanmade_LocalizationPath = Path.GetFullPath(Parameters.RawFanmade_LocalizationPath);
                     Parameters.Reference_LocalizationPath  = Path.GetFullPath(Parameters.Reference_LocalizationPath);
                     Parameters.OutputDirectory             = Path.GetFullPath(Parameters.OutputDirectory);
-                    //rin(Parameters.RawFanmade_LocalizationPath);
-                    //ActionsProvider.ShorthandsTransform.KeywordColors = ActionsProvider.ShorthandsTransform.GetKeywordColors(Parameters.KeywordColorsFile);
 
                     if (Directory.Exists(Parameters.RawFanmade_LocalizationPath) & Directory.Exists(Parameters.Reference_LocalizationPath))
                     {
@@ -630,10 +628,22 @@ namespace Siltcurrent
                                 string LocalizeFile_Text = File.ReadAllText(LocalizeFile.FullName);
                                 LocalizeFile_RelativePath = LocalizeFile.FullName[(Parameters.RawFanmade_LocalizationPath.Length + 1)..];
 
+                                string ReferenceLocalizeFilePath = LocalizeFile_RelativePath;
+
+                                if (ReferenceLocalizeFilePath.Contains('\\'))
+                                {
+                                    ReferenceLocalizeFilePath = ReferenceLocalizeFilePath.Insert(ReferenceLocalizeFilePath.LastIndexOf('\\')+1, "EN_");
+                                }
+                                else
+                                {
+                                    ReferenceLocalizeFilePath = $"EN_{ReferenceLocalizeFilePath}";
+                                }
+
                                 // Append missing content
                                 if (Configurazione.Settings.Export.AddMissingIDs)
                                 {
-                                    string ReferenceFilePath = @$"{Parameters.Reference_LocalizationPath}\{Parameters.ReferenceFilesPrefix}{LocalizeFile_RelativePath}";
+                                    string ReferenceFilePath = @$"{Parameters.Reference_LocalizationPath}\{ReferenceLocalizeFilePath}";
+                                    rin($"Trying to append `{ReferenceFilePath}`");
                                     if (File.Exists(ReferenceFilePath))
                                     {
                                         LocalizeFile_Text = ActionsProvider.MissingJsonIDManager.CompareAppend(LocalizeFile_Text, File.ReadAllText(ReferenceFilePath), LocalizeFile_RelativePath.Replace("\\", "/"));
