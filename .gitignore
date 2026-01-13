@@ -1,9 +1,0 @@
-/obj
-/Properties
-*.user
-/.vs
-/bin/Release
-bin/Debug/net8.0-windows/Translation-Devouring Siltcurrent.pdb
-bin/Debug/net8.0-windows/Translation-Devouring Siltcurrent.exe
-bin/Debug/net8.0-windows/Translation-Devouring Siltcurrent.dll
-bin/Debug/net8.0-windows/Export Records.json
