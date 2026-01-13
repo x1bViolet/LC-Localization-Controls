@@ -71,7 +71,8 @@ namespace Translation_Devouring_Siltcurrent
 
         public MainWindow()
         {
-            Console.OutputEncoding = Encoding.UTF8;
+            try { Console.OutputEncoding = Encoding.UTF8; }
+            catch { }
 
             InitializeComponent();
             MainControl = this;

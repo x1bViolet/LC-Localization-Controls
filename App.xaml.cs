@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using static Translation_Devouring_Siltcurrent.Requirements;
+using static Translation_Devouring_Siltcurrent.MainWindow;
 
 namespace Translation_Devouring_Siltcurrent
 {
@@ -36,6 +37,7 @@ namespace Translation_Devouring_Siltcurrent
         private void LogUnhandledException(Exception Exception, string HandlingSource)
         {
             rin(Exception.ToString());
+            if (MainControl == null) Application.Current.Shutdown();
         }
     }
 }

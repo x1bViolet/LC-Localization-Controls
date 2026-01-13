@@ -1,5 +1,9 @@
 /.vs
 /obj
+/bin
+/Properties/PublishProfiles
+
+Translation-Devouring Siltcurrent.csproj.user
 
 bin/Debug/net8.0-windows/*.dll
 bin/Debug/net8.0-windows/Translation-Devouring Siltcurrent.*
