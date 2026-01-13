@@ -1,0 +1,23 @@
+{
+  "Date": "2026-01-13T19:41:48.8275806+05:00",
+  "Destination directory": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en-Unified",
+  "Source directory": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
+  "Reference translation directory": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
+  "Untranslated content added": {
+    "Missing IDs count": 0,
+    "Untranslated files count": 0,
+    "Untranslated files added": [],
+    "Missing IDs added": {}
+  },
+  "Merged Fonts conversion": {
+    "Attached fonts (Markers)": {},
+    "Attached fonts (Multiple Apply Config)": {},
+    "Used Characters Replacement Map fonts": {}
+  },
+  "JsonPath Multiple Regex conversions": {},
+  "Shorthands Conversion Info": {
+    "Used Pattern": null,
+    "Conversions Count": 0,
+    "Undefined Colors for:": []
+  }
+}

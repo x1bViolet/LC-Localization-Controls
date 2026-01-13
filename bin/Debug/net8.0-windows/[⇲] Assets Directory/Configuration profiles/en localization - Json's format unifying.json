@@ -1,0 +1,50 @@
+{
+  "Paths": {
+    "Source path of localization files": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
+    "Destination path of processed files": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en-Unified"
+  },
+  "General localization files whitelist": "*.json",
+  "Files processing order": "Sort by name",
+  "Json files formatting": {
+    "Existing files overwriting rule": "Overwrite existing files anyway",
+    "Output json formatting": "Indented",
+    "Json Indentation size": "2",
+    "Line break mode": "LF",
+    "UTF-8 Byte Order Marks": "Save files with regular UTF-8 encoding",
+    "Empty last line": "Ignore empty last line"
+  },
+  "Reference localization": {
+    "Directory of reference localization": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
+    "Prefix of reference localization": "EN_",
+    "Missing content appending": {
+      "Append missing files": false,
+      "Append missing IDs": false,
+      "Whitelist of missing files to append": "",
+      "Whitelist of existing files to add IDs to": "",
+      "Count IDs as missed starting from the last one from source file": false
+    }
+  },
+  "Font files": {
+    "Also copy font files": false,
+    "Title font file": "",
+    "Context font file": ""
+  },
+  "JsonPath regex conversions": {
+    "Do JsonPath Multiple Regex Conversions": false,
+    "JsonPath Multiple Regex Conversions config": ""
+  },
+  "Miscellaneous": {
+    "Add <style> placeholders": false,
+    "Convert Keyword Shorthands": false,
+    "Keyword Shorthands regex pattern": "",
+    "Keyword Shorthands files whitelist": "",
+    "Keyword Shorthands colors info file": "[⇲] Assets Directory/Keyword Colors.cd.txt"
+  },
+  "Merged fonts": {
+    "Merged font Characters Replacement Map": "",
+    "Merged font Multiple Apply config": "",
+    "Merged font Ignore Sequences regex pattern": "{\\d+}|<.*?>|\\\\n",
+    "Convert fonts by Multiple Apply config": false,
+    "Convert fonts by '[font=name]' markers": false
+  }
+}

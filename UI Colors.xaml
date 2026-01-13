@@ -1,0 +1,144 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+	<!--#region General-->
+
+
+	<SolidColorBrush x:Key="General:MainBackground" Color="#1A191F" />
+	<SolidColorBrush x:Key="General:TitleBarBackground" Color="#101117" />
+	<SolidColorBrush x:Key="General:WindowBorder" Color="#2B2933" />
+
+	<LinearGradientBrush x:Key="General:TitleColor" StartPoint="0.5 0" EndPoint="0.5 1">
+		<GradientStop Offset="0" Color="#BE4646" />
+		<GradientStop Offset="0.48" Color="#A03400" />
+	</LinearGradientBrush>
+
+	<SolidColorBrush x:Key="General:DefaultTextColor" Color="#B7B7B7" />
+	<SolidColorBrush x:Key="General:Separators" Color="#45444C" />
+	<SolidColorBrush x:Key="General:Remarks" Color="#aa9a9a" />
+
+
+	<!--#endregion-->
+
+
+
+
+
+
+	<!--#region Textboxes-->
+
+
+	<SolidColorBrush x:Key="TextBoxes:Foreground" Color="#B7B7B7" />
+	<SolidColorBrush x:Key="TextBoxes:Caret" Color="#B7B7B7" />
+	<SolidColorBrush x:Key="TextBoxes:Selection" Color="#B7B7B7" />
+	<SolidColorBrush x:Key="TextBoxes:ShadowText" Color="#444343" />
+
+	<SolidColorBrush x:Key="TextBoxes:Background" Color="#26252D" />
+	<SolidColorBrush x:Key="TextBoxes:Background.Focused" Color="#34333D" />
+
+	<SolidColorBrush x:Key="TextBoxes:Border" Color="#34333D" />
+	<SolidColorBrush x:Key="TextBoxes:Border.Focused" Color="#34333D" />
+
+
+	<!--#endregion-->
+
+
+
+
+
+
+	<!--#region Scrollbars-->
+
+	<SolidColorBrush x:Key="ScrollBars:Line" Color="#2B2933" />
+	<sys:Double x:Key="ScrollBars:Line.Thickness">2.5</sys:Double>
+
+	<!--#region Up/Down buttons-->
+	<SolidColorBrush x:Key="ScrollBars:UpDownButtons.Icon" Color="#B7B7B7" />
+
+	<SolidColorBrush x:Key="ScrollBars:UpDownButtons.Background" Color="#26252D" />
+	<SolidColorBrush x:Key="ScrollBars:UpDownButtons.Background.Pressed" Color="#2D2C36" />
+	<SolidColorBrush x:Key="ScrollBars:UpDownButtons.Background.Highlighted" Color="#34333D" />
+
+	<SolidColorBrush x:Key="ScrollBars:UpDownButtons.Border" Color="#34333D" />
+	<Thickness x:Key="ScrollBars:UpDownButtons.Border.Thickness">2</Thickness>
+	<CornerRadius x:Key="ScrollBars:UpDownButtons.Border.CornerRadius">2</CornerRadius>
+	<!--#endregion-->
+
+	<!--#region Thumb-->
+	<SolidColorBrush x:Key="ScrollBars:Thumb.Background" Color="#26252D" />
+	<SolidColorBrush x:Key="ScrollBars:Thumb.Background.Pressed" Color="#2D2C36" />
+	<SolidColorBrush x:Key="ScrollBars:Thumb.Background.Highlighted" Color="#34333D" />
+
+	<SolidColorBrush x:Key="ScrollBars:Thumb.Border" Color="#34333D" />
+	<Thickness x:Key="ScrollBars:Thumb.Border.Thickness">2</Thickness>
+	<CornerRadius x:Key="ScrollBars:Thumb.Border.CornerRadius">2</CornerRadius>
+	<!--#endregion-->
+
+
+	<!--#endregion-->
+
+
+
+
+
+
+	<!--#region Square Buttons-->
+
+
+	<SolidColorBrush x:Key="SquareButtons:DisabledButtonsShadowing" Color="#77000000" />
+
+	<SolidColorBrush x:Key="SquareButtons:Icons" Color="#DEDEDE" />
+
+	<SolidColorBrush x:Key="SquareButtons:Background" Color="#26252D" />
+	<SolidColorBrush x:Key="SquareButtons:Background.Pressed" Color="#2D2C36" />
+	<SolidColorBrush x:Key="SquareButtons:Background.Highlighted" Color="#34333D" />
+
+	<SolidColorBrush x:Key="SquareButtons:Border" Color="#34333D" />
+	<Thickness x:Key="SquareButtons:Border.Thickness">2</Thickness>
+	<CornerRadius x:Key="SquareButtons:Border.CornerRadius">2</CornerRadius>
+
+
+	<!--#endregion-->
+
+
+
+
+
+
+	<!--#region Elongated Buttons-->
+
+
+	<SolidColorBrush x:Key="ElongatedButtons:DisabledButtonsShadowing" Color="#77000000" />
+
+	<SolidColorBrush x:Key="ElongatedButtons:Text" Color="#C4B0B6" />
+
+	<SolidColorBrush x:Key="ElongatedButtons:Background" Color="#26252D" />
+	<SolidColorBrush x:Key="ElongatedButtons:Background.Pressed" Color="#2D2C36" />
+	<SolidColorBrush x:Key="ElongatedButtons:Background.Highlighted" Color="#34333D" />
+
+	<SolidColorBrush x:Key="ElongatedButtons:Border" Color="#34333D" />
+	<Thickness x:Key="ElongatedButtons:Border.Thickness">2</Thickness>
+	<CornerRadius x:Key="ElongatedButtons:Border.CornerRadius">2</CornerRadius>
+
+
+	<!--#endregion-->
+
+
+
+
+
+
+	<!--#region Other Border-like things-->
+
+
+	<SolidColorBrush x:Key="OtherBorderLikeThings:Background" Color="#26252D" />
+
+	<SolidColorBrush x:Key="OtherBorderLikeThings:Border" Color="#333333" />
+	<Thickness x:Key="OtherBorderLikeThings:Border.Thickness">2</Thickness>
+	<CornerRadius x:Key="OtherBorderLikeThings:Border.CornerRadius">2</CornerRadius>
+
+
+	<!--#endregion-->
+
+</ResourceDictionary>

@@ -1,0 +1,50 @@
+{
+  "Paths": {
+    "Source path of localization files": "Your Source localization folder there",
+    "Destination path of processed files": "Your Source localization folder there"
+  },
+  "General localization files whitelist": "*.json",
+  "Files processing order": "Recently changed first (Recommended)",
+  "Json files formatting": {
+    "Existing files overwriting rule": "Only if Json content itself is not the same",
+    "Output json formatting": "Indented",
+    "Json Indentation size": "Keep original",
+    "Line break mode": "Keep original",
+    "UTF-8 Byte Order Marks": "Keep BOM if they are inside source file",
+    "Empty last line": "Keep empty last line if its inside source file"
+  },
+  "Reference localization": {
+    "Directory of reference localization": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
+    "Prefix of reference localization": "EN_",
+    "Missing content appending": {
+      "Append missing files": false,
+      "Append missing IDs": true,
+      "Whitelist of missing files to append": "",
+      "Whitelist of existing files to add IDs to": "Skills_personality-*.json, Skills_Ego_Personality-*.json, BattleKeywords.json, Bufs.json, PanicInfo.json, Personalities.json, Egos.json, Personality_Get_Condition.json, GachaTitle.json, IntroductionPreset.json, StoryTheaterMirrorWorldStoryTitle.json",
+      "Count IDs as missed starting from the last one from source file": true
+    }
+  },
+  "Font files": {
+    "Also copy font files": false,
+    "Title font file": "",
+    "Context font file": ""
+  },
+  "JsonPath regex conversions": {
+    "Do JsonPath Multiple Regex Conversions": false,
+    "JsonPath Multiple Regex Conversions config": ""
+  },
+  "Miscellaneous": {
+    "Add <style> placeholders": false,
+    "Convert Keyword Shorthands": false,
+    "Keyword Shorthands regex pattern": "",
+    "Keyword Shorthands files whitelist": "",
+    "Keyword Shorthands colors info file": "[⇲] Assets Directory/Keyword Colors.cd.txt"
+  },
+  "Merged fonts": {
+    "Merged font Characters Replacement Map": "",
+    "Merged font Multiple Apply config": "",
+    "Merged font Ignore Sequences regex pattern": "{\\d+}|<.*?>|\\\\n",
+    "Convert fonts by Multiple Apply config": false,
+    "Convert fonts by '[font=name]' markers": false
+  }
+}

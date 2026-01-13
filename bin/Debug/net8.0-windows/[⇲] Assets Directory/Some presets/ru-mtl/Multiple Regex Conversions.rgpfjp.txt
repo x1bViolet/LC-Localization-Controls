@@ -1,0 +1,35 @@
+{Regex Option}
+- Files: MirrorDungeonRentalName.json
+- JsonPath: $.dataList[*].content
+
+This is a 'auto translation' via replacements
+* Pattern: Pierce
+  Replace: Пронзающий
+
+* Pattern: Blunt
+  Replace: Дробящий
+
+* Pattern: Slash
+  Replace: Рубящий
+
+
+* Pattern: Poise
+  Replace: Дыхание
+
+* Pattern: Charge
+  Replace: Заряд
+
+* Pattern: Sinking
+  Replace: Утопание
+
+* Pattern: Rupture
+  Replace: Разрыв
+
+* Pattern: Burn
+  Replace: Огонь
+
+* Pattern: Bleed
+  Replace: Кровотечение
+
+* Pattern: Tremor
+  Replace: Тремор

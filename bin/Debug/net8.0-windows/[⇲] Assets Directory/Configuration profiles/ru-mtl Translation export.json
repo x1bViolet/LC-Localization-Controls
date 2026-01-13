@@ -1,0 +1,50 @@
+{
+  "Paths": {
+    "Source path of localization files": "C:/Dream-Devouring Siltcurrent/@LimbusCompany MTL'RU/localize",
+    "Destination path of processed files": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Lang/ru-mtl"
+  },
+  "General localization files whitelist": "*.json",
+  "Files processing order": "Recently changed first (Recommended)",
+  "Json files formatting": {
+    "Existing files overwriting rule": "Only if Json content itself is not the same",
+    "Output json formatting": "Indented",
+    "Json Indentation size": "Keep original",
+    "Line break mode": "Keep original",
+    "UTF-8 Byte Order Marks": "Keep BOM if they are inside source file",
+    "Empty last line": "Keep empty last line if its inside source file"
+  },
+  "Reference localization": {
+    "Directory of reference localization": "C:/Program Files (x86)/Steam/steamapps/common/Limbus Company/LimbusCompany_Data/Assets/Resources_moved/Localize/en",
+    "Prefix of reference localization": "EN_",
+    "Missing content appending": {
+      "Append missing files": false,
+      "Append missing IDs": false,
+      "Whitelist of missing files to append": "",
+      "Whitelist of existing files to add IDs to": "",
+      "Count IDs as missed starting from the last one from source file": false
+    }
+  },
+  "Font files": {
+    "Also copy font files": true,
+    "Title font file": "[⇲] Assets Directory/Some presets/ru-mtl/Title.ttf",
+    "Context font file": "[⇲] Assets Directory/Some presets/ru-mtl/Context.ttf"
+  },
+  "JsonPath regex conversions": {
+    "Do JsonPath Multiple Regex Conversions": false,
+    "JsonPath Multiple Regex Conversions config": ""
+  },
+  "Miscellaneous": {
+    "Add <style> placeholders": true,
+    "Convert Keyword Shorthands": true,
+    "Keyword Shorthands regex pattern": "\\[(?<ID>\\w+):`(?<Name>.*?)`\\](\\((?<Color>#[a-fA-F0-9]{6})\\))?",
+    "Keyword Shorthands files whitelist": "Skills*.json, Passive*.json, EGOgift_*.json, PanicInfo*.json, BuffAbilities.json, MentalCondition*.json, BattleKeywords*.json, Bufs*.json",
+    "Keyword Shorthands colors info file": "[⇲] Assets Directory/Keyword Colors.cd.txt"
+  },
+  "Merged fonts": {
+    "Merged font Characters Replacement Map": "[⇲] Assets Directory/Some presets/ru-mtl/Merged Font assets/Characters Replacement Map.json",
+    "Merged font Multiple Apply config": "[⇲] Assets Directory/Some presets/ru-mtl/Merged Font assets/Merged Font Multiple Apply Config.json",
+    "Merged font Ignore Sequences regex pattern": "{\\d+}|<.*?>|\\\\n",
+    "Convert fonts by Multiple Apply config": true,
+    "Convert fonts by '[font=name]' markers": true
+  }
+}
