@@ -442,10 +442,12 @@
 						<T:TextBlockSelectable Margin="0 30.5 0 0" IsHitTestVisible="False" Text="|" />
 						<T:TextBlockSelectable x:Name="SectionSwitch_Parameters" Margin="0 30.5 0 0" DataContext="1" Text="Parameters" />
 
+						<T:TextBlockSelectable IsHitTestVisible="False" HorizontalAlignment="Right" Margin="0 30.5 3.5 0" FontSize="15" Foreground="{DynamicResource General:TitleColor}" Text="Version 1.0:0" />
+						
 					</StackPanel>
 
 
-					<TabControl x:Name="Sections" Margin="25 0 0 0" SelectedIndex="1">
+					<TabControl x:Name="Sections" Margin="25 0 0 0" SelectedIndex="0">
 
 						<TabControl.Resources>
 
